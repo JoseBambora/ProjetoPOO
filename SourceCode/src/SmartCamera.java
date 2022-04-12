@@ -3,7 +3,7 @@ public class SmartCamera extends SmartDevices
 
     private int consumoDiario;
     private String resolucao;
-
+    private int tamanho;
 
     /**
      *
@@ -11,25 +11,28 @@ public class SmartCamera extends SmartDevices
     public SmartCamera(){
         this.consumoDiario = 0;
         this.resolucao = "";
+        this.tamanho = 0;
     }
 
 
     /**
      *
      */
-    public SmartCamera(int consumoDiario, String resolucao){
+    public SmartCamera(int consumoDiario, String resolucao, int tamanho){
         this.consumoDiario = consumoDiario;
         this.resolucao = resolucao;
+        this.tamanho = tamanho;
     }
 
 
     /**
      *
      */
-    public SmartCamera(String id, boolean on, int consumoDiario, String resolucao){
+    public SmartCamera(String id, boolean on, int consumoDiario, String resolucao, int tamanho){
         super(id,on);
         this.setConsumoDiario(consumoDiario);
         this.setResolucao(resolucao);
+        this.setTamanho(tamanho);
     }
 
 
@@ -41,6 +44,7 @@ public class SmartCamera extends SmartDevices
         super();
         this.consumoDiario = smartCamera.getConsumoDiario();
         this.resolucao = smartCamera.getResolucao();
+        this.tamanho = smartCamera.getTamanho();
     }
 
 
@@ -63,10 +67,16 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    /**
+     *
+     */
     public void setConsumoDiario(int consumoDiario) {
         this.consumoDiario = consumoDiario;
     }
-
 
 
     /**
@@ -76,6 +86,12 @@ public class SmartCamera extends SmartDevices
         this.resolucao = resolucao;
     }
 
+    /**
+     *
+     */
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
 
     /**
      *
@@ -86,7 +102,7 @@ public class SmartCamera extends SmartDevices
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         SmartCamera that = (SmartCamera) o;
-        return consumoDiario == that.consumoDiario && this.resolucao.equals(that.resolucao);
+        return consumoDiario == that.consumoDiario && this.resolucao.equals(that.resolucao) && this.tamanho == that.tamanho;
     }
 
 
@@ -101,9 +117,6 @@ public class SmartCamera extends SmartDevices
      */
     @Override
     public String toString() {
-        return "SmartCamera: " +
-                "consumoDiario=" + consumoDiario +
-                ", resolucao='" + resolucao + '\'' +
-                '}';
+        return "SmartCamera: Consumo Diario = " + consumoDiario +", Resolução = " + resolucao +", Tamanho: "+tamanho +"\n";
     }
 }
