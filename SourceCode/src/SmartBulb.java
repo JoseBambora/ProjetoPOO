@@ -28,16 +28,18 @@ public class SmartBulb extends SmartDevices {
         this.consumoDiario = 0;
     }
 
-    public SmartBulb(String id, boolean on, int dimensao, int consumoDiario){
+    public SmartBulb(String id, boolean on, int tone, int dimensao, int consumoDiario){
         // initialise instance variables
         super(id,on);
-        this.tone = NEUTRAL;
-        this.dimensao = dimensao;
-        this.consumoDiario = consumoDiario;
+        this.tone = tone;
+        if (dimensao >=0 ) this.dimensao = dimensao; // if the dimensao is >=0 it's okay to use it
+        else this.dimensao = 0; // otherwise, it's initialized as 0
+        if (consumoDiario >= 0) this.consumoDiario = consumoDiario; // if the consumoDiario is >=0 it's okay to use it
+        else this.consumoDiario = 0; // otherwise, it's initialized as 0
     }
 
     public SmartBulb (SmartBulb sb) {
-        super();
+        super(sb.getId(), sb.isOn());
         this.tone = sb.getTone();
         this.dimensao = sb.getDimensao();
         this.consumoDiario = sb.getConsumoDiario();
@@ -64,11 +66,11 @@ public class SmartBulb extends SmartDevices {
     }
 
     public void setDimensao(int dimensao) {
-        this.dimensao = dimensao;
+       if (dimensao >=0) this.dimensao = dimensao;
     }
 
     public void setConsumoDiario(int consumoDiario) {
-        this.consumoDiario = consumoDiario;
+        if (consumoDiario>=0) this.consumoDiario = consumoDiario;
     }
 
     @Override
