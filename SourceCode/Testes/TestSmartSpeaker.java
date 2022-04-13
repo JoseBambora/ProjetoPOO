@@ -1,25 +1,23 @@
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
 
 public class TestSmartSpeaker
 {
-    SmartSpeaker smartSpeaker1;
-    SmartSpeaker smartSpeaker2;
-    SmartSpeaker smartSpeaker3;
-    SmartSpeaker smartSpeaker4;
-    SmartSpeaker smartSpeaker5;
-    SmartSpeaker smartSpeaker6;
+    private SmartSpeaker smartSpeaker1;
+    private SmartSpeaker smartSpeaker2;
+    private SmartSpeaker smartSpeaker3;
+    private SmartSpeaker smartSpeaker4;
+    private SmartSpeaker smartSpeaker5;
+    private SmartSpeaker smartSpeaker6;
     @BeforeEach
     public void atribui()
     {
         this.smartSpeaker1 = new SmartSpeaker();
         this.smartSpeaker2 = new SmartSpeaker("1",true);
         this.smartSpeaker3 = new SmartSpeaker("2",false,10,30,"Samsung",10);
-        this.smartSpeaker4 = new SmartSpeaker("3",false,-2,40,"LG",30);
+        this.smartSpeaker4 = new SmartSpeaker("3",true,-2,40,"LG",30);
         this.smartSpeaker5 = new SmartSpeaker("4",true,30,1,"Sony",5);
         this.smartSpeaker6 = new SmartSpeaker("4",true,30,1,"Sony",5);
     }
@@ -99,7 +97,7 @@ public class TestSmartSpeaker
         int dias = 31;
         assertEquals(this.smartSpeaker1.calculaConsumo(dias),0,"Erro Calculo Consumo 1");
         assertEquals(this.smartSpeaker2.calculaConsumo(dias),0,"Erro Calculo Consumo 2");
-        assertEquals(this.smartSpeaker3.calculaConsumo(dias),320,"Erro Calculo Consumo 3");
+        assertEquals(this.smartSpeaker3.calculaConsumo(dias),0,"Erro Calculo Consumo 3");
         assertEquals(this.smartSpeaker4.calculaConsumo(dias),930,"Erro Calculo Consumo 4");
         assertEquals(this.smartSpeaker5.calculaConsumo(dias),175,"Erro Calculo Consumo 5");
     }

@@ -119,4 +119,9 @@ public class SmartCamera extends SmartDevices
     public String toString() {
         return "SmartCamera: Consumo Diario = " + consumoDiario +", Resolução = " + resolucao +", Tamanho: "+tamanho +"\n";
     }
+
+    public int calculaConsumo (int dias) {
+        // a definir
+        return this.isOn() ? 1 : 0;
+    }
 }

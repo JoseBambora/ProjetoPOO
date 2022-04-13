@@ -53,7 +53,7 @@ public class SmartSpeaker extends SmartDevices
      */
     public SmartSpeaker(SmartSpeaker smartSpeaker)
     {
-        super();
+        super(smartSpeaker.getId(), smartSpeaker.isOn());
         this.volume = smartSpeaker.getVolume();
         this.canal = smartSpeaker.getCanal();
         this.marca = smartSpeaker.getMarca();
@@ -174,5 +174,8 @@ public class SmartSpeaker extends SmartDevices
      * @param dias
      * @return
      */
-    public int calculaConsumo(int dias) { return (this.getConsumoDiario() * dias) + this.getVolume(); }
+    public int calculaConsumo(int dias)
+    {
+        return this.isOn() ? (this.getConsumoDiario() * dias) + this.getVolume() : 0;
+    }
 }

@@ -19,32 +19,27 @@ public abstract class SmartDevices
         this.id = id;
         this.on = on;
     }
-    public abstract int getConsumoDiario();
+    public abstract int calculaConsumo(int dias);
     public void turnOn()
     {
-        this.on = true;
+        this.setOn(true);
     }
     public void turnOff()
     {
-        this.on = false;
+        this.setOn(false);
     }
-
     public boolean isOn() {
         return on;
     }
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public void setOn(boolean on) {
         this.on = on;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,12 +47,6 @@ public abstract class SmartDevices
         SmartDevices that = (SmartDevices) o;
         return Objects.equals(id, that.id);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, on);
-    }
-
     @Override
     public String toString() {
         return "SmartDevices, id: '" + id + '\'' + ", on: " + on;
