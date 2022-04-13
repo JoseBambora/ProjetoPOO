@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class SmartBulbTest {
+public class TestSmartBulb {
     SmartBulb sb1;
     SmartBulb sb2;
     SmartBulb sb3;
