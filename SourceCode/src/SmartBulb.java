@@ -1,7 +1,7 @@
 /**
  * Lâmpadas Inteligentes, as SmartBulb
  */
-public class SmartBulb extends SmartDevice {
+public class SmartBulb extends SmartDevices {
     public static final int WARM = 2;
     public static final int NEUTRAL = 1;
     public static final int COLD = 0;
@@ -80,7 +80,7 @@ public class SmartBulb extends SmartDevice {
             return false;
         }
         SmartBulb sb = (SmartBulb) o;
-        return tone == sb.tone && dimensao == this.dimensao && consumoDiario == this.consumoDiario;
+        return tone == sb.tone && dimensao == sb.getDimensao() && consumoDiario == sb.getConsumoDiario();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SmartBulb extends SmartDevice {
     }
 
 
-    public SmartDevice clone() {
+    public SmartBulb clone() {
         return new SmartBulb(this);
     }
     /**

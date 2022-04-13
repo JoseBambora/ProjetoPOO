@@ -170,4 +170,9 @@ public class SmartSpeaker extends SmartDevices
      * @return
      */
     public SmartSpeaker clone() { return new SmartSpeaker(this); }
+    /**
+     * @param dias
+     * @return
+     */
+    public int calculaConsumo(int dias) { return (this.getConsumoDiario() * dias) + this.getVolume(); }
 }

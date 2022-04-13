@@ -93,4 +93,14 @@ public class TestSmartSpeaker
         assertEquals(smartSpeaker7,smartSpeaker1);
         assertNotEquals(smartSpeaker7,this.smartSpeaker6);
     }
+    @Test
+    public void testCalculaConsumo()
+    {
+        int dias = 31;
+        assertEquals(this.smartSpeaker1.calculaConsumo(dias),0,"Erro Calculo Consumo 1");
+        assertEquals(this.smartSpeaker2.calculaConsumo(dias),0,"Erro Calculo Consumo 2");
+        assertEquals(this.smartSpeaker3.calculaConsumo(dias),320,"Erro Calculo Consumo 3");
+        assertEquals(this.smartSpeaker4.calculaConsumo(dias),930,"Erro Calculo Consumo 4");
+        assertEquals(this.smartSpeaker5.calculaConsumo(dias),175,"Erro Calculo Consumo 5");
+    }
 }
