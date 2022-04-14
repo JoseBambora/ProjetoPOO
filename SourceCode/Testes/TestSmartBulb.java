@@ -6,14 +6,12 @@ import org.junit.jupiter.api.Test;
 
 
 public class TestSmartBulb {
-    SmartBulb sb1;
-    SmartBulb sb2;
-    SmartBulb sb3;
-    SmartBulb sb4;
-    SmartBulb sb5;
-    SmartBulb sb6;
-    @BeforeEach
-
+    private SmartBulb sb1;
+    private SmartBulb sb2;
+    private SmartBulb sb3;
+    private SmartBulb sb4;
+    private SmartBulb sb5;
+    private SmartBulb sb6;
     @Test
     public void testGetTone() {
         sb1  = new SmartBulb("1", true, 1,4, 4);
@@ -123,7 +121,7 @@ public class TestSmartBulb {
         sb4  = new SmartBulb("b4", true, 10,9, 4);
         assertEquals(this.sb4.calculaConsumo(dias),11180,"Erro Calculo Consumo sb4");
         sb5  = new SmartBulb();
-        assertEquals(this.sb5.calculaConsumo(dias),20,"Erro Calculo Consumo sb5");
+        assertEquals(this.sb5.calculaConsumo(dias),0,"Erro Calculo Consumo sb5");
         sb6  = new SmartBulb("b6", true);
         assertEquals(this.sb6.calculaConsumo(dias),20,"Erro Calculo Consumo sb6");
     }
