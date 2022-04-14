@@ -9,11 +9,11 @@ public class Fatura {
     private Morada local;
 
     public Fatura(){
-    this.cliente = new Pessoa();
-    this.preco = 0;
-    this.consumo = 0;
-    this.dataEmissao = LocalDate.now();
-    this.local = new Morada();
+        this.cliente = new Pessoa();
+        this.preco = 0;
+        this.consumo = 0;
+        this.dataEmissao = LocalDate.now();
+        this.local = new Morada();
     }
 
     public Fatura(Pessoa cliente, int preco, int consumo, LocalDate date, Morada local){
@@ -33,27 +33,27 @@ public class Fatura {
     }
 
     public Pessoa getCliente() {
-        return cliente;
+        return this.cliente.clone();
     }
 
     public int getPreco() {
-        return preco;
+        return this.preco;
     }
 
     public int getConsumo() {
-        return consumo;
+        return this.consumo;
     }
 
     public Morada getLocal() {
-        return local;
+        return this.local.clone();
     }
 
     public LocalDate getDataEmissao() {
-        return dataEmissao;
+        return this.dataEmissao;
     }
 
     public void setCliente(Pessoa cliente) {
-        this.cliente = cliente;
+        this.cliente = cliente.clone();
     }
 
     public void setPreco(int preco) {
@@ -65,7 +65,7 @@ public class Fatura {
     }
 
     public void setLocal(Morada local) {
-        this.local = local;
+        this.local = local.clone();
     }
 
     public void setDataEmissao(LocalDate dataEmissao) {
@@ -74,12 +74,11 @@ public class Fatura {
 
     @Override
     public String toString() {
-        return "Fatura:" +
-                "cliente=" + cliente +
-                ", preco=" + preco +
-                ", consumo=" + consumo +
-                ", dataEmissao=" + dataEmissao +
-                ", local=" + local +"\n";
+        return "Fatura, Cliente: " + cliente +
+                ", Preco: " + preco +
+                ", Consumo:" + consumo +
+                ", DataEmissao:" + dataEmissao +
+                ", Local:" + local;
     }
 
     @Override
@@ -87,7 +86,7 @@ public class Fatura {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fatura fatura = (Fatura) o;
-        return preco == fatura.preco && consumo == fatura.consumo && this.cliente == fatura.cliente &&
+        return preco == fatura.preco && consumo == fatura.consumo && this.cliente.equals(fatura.getCliente()) &&
                 this.dataEmissao.equals(fatura.dataEmissao) && this.local.equals(fatura.local);
     }
 
