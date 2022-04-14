@@ -45,7 +45,7 @@ public abstract class SmartDevices
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SmartDevices that = (SmartDevices) o;
-        return Objects.equals(id, that.id);
+        return this.id.equals(that.getId());
     }
     @Override
     public String toString() {

@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class Pessoa
 {
     private String nome;
@@ -14,7 +12,11 @@ public class Pessoa
         this.nome = nome;
         this.NIF = NIF;
     }
-
+    public Pessoa(Pessoa pessoa)
+    {
+        this.nome = pessoa.getNome();
+        this.NIF = pessoa.getNIF();
+    }
     public int getNIF() {
         return NIF;
     }
@@ -47,5 +49,10 @@ public class Pessoa
     @Override
     public String toString() {
         return "Pessoa, nome: '" + this.nome + "', NIF:" + this.NIF;
+    }
+
+    public Pessoa clone()
+    {
+        return new Pessoa(this);
     }
 }

@@ -66,4 +66,13 @@ public class TestPessoa
         assertEquals(123,this.p4.hashCode(),"HashCode 4 errado");
         assertEquals(12,this.p5.hashCode(),"HashCode 5 errado");
     }
+    @Test
+    public void testClone()
+    {
+        assertEquals(this.p1,this.p1.clone(),"Clone 1 errado");
+        assertEquals(this.p2,this.p2.clone(),"Clone 2 errado");
+        assertEquals(this.p3,this.p3.clone(),"Clone 3 errado");
+        assertEquals(this.p4,this.p4.clone(),"Clone 4 errado");
+        assertEquals(this.p5,this.p5.clone(),"Clone 5 errado");
+    }
 }
