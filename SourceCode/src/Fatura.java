@@ -17,11 +17,11 @@ public class Fatura {
     }
 
     public Fatura(Pessoa cliente, int preco, int consumo, LocalDate date, Morada local){
-        this.cliente = cliente;
+        this.cliente = cliente.clone();
         this.preco = preco;
         this.consumo = consumo;
         this.dataEmissao = date;
-        this.local = local;
+        this.local = local.clone();
     }
 
     public Fatura(Fatura fatura){
