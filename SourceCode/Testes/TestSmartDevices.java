@@ -17,8 +17,8 @@ public class TestSmartDevices
         this.smartBulb2 = new SmartBulb("2",false,0,20,10); 
         this.smartSpeaker1 = new SmartSpeaker("3",false,30,6,"LG",10);
         this.smartSpeaker2 = new SmartSpeaker("4",true,10,10,"LG",20);
-        this.smartCamera1 = new SmartCamera("5",true,10,"1920x1080",10);
-        this.smartCamera2 = new SmartCamera("6",false,20,"1920x1080",40);
+        this.smartCamera1 = new SmartCamera("5",true,10,1920,1080,10);
+        this.smartCamera2 = new SmartCamera("6",false,20,1920,1080,40);
     }
     @Test
     public void testEquals()

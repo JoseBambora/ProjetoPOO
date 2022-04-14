@@ -1,3 +1,4 @@
+
 public class Morada {
 
     private String localidade;
@@ -35,4 +36,21 @@ public class Morada {
     }
 
     public Morada clone() { return new Morada(this); }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Morada morada = (Morada) o;
+        return porta == morada.porta && this.localidade.equals(morada.localidade);
+    }
+
+    @Override
+    public String toString() {
+        return "Morada" +
+                "localidade='" + localidade + '\'' +
+                ", porta=" + porta +
+                "\n";
+    }
 }
