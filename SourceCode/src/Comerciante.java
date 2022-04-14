@@ -7,7 +7,7 @@ public class Comerciante {
     private String nome;
     private int preco;
     private Map<Pessoa,List<House>>clientes;
-    private Map<LocalDate,List<Fatura>>faturasEmitidas
+    private Map<LocalDate,List<Fatura>>faturasEmitidas;
 
 public Comerciante(){
         this.nome = "";
