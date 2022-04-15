@@ -99,6 +99,6 @@ public class TestSmartSpeaker
         assertEquals(this.smartSpeaker2.calculaConsumo(dias),0,"Erro Calculo Consumo 2");
         assertEquals(this.smartSpeaker3.calculaConsumo(dias),0,"Erro Calculo Consumo 3");
         assertEquals(this.smartSpeaker4.calculaConsumo(dias),930,"Erro Calculo Consumo 4");
-        assertEquals(this.smartSpeaker5.calculaConsumo(dias),175,"Erro Calculo Consumo 5");
+        assertEquals(this.smartSpeaker5.calculaConsumo(dias),775,"Erro Calculo Consumo 5");
     }
 }

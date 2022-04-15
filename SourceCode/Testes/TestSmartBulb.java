@@ -113,17 +113,17 @@ public class TestSmartBulb {
     public void testConsumo() {
         int dias = 31;
         sb1  = new SmartBulb("b1", true, 1,4, 4);
-        assertEquals(this.sb1.calculaConsumo(dias),516,"Erro Calculo Consumo sb1");
+        assertEquals(this.sb1.calculaConsumo(dias),372,"Erro Calculo Consumo sb1");
         sb2  = new SmartBulb("b2", true, 3,5, 4);
-        assertEquals(this.sb2.calculaConsumo(dias),1880,"Erro Calculo Consumo sb2");
+        assertEquals(this.sb2.calculaConsumo(dias),589,"Erro Calculo Consumo sb2");
         sb3  = new SmartBulb("b3", true, 1,10, 4);
-        assertEquals(this.sb3.calculaConsumo(dias),1260,"Erro Calculo Consumo sb3");
+        assertEquals(this.sb3.calculaConsumo(dias),744,"Erro Calculo Consumo sb3");
         sb4  = new SmartBulb("b4", true, 10,9, 4);
-        assertEquals(this.sb4.calculaConsumo(dias),11180,"Erro Calculo Consumo sb4");
+        assertEquals(this.sb4.calculaConsumo(dias),961,"Erro Calculo Consumo sb4");
         sb5  = new SmartBulb();
         assertEquals(this.sb5.calculaConsumo(dias),0,"Erro Calculo Consumo sb5");
         sb6  = new SmartBulb("b6", true);
-        assertEquals(this.sb6.calculaConsumo(dias),20,"Erro Calculo Consumo sb6");
+        assertEquals(this.sb6.calculaConsumo(dias),0,"Erro Calculo Consumo sb6");
     }
 
 

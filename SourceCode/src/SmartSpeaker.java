@@ -176,6 +176,6 @@ public class SmartSpeaker extends SmartDevices
      */
     public int calculaConsumo(int dias)
     {
-        return this.isOn() ? (this.getConsumoDiario() * dias) + this.getVolume() : 0;
+        return this.isOn() ? (this.getConsumoDiario() + this.getVolume()) * dias : 0;
     }
 }

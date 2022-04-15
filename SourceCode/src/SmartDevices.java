@@ -51,4 +51,5 @@ public abstract class SmartDevices
     public String toString() {
         return "SmartDevices, id: '" + id + '\'' + ", on: " + on;
     }
+    public abstract SmartDevices clone();
 }

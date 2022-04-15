@@ -31,11 +31,9 @@ public class SmartBulb extends SmartDevices {
     public SmartBulb(String id, boolean on, int tone, int dimensao, int consumoDiario){
         // initialise instance variables
         super(id,on);
-        this.tone = tone;
-        if (dimensao >=0 ) this.dimensao = dimensao; // if the dimensao is >=0 it's okay to use it
-        else this.dimensao = 0; // otherwise, it's initialized as 0
-        if (consumoDiario >= 0) this.consumoDiario = consumoDiario; // if the consumoDiario is >=0 it's okay to use it
-        else this.consumoDiario = 0; // otherwise, it's initialized as 0
+        this.setTone(tone);
+        this.setDimensao(dimensao); // if the dimensao is >=0 it's okay to use it otherwise, it's initialized as 0
+        this.setConsumoDiario(consumoDiario); // if the consumoDiario is >=0 it's okay to use it otherwise, it's initialized as 0
     }
 
     public SmartBulb (SmartBulb sb) {
@@ -45,7 +43,6 @@ public class SmartBulb extends SmartDevices {
         this.consumoDiario = sb.getConsumoDiario();
     }
     public int getDimensao() {
-
         return this.dimensao;
     }
 
@@ -97,10 +94,9 @@ public class SmartBulb extends SmartDevices {
     /**
      * Calcula o consumo em função do tipo de luz que está a ser emitida
      */
-     public int calculaConsumo (int dias) {
-        int valor_fixo = 20;
-        int fator = this.getConsumoDiario()*dias * this.getTone()*this.getDimensao();
-        return this.isOn() ? (valor_fixo+fator) : 0;
+    public int calculaConsumo (int dias) {
+        int fator = (this.getTone() + 1) * this.getDimensao();
+        return this.isOn() ? dias*(this.getConsumoDiario()+fator) : 0;
     }
 }
 
