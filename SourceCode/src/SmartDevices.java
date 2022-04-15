@@ -19,7 +19,7 @@ public abstract class SmartDevices
         this.id = id;
         this.on = on;
     }
-    public abstract int calculaConsumo(int dias);
+    public abstract double calculaConsumo(int dias);
     public void turnOn()
     {
         this.setOn(true);

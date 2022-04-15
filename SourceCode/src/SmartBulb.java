@@ -93,7 +93,7 @@ public class SmartBulb extends SmartDevices {
     /**
      * Calcula o consumo em função do tipo de luz que está a ser emitida
      */
-    public int calculaConsumo (int dias) {
+    public double calculaConsumo (int dias) {
         int fator = (this.getTone() + 1) * this.getDimensao();
         return this.isOn() ? dias*(this.getConsumoDiario()+fator) : 0;
     }
