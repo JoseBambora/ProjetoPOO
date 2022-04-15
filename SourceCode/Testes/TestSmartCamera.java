@@ -115,11 +115,11 @@ public class TestSmartCamera {
     @Test
     public void testConsumo(){
     int dias = 31;
-        assertEquals(this.smartCamera1.calculaConsumo(dias),20736310,"Erro Calculo Consumo smartcamera1");
+        assertEquals(this.smartCamera1.calculaConsumo(dias),330.736,"Erro Calculo Consumo smartcamera1");
         assertEquals(this.smartCamera2.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera2");
-        assertEquals(this.smartCamera3.calculaConsumo(dias),70848310,"Erro Calculo Consumo smartcamera3");
+        assertEquals(this.smartCamera3.calculaConsumo(dias),380.848,"Erro Calculo Consumo smartcamera3");
         assertEquals(this.smartCamera4.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera4");
-        assertEquals(this.smartCamera5.calculaConsumo(dias),145152310,"Erro Calculo Consumo smartcamera5");
+        assertEquals(this.smartCamera5.calculaConsumo(dias),455.152,"Erro Calculo Consumo smartcamera5");
         assertEquals(this.smartCamera6.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera6");
     }
 }
