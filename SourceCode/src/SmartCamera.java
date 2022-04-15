@@ -4,7 +4,7 @@ public class SmartCamera extends SmartDevices
     private int consumoDiario;
     private int resolucaoX;
     private int resolucaoY;
-    private int tamanho;
+    private double tamanho;
 
     /**
      *
@@ -78,7 +78,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public int getTamanho() {
+    public double getTamanho() {
         return tamanho;
     }
 
@@ -108,7 +108,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public void setTamanho(int tamanho) {
+    public void setTamanho(double tamanho) {
         this.tamanho = tamanho;
     }
 
@@ -139,7 +139,7 @@ public class SmartCamera extends SmartDevices
         return "SmartCamera: Consumo Diario = " + consumoDiario +", Resolução = " + resolucaoX+"x" + resolucaoY + ", Tamanho: "+tamanho +"\n";
     }
 
-    public int calculaConsumo (int dias) {
-        return this.isOn() ? (this.getConsumoDiario() * dias) + (resolucaoX*resolucaoY*tamanho) : 0;
+    public double calculaConsumo (int dias) {
+        return this.isOn() ? (this.getConsumoDiario() * dias) + (resolucaoX*resolucaoY*tamanho) / 1000000 : 0;
     }
 }

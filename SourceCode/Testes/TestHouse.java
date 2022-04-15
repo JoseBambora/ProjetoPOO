@@ -352,32 +352,6 @@ public class TestHouse
     public void testCalculoConsumo()
     {
         this.house4.setAllOff();
-        // Retirar a partir daqui
-        this.house1.setDeviceOff("c1");
-        this.house1.setDeviceOff("c2");
-        this.house1.setDeviceOff("c3");
-        this.house1.setDeviceOff("c4");
-        this.house2.setDeviceOff("c1");
-        this.house2.setDeviceOff("c2");
-        this.house2.setDeviceOff("c3");
-        this.house2.setDeviceOff("c4");
-        this.house3.setDeviceOff("c1");
-        this.house3.setDeviceOff("c2");
-        this.house3.setDeviceOff("c3");
-        this.house3.setDeviceOff("c4");
-        this.house4.setDeviceOff("c1");
-        this.house4.setDeviceOff("c2");
-        this.house4.setDeviceOff("c3");
-        this.house4.setDeviceOff("c4");
-        this.house5.setDeviceOff("c1");
-        this.house5.setDeviceOff("c2");
-        this.house5.setDeviceOff("c3");
-        this.house5.setDeviceOff("c4");
-        this.house6.setDeviceOff("c1");
-        this.house6.setDeviceOff("c2");
-        this.house6.setDeviceOff("c3");
-        this.house6.setDeviceOff("c4");
-        // até aqui
 
         assertEquals(this.b1.calculaConsumo(1),56);
         assertEquals(this.b2.calculaConsumo(1),68);
@@ -388,11 +362,11 @@ public class TestHouse
         assertEquals(this.s3.calculaConsumo(1),26);
         assertEquals(this.s4.calculaConsumo(1),35);
 
-        assertEquals(this.house1.getConsumo(1),222); // b1 + b2 + c1 + s2 + c2 + b3 + s1 = 222
-        assertEquals(this.house2.getConsumo(3),603); // b4 + b2 + c4 + s1 + c4 + b3 + s2 = 201
-        assertEquals(this.house3.getConsumo(6),1188); // b4 + b3 + c2 + s2 + c3 + b2 + s3 = 198
+        assertEquals(this.house1.getConsumo(1),319); // b1 + b2 + c1 + s2 + c2 + b3 + s1 = 319
+        assertEquals(this.house2.getConsumo(3),667); // b4 + b2 + c4 + s1 + c4 + b3 + s2 = 667
+        assertEquals(this.house3.getConsumo(6),1366); // b4 + b3 + c2 + s2 + c3 + b2 + s3 = 1366
         assertEquals(this.house4.getConsumo(9),0); // b3 + b2 + c4 + s1 + c1 + b1 + s4
-        assertEquals(this.house5.getConsumo(12),2472); // b3 + b2 + c3 + s1 + c1 + b4 + s4 = 206
-        assertEquals(this.house6.getConsumo(15),3270); // b1 + b3 + c4 + s1 + c3 + b2 + s3 = 218
+        assertEquals(this.house5.getConsumo(12),2782); // b3 + b2 + c3 + s1 + c1 + b4 + s4 = 2782
+        assertEquals(this.house6.getConsumo(15),3807); // b1 + b3 + c4 + s1 + c3 + b2 + s3 = 3807
     }
 }

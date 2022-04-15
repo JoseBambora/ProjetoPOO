@@ -1,4 +1,3 @@
-
 public class Morada {
 
     private String localidade;
@@ -20,11 +19,11 @@ public class Morada {
     }
 
     public String getLocalidade() {
-        return localidade;
+        return this.localidade;
     }
 
     public int getPorta() {
-        return porta;
+        return this.porta;
     }
 
     public void setLocalidade(String localidade) {
@@ -37,20 +36,16 @@ public class Morada {
 
     public Morada clone() { return new Morada(this); }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Morada morada = (Morada) o;
-        return porta == morada.porta && this.localidade.equals(morada.localidade);
+        return this.porta == morada.getPorta() && this.localidade.equals(morada.getLocalidade());
     }
 
     @Override
     public String toString() {
-        return "Morada" +
-                "localidade='" + localidade + '\'' +
-                ", porta=" + porta +
-                "\n";
+        return "Morada, Localidade: '" + this.localidade + "', Porta:" + this.porta;
     }
 }
