@@ -93,7 +93,7 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @param consumoDiario
      */
-    public void setConsumoDiario(int consumoDiario) { this.consumoDiario = consumoDiario; }
+    public void setConsumoDiario(double consumoDiario) { this.consumoDiario = consumoDiario; }
 
     /**
      * @param volume

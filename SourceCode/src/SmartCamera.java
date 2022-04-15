@@ -1,7 +1,6 @@
 public class SmartCamera extends SmartDevices
 {
-
-    private int consumoDiario;
+    private double consumoDiario;
     private int resolucaoX;
     private int resolucaoY;
     private double tamanho;
@@ -20,7 +19,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public SmartCamera(int consumoDiario, int resolucaoX, int resolucaoY, int tamanho){
+    public SmartCamera(double consumoDiario, int resolucaoX, int resolucaoY, double tamanho){
         this.consumoDiario = consumoDiario;
         this.resolucaoX = resolucaoX;
         this.resolucaoY = resolucaoY;
@@ -31,7 +30,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public SmartCamera(String id, boolean on, int consumoDiario, int resolucaoX, int resolucaoY, int tamanho){
+    public SmartCamera(String id, boolean on, double consumoDiario, int resolucaoX, int resolucaoY, double tamanho){
         super(id,on);
         this.setConsumoDiario(consumoDiario);
         this.setResolucaoX(resolucaoX);
@@ -56,7 +55,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public int getConsumoDiario() {
+    public double getConsumoDiario() {
         return this.consumoDiario;
     }
 
@@ -85,7 +84,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public void setConsumoDiario(int consumoDiario) {
+    public void setConsumoDiario(double consumoDiario) {
         this.consumoDiario = consumoDiario;
     }
 

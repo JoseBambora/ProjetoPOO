@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class House {
     private Map<String,SmartDevices> devices;
@@ -187,18 +188,36 @@ public class House {
         this.addDevice(smartDevices);
     }
 
+    public void removeDevice(String device)
+    {
+        if(this.devices.containsKey(device))
+        {
+            this.devices.remove(device);
+            for(List<String> list : this.divisoes.values())
+                list.removeIf(s -> s.equals(device));
+        }
+    }
+
+    public void removeDivisao(String divisao)
+    {
+        if(this.divisoes.containsKey(divisao))
+        {
+            List<String> list = this.divisoes.remove(divisao);
+            for(String s : list)
+                this.devices.remove(s);
+        }
+    }
+
     public House clone()
     {
         return new House(this);
     }
 
-    public int getConsumo(int dias)
+    public double getConsumo(int dias)
     {
-        int result = 0;
+        double result = 0;
         for(SmartDevices smartDevices : this.devices.values())
-        {
             result += smartDevices.calculaConsumo(dias);
-        }
         return result;
     }
 }

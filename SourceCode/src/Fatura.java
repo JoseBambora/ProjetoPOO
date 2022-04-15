@@ -3,8 +3,8 @@ import java.util.Objects;
 
 public class Fatura {
     private Pessoa cliente;
-    private int preco;
-    private int consumo;
+    private double preco;
+    private double consumo;
     private LocalDate dataEmissao;
     private Morada local;
 
@@ -16,7 +16,7 @@ public class Fatura {
         this.local = new Morada();
     }
 
-    public Fatura(Pessoa cliente, int preco, int consumo, LocalDate date, Morada local){
+    public Fatura(Pessoa cliente, double preco, double consumo, LocalDate date, Morada local){
         this.cliente = cliente.clone();
         this.preco = preco;
         this.consumo = consumo;
@@ -36,11 +36,11 @@ public class Fatura {
         return this.cliente.clone();
     }
 
-    public int getPreco() {
+    public double getPreco() {
         return this.preco;
     }
 
-    public int getConsumo() {
+    public double getConsumo() {
         return this.consumo;
     }
 
@@ -56,11 +56,11 @@ public class Fatura {
         this.cliente = cliente.clone();
     }
 
-    public void setPreco(int preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
-    public void setConsumo(int consumo) {
+    public void setConsumo(double consumo) {
         this.consumo = consumo;
     }
 

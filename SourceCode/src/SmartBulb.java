@@ -7,8 +7,8 @@ public class SmartBulb extends SmartDevices {
     public static final int COLD = 0;
     
     private int tone;
-    private int dimensao;
-    private int consumoDiario;
+    private double dimensao;
+    private double consumoDiario;
 
 
     /**
@@ -28,7 +28,7 @@ public class SmartBulb extends SmartDevices {
         this.consumoDiario = 0;
     }
 
-    public SmartBulb(String id, boolean on, int tone, int dimensao, int consumoDiario){
+    public SmartBulb(String id, boolean on, int tone, double dimensao, double consumoDiario){
         // initialise instance variables
         super(id,on);
         this.setTone(tone);
@@ -42,17 +42,15 @@ public class SmartBulb extends SmartDevices {
         this.dimensao = sb.getDimensao();
         this.consumoDiario = sb.getConsumoDiario();
     }
-    public int getDimensao() {
+    public double getDimensao() {
         return this.dimensao;
     }
 
-    public int getConsumoDiario() {
-
+    public double getConsumoDiario() {
         return this.consumoDiario;
     }
 
     public int getTone() {
-
         return this.tone;
     }
 
@@ -61,11 +59,11 @@ public class SmartBulb extends SmartDevices {
         else this.tone = Math.max(t, COLD);
     }
 
-    public void setDimensao(int dimensao) {
+    public void setDimensao(double dimensao) {
        if (dimensao >=0) this.dimensao = dimensao;
     }
 
-    public void setConsumoDiario(int consumoDiario) {
+    public void setConsumoDiario(double consumoDiario) {
         if (consumoDiario>=0) this.consumoDiario = consumoDiario;
     }
 
@@ -94,7 +92,7 @@ public class SmartBulb extends SmartDevices {
      * Calcula o consumo em função do tipo de luz que está a ser emitida
      */
     public double calculaConsumo (int dias) {
-        int fator = (this.getTone() + 1) * this.getDimensao();
+        double fator = (this.getTone() + 1) * this.getDimensao();
         return this.isOn() ? dias*(this.getConsumoDiario()+fator) : 0;
     }
 }

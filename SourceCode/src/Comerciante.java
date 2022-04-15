@@ -1,9 +1,13 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Comerciante {
     private String nome;
-    private int preco;
+    private double preco;
     private Map<Pessoa,List<Morada>>clientes;
     private Map<LocalDate,List<Fatura>>faturasEmitidas;
     public Comerciante(){
@@ -13,7 +17,7 @@ public class Comerciante {
             this.faturasEmitidas = new HashMap<>();
     }
 
-    public Comerciante(String nome, int preco){
+    public Comerciante(String nome, double preco){
         this.nome = nome;
         this.preco = preco;
         this.clientes = new HashMap<>();
@@ -28,7 +32,7 @@ public class Comerciante {
         this.clientes = comerciante.clientes;
     }
 
-    public int getPreco() {
+    public double getPreco() {
         return this.preco;
     }
 
@@ -36,7 +40,7 @@ public class Comerciante {
         return this.nome;
     }
 
-    public void setPreco(int preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
