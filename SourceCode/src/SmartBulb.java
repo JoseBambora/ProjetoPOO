@@ -58,8 +58,7 @@ public class SmartBulb extends SmartDevices {
 
     public void setTone(int t) {
         if (t>WARM) this.tone = WARM;
-        else if (t<COLD) this.tone = COLD;
-        else this.tone = t;
+        else this.tone = Math.max(t, COLD);
     }
 
     public void setDimensao(int dimensao) {
