@@ -1,7 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -9,20 +8,20 @@ import java.util.Map;
 public class TestHouse
 {
 
-    SmartBulb b1;
-    SmartBulb b2;
-    SmartBulb b3;
-    SmartBulb b4;
+    private SmartBulb b1;
+    private SmartBulb b2;
+    private SmartBulb b3;
+    private SmartBulb b4;
 
-    SmartSpeaker s1;
-    SmartSpeaker s2;
-    SmartSpeaker s3;
-    SmartSpeaker s4;
+    private SmartSpeaker s1;
+    private SmartSpeaker s2;
+    private SmartSpeaker s3;
+    private SmartSpeaker s4;
 
-    SmartCamera c1;
-    SmartCamera c2;
-    SmartCamera c3;
-    SmartCamera c4;
+    private SmartCamera c1;
+    private SmartCamera c2;
+    private SmartCamera c3;
+    private SmartCamera c4;
 
     private Comerciante comerciante1;
     private Comerciante comerciante2;

@@ -78,7 +78,7 @@ public class Fatura {
                 ", Preco: " + preco +
                 ", Consumo:" + consumo +
                 ", DataEmissao:" + dataEmissao +
-                ", Local:" + local;
+                ", Local:" + local + '\n';
     }
 
     @Override
