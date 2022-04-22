@@ -172,14 +172,14 @@ public class TestHouse
         assertEquals(divisoes.size(),4);
     }
     @Test
-    public void testComposicao()
+    public void testComposicaoAgregacao()
     {
         this.pessoa1.setNIF(90);
         assertNotEquals(this.house1.getProprietario(),this.pessoa1, "Erro composição 1");
         assertNotEquals(this.house2.getProprietario(),this.pessoa1, "Erro composição 2");
         this.comerciante2.setNome("Repsol");
-        assertNotEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
-        assertNotEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
+        assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
+        assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
         this.morada3.setPorta(2000);
         assertNotEquals(this.house3.getLocal(),this.morada3, "Erro composição 5");
         Map<String, List<String>> divisoes = this.house1.getDivisoes();

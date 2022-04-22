@@ -185,8 +185,6 @@ public class TestComerciante
             if(fatura2.getPreco() > fatura1.getPreco())
                 fatura1 = fatura2;
         assertEquals(fatura,fatura1);
-        fatura1 = this.comerciante3.getMaiorFatura(LocalDate.of(2022,4,19),LocalDate.of(2022,4,21));
-        assertEquals(fatura,fatura1);
         fatura = this.comerciante3.getMaiorFatura(LocalDate.of(2000,2,2),LocalDate.of(2003,2,2));
         assertEquals(fatura,new Fatura());
     }

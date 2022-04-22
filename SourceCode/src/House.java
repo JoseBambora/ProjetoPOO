@@ -2,7 +2,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 public class House {
     private Map<String,SmartDevices> devices;
@@ -14,7 +13,7 @@ public class House {
     public House(Comerciante comerciante){
         this.proprietario = new Pessoa();
         this.local = new Morada();
-        this.fornecedor = comerciante.clone();
+        this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
@@ -22,7 +21,7 @@ public class House {
     public House(Pessoa proprietario, Comerciante comerciante, Morada local){
         this.proprietario = proprietario.clone();
         this.local = local.clone();
-        this.fornecedor = comerciante.clone();
+        this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
@@ -30,7 +29,7 @@ public class House {
     public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap){
         this.proprietario = proprietario.clone();
         this.local = local.clone();
-        this.fornecedor = comerciante.clone();
+        this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
         this.setDevices(smartDevicesMap);
@@ -39,7 +38,7 @@ public class House {
     public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap){
         this.proprietario = proprietario.clone();
         this.local = local.clone();
-        this.fornecedor = comerciante.clone();
+        this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
         this.setDevices(smartDevicesMap);
@@ -82,7 +81,7 @@ public class House {
     }
 
     public Comerciante getFornecedor() {
-        return this.fornecedor.clone();
+        return this.fornecedor;
     }
 
     public void setDevices(Map<String, SmartDevices> devices) {
@@ -92,7 +91,7 @@ public class House {
     }
 
     public void setFornecedor(Comerciante fornecedor) {
-        this.fornecedor = fornecedor.clone();
+        this.fornecedor = fornecedor;
     }
 
     public void setLocal(Morada local) {
