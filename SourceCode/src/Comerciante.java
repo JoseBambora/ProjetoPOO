@@ -119,7 +119,8 @@ public class Comerciante {
     {
         if(!this.faturasEmitidas.containsKey(fatura.getDataEmissao()))
             this.faturasEmitidas.put(fatura.getDataEmissao(),new ArrayList<>());
-        this.faturasEmitidas.get(fatura.getDataEmissao()).add(fatura);
+        fatura.setPreco(fatura.getConsumo() * this.getPreco());
+        this.faturasEmitidas.get(fatura.getDataEmissao()).add(fatura.clone());
     }
 
     public double getLucro()
