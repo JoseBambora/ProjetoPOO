@@ -19,7 +19,7 @@ public class House {
     }
 
     public House(Pessoa proprietario, Comerciante comerciante, Morada local){
-        this.proprietario = proprietario.clone();
+        this.proprietario = proprietario;
         this.local = local.clone();
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
@@ -27,7 +27,7 @@ public class House {
     }
 
     public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap){
-        this.proprietario = proprietario.clone();
+        this.proprietario = proprietario;
         this.local = local.clone();
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
@@ -36,7 +36,7 @@ public class House {
     }
 
     public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap){
-        this.proprietario = proprietario.clone();
+        this.proprietario = proprietario;
         this.local = local.clone();
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
@@ -53,7 +53,7 @@ public class House {
     }
 
     public Pessoa getProprietario() {
-        return this.proprietario.clone();
+        return this.proprietario;
     }
 
     public Morada getLocal() {
@@ -99,7 +99,7 @@ public class House {
     }
 
     public void setProprietario(Pessoa proprietario) {
-        this.proprietario = proprietario.clone();
+        this.proprietario = proprietario;
     }
 
     public void setDivisoes(Map<String, List<String>> divisoes) {

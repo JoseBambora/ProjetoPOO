@@ -117,4 +117,15 @@ public class TestFatura
         assertNotEquals(this.fatura1,this.fatura4,"Equals 1 errado");
 
     }
-}
+    @Test
+    public void testAgregação()
+    {
+        Fatura faturaT1 = new Fatura(pessoa1, 20, 10,LocalDate.of(2020,1,1),morada1);
+        Fatura faturaT2 = new Fatura(pessoa2, 20, 10,LocalDate.of(2020,1,1),morada1);
+        this.pessoa1.setNome("Alberto");
+        this.pessoa2.setNome("Josefa");
+        assertEquals(faturaT1.getCliente(), this.pessoa1, "Agregação Errada");
+        assertEquals(faturaT2.getCliente(), this.pessoa2, "Agregação Errada");
+    }}
+
+

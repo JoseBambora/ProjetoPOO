@@ -175,8 +175,8 @@ public class TestHouse
     public void testComposicaoAgregacao()
     {
         this.pessoa1.setNIF(90);
-        assertNotEquals(this.house1.getProprietario(),this.pessoa1, "Erro composição 1");
-        assertNotEquals(this.house2.getProprietario(),this.pessoa1, "Erro composição 2");
+        assertEquals(this.house1.getProprietario(),this.pessoa1, "Erro agregação 1");
+        assertEquals(this.house2.getProprietario(),this.pessoa1, "Erro agregação 2");
         this.comerciante2.setNome("Repsol");
         assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
         assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");

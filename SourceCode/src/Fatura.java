@@ -33,7 +33,7 @@ public class Fatura {
     }
 
     public Pessoa getCliente() {
-        return this.cliente.clone();
+        return this.cliente;
     }
 
     public double getPreco() {
@@ -53,7 +53,7 @@ public class Fatura {
     }
 
     public void setCliente(Pessoa cliente) {
-        this.cliente = cliente.clone();
+        this.cliente = cliente;
     }
 
     public void setPreco(double preco) {
