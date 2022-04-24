@@ -157,4 +157,14 @@ public class Comerciante {
         Comerciante that = (Comerciante) o;
         return Objects.equals(nome, that.nome);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comerciante:\n")
+                .append("Nome: ").append(this.nome).append("\n")
+                .append("Preco: ").append(this.preco).append("\n")
+                .append("Faturas Emitidas: ").append(this.faturasEmitidas).append("\n");
+        return sb.toString();
+    }
 }

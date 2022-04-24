@@ -49,7 +49,11 @@ public abstract class SmartDevices
     }
     @Override
     public String toString() {
-        return "SmartDevices, id: '" + id + '\'' + ", on: " + on;
+        StringBuilder sb = new StringBuilder();
+        sb.append("SmartDevices:\n")
+                .append("ID: ").append(this.id).append("\n")
+                .append("On: ").append(this.on).append("\n");
+        return sb.toString();
     }
     public abstract SmartDevices clone();
 }

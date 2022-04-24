@@ -74,11 +74,13 @@ public class Fatura {
 
     @Override
     public String toString() {
-        return "Fatura, Cliente: " + cliente +
-                ", Preco: " + preco +
-                ", Consumo:" + consumo +
-                ", DataEmissao:" + dataEmissao +
-                ", Local:" + local + '\n';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Fatura:\n").append("Cliente: ").append(this.cliente).append("\n")
+                .append("Preco: ").append(this.preco).append("\n")
+                .append("Consumo: ").append(this.consumo).append("\n")
+                .append("Data de Emissão: ").append(this.dataEmissao).append("\n")
+                .append("Local: ").append(this.local).append("\n");
+        return sb.toString();
     }
 
     @Override

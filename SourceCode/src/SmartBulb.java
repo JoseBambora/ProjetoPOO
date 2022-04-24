@@ -81,7 +81,12 @@ public class SmartBulb extends SmartDevices {
 
     @Override
     public String toString() {
-        return "SmartBulb:  Tone = " + tone + ", Dimensão = " + dimensao + ", Consumo Diário = "  + consumoDiario +"\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("SmartBulb:\n")
+                .append("Tone: ").append(this.tone).append("\n")
+                .append("Dimensao: ").append(this.dimensao).append("\n")
+                .append("Consumo Diario").append(this.consumoDiario).append("\n");
+        return sb.toString();
     }
 
 

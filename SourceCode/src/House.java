@@ -212,6 +212,19 @@ public class House {
         return new House(this);
     }
 
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("House:\n")
+                .append("Devices: ").append(this.devices).append("\n")
+                .append("Devisoes").append(this.divisoes).append("\n")
+                .append("Proprietario: ").append(this.proprietario).append("\n")
+                .append("Local").append(this.local).append("\n")
+                .append("Fornecedor").append(this.fornecedor).append("\n");
+        return sb.toString();
+    }
+
     public double getConsumo(int dias)
     {
         double result = 0;

@@ -46,6 +46,10 @@ public class Morada {
 
     @Override
     public String toString() {
-        return "Morada, Localidade: '" + this.localidade + "', Porta:" + this.porta;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Morada:\n")
+                .append("Localidade: ").append(this.localidade).append("\n")
+                .append("Porta: ").append(this.porta).append("\n");
+        return sb.toString();
     }
 }

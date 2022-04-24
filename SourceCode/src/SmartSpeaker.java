@@ -123,7 +123,13 @@ public class SmartSpeaker extends SmartDevices
      */
     @Override
     public String toString() {
-        return "SmartSpeaker, V: " + volume + ", C: " + canal + ", M: '" + marca + '\'' + ", CD: " + consumoDiario;
+        StringBuilder sb = new StringBuilder();
+        sb.append("SmartSpeaker:\n")
+                .append("Volume: ").append(this.volume).append("\n")
+                .append("Canal: ").append(this.canal).append("\n")
+                .append("Marca: ").append(this.marca).append("\n")
+                .append("Consumo Diario").append(consumoDiario).append("\n");
+        return sb.toString();
     }
 
     /**

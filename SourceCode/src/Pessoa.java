@@ -48,7 +48,10 @@ public class Pessoa
 
     @Override
     public String toString() {
-        return "Pessoa, nome: '" + this.nome + "', NIF:" + this.NIF;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Pessoa:\n")
+                .append("Nome: ").append(this.nome).append("\n").append("NIF: ").append(this.NIF).append("\n");
+        return sb.toString();
     }
 
     public Pessoa clone()

@@ -135,7 +135,12 @@ public class SmartCamera extends SmartDevices
      */
     @Override
     public String toString() {
-        return "SmartCamera: Consumo Diario = " + consumoDiario +", Resolução = " + resolucaoX+"x" + resolucaoY + ", Tamanho: "+tamanho +"\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("SmartCamera:\n")
+                .append("Consumo Diario = ").append(consumoDiario).append("\n")
+                .append("Resolucao = ").append(resolucaoX).append("x").append(resolucaoY).append("\n")
+                .append("Tamanho = ").append(tamanho).append("\n");
+        return sb.toString();
     }
 
     public double calculaConsumo (int dias) {
