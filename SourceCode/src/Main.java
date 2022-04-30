@@ -80,6 +80,16 @@ public class Main {
     }
     public static void addCasa()
     {
+        System.out.println("Qual o Nome do proprietario?");
+        String nome = iteracao.next();
+        System.out.println("Qual o nome do Comerciante?");
+        String cm = iteracao.next();
+        System.out.println("Qual o local");
+        String local = iteracao.next();
+        House newH = new House (null,null ,local);
+        app.addCasa(newH, nome, cm);
+        System.out.println("Casa adicionada com sucesso " + newH);
+
 
     }
     public static void addPessoa()

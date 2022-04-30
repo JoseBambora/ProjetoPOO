@@ -31,8 +31,11 @@ public class App
     {
         this.pessoas.put(pessoa.getNome(),pessoa.clone());
     }
-    public void addCasa(House house)
+
+    public void addCasa(House house,String pessoa, String fornecedor)
     {
+        house.setProprietario(this.pessoas.get(pessoa));
+        house.setFornecedor(this.fornecedores.get(fornecedor));
         this.casas.put(house.getLocal(),house.clone());
     }
     public void avancaDias(int dias)
@@ -118,6 +121,7 @@ public class App
         return this.fornecedores.size();
     }
 
+    public boolean temPessoa (String nome) {return this.pessoas.containsKey(nome);}
     public int getImposto() {
         return imposto;
     }
