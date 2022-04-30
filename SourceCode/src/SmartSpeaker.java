@@ -4,7 +4,6 @@ public class SmartSpeaker extends SmartDevices
     private int volume;
     private int canal;
     private String marca;
-    private double consumoDiario;
 
     /**
      *
@@ -15,20 +14,18 @@ public class SmartSpeaker extends SmartDevices
         this.volume = 0;
         this.canal = 0;
         this.marca = "";
-        this.consumoDiario = 0;
     }
 
     /**
      * @param id
      * @param on
      */
-    public SmartSpeaker(String id, boolean on)
+    public SmartSpeaker(String id, boolean on, double consumo)
     {
-        super(id, on);
+        super(id, on,consumo);
         this.volume = 0;
         this.canal = 0;
         this.marca = "";
-        this.consumoDiario = 0;
     }
 
     /**
@@ -37,15 +34,13 @@ public class SmartSpeaker extends SmartDevices
      * @param volume
      * @param canal
      * @param marca
-     * @param consumoDiario
      */
-    public SmartSpeaker(String id, boolean on, int volume,int canal,String marca,double consumoDiario)
+    public SmartSpeaker(String id, boolean on, int volume,int canal,String marca,double consumo)
     {
-        super(id, on);
+        super(id, on, consumo);
         this.setVolume(volume);
         this.canal = canal;
         this.marca = marca;
-        this.consumoDiario = consumoDiario;
     }
 
     /**
@@ -53,22 +48,16 @@ public class SmartSpeaker extends SmartDevices
      */
     public SmartSpeaker(SmartSpeaker smartSpeaker)
     {
-        super(smartSpeaker.getId(), smartSpeaker.isOn());
+        super(smartSpeaker.getId(), smartSpeaker.isOn(), smartSpeaker.getConsumo());
         this.volume = smartSpeaker.getVolume();
         this.canal = smartSpeaker.getCanal();
         this.marca = smartSpeaker.getMarca();
-        this.consumoDiario = smartSpeaker.getConsumoDiario();
     }
 
     /**
      * @return
      */
     public int getCanal() { return this.canal; }
-
-    /**
-     * @return
-     */
-    public double getConsumoDiario() { return this.consumoDiario; }
 
     /**
      * @return
@@ -90,10 +79,6 @@ public class SmartSpeaker extends SmartDevices
      */
     public void setMarca(String marca) { this.marca = marca;}
 
-    /**
-     * @param consumoDiario
-     */
-    public void setConsumoDiario(double consumoDiario) { this.consumoDiario = consumoDiario; }
 
     /**
      * @param volume
@@ -127,8 +112,7 @@ public class SmartSpeaker extends SmartDevices
         sb.append("SmartSpeaker:\n")
                 .append("Volume: ").append(this.volume).append("\n")
                 .append("Canal: ").append(this.canal).append("\n")
-                .append("Marca: ").append(this.marca).append("\n")
-                .append("Consumo Diario: ").append(consumoDiario).append("\n");
+                .append("Marca: ").append(this.marca).append("\n");
         return sb.toString();
     }
 
@@ -182,6 +166,6 @@ public class SmartSpeaker extends SmartDevices
      */
     public double calculaConsumo(int dias)
     {
-        return this.isOn() ? (this.getConsumoDiario() + this.getVolume()) * dias : 0;
+        return this.isOn() ? (this.getConsumo() + this.getVolume()) * dias : 0;
     }
 }
