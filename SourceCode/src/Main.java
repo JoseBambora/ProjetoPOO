@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.ListResourceBundle;
 import java.util.Scanner;
 
 public class Main {
@@ -34,6 +36,13 @@ public class Main {
         switch (tipoDevice)
         {
             case "SB":
+                System.out.println("Qual o tone?");
+                int tone = iteracao.nextInt();
+                System.out.println("Qual a dimensão?");
+                double dimensao = iteracao.nextDouble();
+                SmartBulb sb = new SmartBulb(idDevice,modo,tone,dimensao,consumo);
+                app.addDevice(sb);
+                System.out.println("Smart Bulb adicionado com sucesso " + sb);
                 break;
             case "SS":
                 System.out.println("Qual a marca?");
@@ -52,7 +61,13 @@ public class Main {
     }
     public static void addFornecedor()
     {
-
+        System.out.println("Qual o nome do Comerciante?");
+        String nomeC = iteracao.next();
+        System.out.println("Introduza o preço deste comerciante");
+        double preco = iteracao.nextDouble();
+        Comerciante cm = new Comerciante(nomeC, preco);
+        app.addFornecedor(cm);
+        System.out.println("Comerciante adicionado com sucesso " + cm);
     }
     public static void addCasa()
     {
@@ -60,6 +75,13 @@ public class Main {
     }
     public static void addPessoa()
     {
+        System.out.println("Qual o nome da pessoa?");
+        String nome = iteracao.next();
+        System.out.println("Introduza o NIF da pessoa");
+        int NIF = iteracao.nextInt();
+        Pessoa newP = new Pessoa(nome, NIF);
+        app.addPessoa(newP);
+        System.out.println("Pessoa adicionada com sucesso " + newP);
 
     }
     public static void main(String[] args)
