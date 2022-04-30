@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.util.ListResourceBundle;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class Main {
     static String menu = "Entrou menu";
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
@@ -56,6 +58,13 @@ public class Main {
                 System.out.println("Smart Speaker adicionado com sucesso " + add);
                 break;
             case "SC":
+                System.out.println("Qual é a Resolução? (formato HorizontalxVertical");
+                String resolucao = iteracao.nextLine();
+                String[] resolucoes = resolucao.split("x");
+                System.out.println("Qual é o Tamanho?");
+                double tamanho = iteracao.nextDouble();
+                SmartCamera sc = new SmartCamera(idDevice,modo,consumo,parseInt(resolucoes[0]),parseInt(resolucoes[1]),tamanho);
+                System.out.println("Smart Camera adicionado com sucesso " + sc);
                 break;
         }
     }
