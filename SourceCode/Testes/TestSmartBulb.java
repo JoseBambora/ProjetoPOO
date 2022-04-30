@@ -24,7 +24,7 @@ public class TestSmartBulb {
         assertEquals(SmartBulb.NEUTRAL, sb4.getTone());
         sb5 = new SmartBulb();
         assertEquals(SmartBulb.NEUTRAL, sb5.getTone());
-        sb6 = new SmartBulb("6", false);
+        sb6 = new SmartBulb("6", false,20);
         assertEquals(SmartBulb.NEUTRAL, sb6.getTone());
     }
     @Test
@@ -39,23 +39,23 @@ public class TestSmartBulb {
         assertEquals(3, sb4.getDimensao());
         sb5 = new SmartBulb();
         assertEquals(0, sb5.getDimensao());
-        sb6 = new SmartBulb("6", false);
+        sb6 = new SmartBulb("6", false,29);
         assertEquals(0, sb6.getDimensao());
     }
     @Test
     public void testGetConsumoDiario() {
         sb1  = new SmartBulb("b1", true, 1,4, 4);
-        assertEquals(4, sb1.getConsumoDiario());
+        assertEquals(4, sb1.getConsumo());
         sb2 = new SmartBulb("4", false, 0,5, 9);;
-        assertEquals(9, sb2.getConsumoDiario());
+        assertEquals(9, sb2.getConsumo());
         sb3 = new SmartBulb("5", true,2, 6, 10);
-        assertEquals(10, sb3.getConsumoDiario());
+        assertEquals(10, sb3.getConsumo());
         sb4 =  new SmartBulb("6", false,1, 3, 5);
-        assertEquals(5, sb4.getConsumoDiario());
+        assertEquals(5, sb4.getConsumo());
         sb5 = new SmartBulb();
-        assertEquals(0, sb5.getConsumoDiario());
-        sb6 = new SmartBulb("6", false);
-        assertEquals(0, sb6.getConsumoDiario());
+        assertEquals(0, sb5.getConsumo());
+        sb6 = new SmartBulb("6", false,0);
+        assertEquals(0, sb6.getConsumo());
     }
 
     @Test
@@ -82,12 +82,12 @@ public class TestSmartBulb {
     @Test
     public void testSetConsumoDiario() {
         sb1  = new SmartBulb("b1", true, 1,4, 4);
-        sb1.setConsumoDiario(2);
-        assertEquals(2, sb1.getConsumoDiario());
-        sb1.setConsumoDiario(10);
-        assertEquals(10, sb1.getConsumoDiario());
-        sb1.setConsumoDiario(-10);
-        assertEquals(10, sb1.getConsumoDiario());
+        sb1.setConsumo(2);
+        assertEquals(2, sb1.getConsumo());
+        sb1.setConsumo(10);
+        assertEquals(10, sb1.getConsumo());
+        sb1.setConsumo(-10);
+        assertEquals(10, sb1.getConsumo());
     }
     @Test
     public void testEquals() {
@@ -122,7 +122,7 @@ public class TestSmartBulb {
         assertEquals(this.sb4.calculaConsumo(dias),961,"Erro Calculo Consumo sb4");
         sb5  = new SmartBulb();
         assertEquals(this.sb5.calculaConsumo(dias),0,"Erro Calculo Consumo sb5");
-        sb6  = new SmartBulb("b6", true);
+        sb6  = new SmartBulb("b6", true,0);
         assertEquals(this.sb6.calculaConsumo(dias),0,"Erro Calculo Consumo sb6");
     }
 

@@ -29,12 +29,12 @@ public class TestSmartCamera {
 
     @Test
     public void testGetConsumo() {
-        assertEquals(10, smartCamera1.getConsumoDiario());
-        assertEquals(20, smartCamera2.getConsumoDiario());
-        assertEquals(10, smartCamera3.getConsumoDiario());
-        assertEquals(5, smartCamera4.getConsumoDiario());
-        assertEquals(10, smartCamera5.getConsumoDiario());
-        assertEquals(10, smartCamera6.getConsumoDiario());
+        assertEquals(10, smartCamera1.getConsumo());
+        assertEquals(20, smartCamera2.getConsumo());
+        assertEquals(10, smartCamera3.getConsumo());
+        assertEquals(5, smartCamera4.getConsumo());
+        assertEquals(10, smartCamera5.getConsumo());
+        assertEquals(10, smartCamera6.getConsumo());
     }
 
     @Test
@@ -65,12 +65,12 @@ public class TestSmartCamera {
 
     @Test
     public void testSetConsumo(){
-        smartCamera1.setConsumoDiario(10);
-        assertEquals(10, smartCamera1.getConsumoDiario());
-        smartCamera1.setConsumoDiario(12);
-        assertEquals(12, smartCamera1.getConsumoDiario());
-        smartCamera1.setConsumoDiario(10);
-        assertEquals(10, smartCamera1.getConsumoDiario());
+        smartCamera1.setConsumo(10);
+        assertEquals(10, smartCamera1.getConsumo());
+        smartCamera1.setConsumo(12);
+        assertEquals(12, smartCamera1.getConsumo());
+        smartCamera1.setConsumo(10);
+        assertEquals(10, smartCamera1.getConsumo());
     }
 
     @Test

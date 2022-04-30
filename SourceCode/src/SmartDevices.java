@@ -22,7 +22,7 @@ public abstract class SmartDevices
     {
         this.id = id;
         this.on = on;
-        this.consumo = consumo;
+        this.setConsumo(consumo);
     }
     public abstract double calculaConsumo(int dias);
     public void turnOn()
@@ -48,7 +48,7 @@ public abstract class SmartDevices
     public void setOn(boolean on) {
         this.on = on;
     }
-    public void setConsumo(double consumo) {this.consumo = consumo;}
+    public void setConsumo(double consumo) {this.consumo = Math.abs(consumo);}
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

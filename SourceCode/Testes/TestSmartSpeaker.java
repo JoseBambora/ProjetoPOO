@@ -15,7 +15,7 @@ public class TestSmartSpeaker
     public void atribui()
     {
         this.smartSpeaker1 = new SmartSpeaker();
-        this.smartSpeaker2 = new SmartSpeaker("1",true);
+        this.smartSpeaker2 = new SmartSpeaker("1",true,0);
         this.smartSpeaker3 = new SmartSpeaker("2",false,10,30,"Samsung",10);
         this.smartSpeaker4 = new SmartSpeaker("3",true,-2,40,"LG",30);
         this.smartSpeaker5 = new SmartSpeaker("4",true,30,1,"Sony",5);
@@ -26,9 +26,9 @@ public class TestSmartSpeaker
     {
         assertTrue(this.smartSpeaker1.getCanal() == 0  && this.smartSpeaker2.getVolume() == 0, "Construtor 1 Errado");
         assertTrue(this.smartSpeaker2.getCanal() == 0  && this.smartSpeaker2.getVolume() == 0, "Construtor 2 Errado");
-        assertTrue(this.smartSpeaker3.getCanal() == 30 && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("Samsung") && this.smartSpeaker3.getConsumoDiario() == 10, "Construtor 3 Errado");
-        assertTrue(this.smartSpeaker4.getCanal() == 40 && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("LG")      && this.smartSpeaker4.getConsumoDiario() == 30, "Construtor 4 Errado");
-        assertTrue(this.smartSpeaker5.getCanal() == 1  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Sony")    && this.smartSpeaker5.getConsumoDiario() == 5  , "Construtor 5 Errado");
+        assertTrue(this.smartSpeaker3.getCanal() == 30 && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("Samsung") && this.smartSpeaker3.getConsumo() == 10, "Construtor 3 Errado");
+        assertTrue(this.smartSpeaker4.getCanal() == 40 && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("LG")      && this.smartSpeaker4.getConsumo() == 30, "Construtor 4 Errado");
+        assertTrue(this.smartSpeaker5.getCanal() == 1  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Sony")    && this.smartSpeaker5.getConsumo() == 5  , "Construtor 5 Errado");
     }
     @Test
     public void testSetters()
@@ -38,16 +38,16 @@ public class TestSmartSpeaker
         this.smartSpeaker2.setCanal(2);
         this.smartSpeaker2.setVolume(30);
         this.smartSpeaker3.setMarca("LG");
-        this.smartSpeaker3.setConsumoDiario(9);
+        this.smartSpeaker3.setConsumo(9);
         this.smartSpeaker4.setMarca("Sony");
-        this.smartSpeaker4.setConsumoDiario(4);
+        this.smartSpeaker4.setConsumo(4);
         this.smartSpeaker5.setMarca("Samsung");
-        this.smartSpeaker5.setConsumoDiario(19);
+        this.smartSpeaker5.setConsumo(19);
         assertTrue(this.smartSpeaker1.getCanal() == 10 && this.smartSpeaker1.getVolume() == 19, "Construtor 1 Errado");
         assertTrue(this.smartSpeaker2.getCanal() == 2  && this.smartSpeaker2.getVolume() == 20, "Construtor 2 Errado");
-        assertTrue(this.smartSpeaker3.getCanal() == 30 && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("LG")      && this.smartSpeaker3.getConsumoDiario() == 9 , "Construtor 3 Errado");
-        assertTrue(this.smartSpeaker4.getCanal() == 40 && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("Sony")    && this.smartSpeaker4.getConsumoDiario() == 4 , "Construtor 4 Errado");
-        assertTrue(this.smartSpeaker5.getCanal() == 1  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Samsung") && this.smartSpeaker5.getConsumoDiario() == 19, "Construtor 5 Errado");
+        assertTrue(this.smartSpeaker3.getCanal() == 30 && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("LG")      && this.smartSpeaker3.getConsumo() == 9 , "Construtor 3 Errado");
+        assertTrue(this.smartSpeaker4.getCanal() == 40 && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("Sony")    && this.smartSpeaker4.getConsumo() == 4 , "Construtor 4 Errado");
+        assertTrue(this.smartSpeaker5.getCanal() == 1  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Samsung") && this.smartSpeaker5.getConsumo() == 19, "Construtor 5 Errado");
 
     }
     @Test
