@@ -7,37 +7,36 @@ public class House {
     private Map<String,SmartDevices> devices;
     private Map<String,List<String>> divisoes;
     private Pessoa proprietario;
-    private Morada local;
+    private String local;
     private Comerciante fornecedor;
-
     public House(Comerciante comerciante){
         this.proprietario = new Pessoa();
-        this.local = new Morada();
+        this.local = "";
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
 
-    public House(Pessoa proprietario, Comerciante comerciante, Morada local){
+    public House(Pessoa proprietario, Comerciante comerciante, String local){
         this.proprietario = proprietario;
-        this.local = local.clone();
+        this.local = local;
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
 
-    public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap){
+    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap){
         this.proprietario = proprietario;
-        this.local = local.clone();
+        this.local = local;
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
         this.setDevices(smartDevicesMap);
     }
 
-    public House(Pessoa proprietario, Comerciante comerciante, Morada local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap){
+    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap){
         this.proprietario = proprietario;
-        this.local = local.clone();
+        this.local = local;
         this.fornecedor = comerciante;
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
@@ -56,8 +55,8 @@ public class House {
         return this.proprietario;
     }
 
-    public Morada getLocal() {
-        return this.local.clone();
+    public String getLocal() {
+        return this.local;
     }
 
     public Map<String, List<String>> getDivisoes() {
@@ -94,8 +93,8 @@ public class House {
         this.fornecedor = fornecedor;
     }
 
-    public void setLocal(Morada local) {
-        this.local = local.clone();
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public void setProprietario(Pessoa proprietario) {
@@ -231,5 +230,10 @@ public class House {
         for(SmartDevices smartDevices : this.devices.values())
             result += smartDevices.calculaConsumo(dias);
         return result;
+    }
+
+    public boolean hasDevice(String id)
+    {
+        return this.devices.containsKey(id);
     }
 }

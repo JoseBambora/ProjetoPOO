@@ -21,12 +21,12 @@ public class TestComerciante
     private final List<Fatura> faturaList4 = new ArrayList<>(10);
     private final List<Fatura> faturaList5 = new ArrayList<>(10);
     private final List<Fatura> faturaList6 = new ArrayList<>(10);
-    private final Morada morada1 = new Morada("Braga",20);
-    private final Morada morada2 = new Morada("Porto",15);
-    private final Morada morada3 = new Morada("Lisboa",17);
-    private final Morada morada4 = new Morada("Bragança",10);
-    private final Morada morada5 = new Morada("Algarve",5);
-    private final Morada morada6 = new Morada("Setubal",23);
+    private final String morada1 = "Braga";
+    private final String morada2 = "Porto";
+    private final String morada3 = "Lisboa";
+    private final String morada4 = "Bragança";
+    private final String morada5 = "Algarve";
+    private final String morada6 = "Setubal";
     private final Pessoa pessoa1 = new Pessoa("Jose",1234);
     private final Pessoa pessoa2 = new Pessoa("Miguel",123);
     private final Pessoa pessoa3 = new Pessoa("Rita",12);
@@ -43,22 +43,22 @@ public class TestComerciante
         {
             double consumo = i * 100 + 50;
             double preco = this.comerciante1.getPreco() * consumo;
-            this.faturaList1.add(new Fatura(this.pessoa1,preco,consumo,LocalDate.now(),this.morada1));
+            this.faturaList1.add(new Fatura(this.pessoa1,preco,10,consumo,LocalDate.now(),this.morada1));
             consumo = i * 75 + 50;
             preco = this.comerciante2.getPreco() * consumo;
-            this.faturaList2.add(new Fatura(this.pessoa2,preco,consumo,LocalDate.now(),this.morada2));
+            this.faturaList2.add(new Fatura(this.pessoa2,preco,10,consumo,LocalDate.now(),this.morada2));
             consumo = i * 85 + 97;
             preco = this.comerciante3.getPreco() * consumo;
-            this.faturaList3.add(new Fatura(this.pessoa3,preco,consumo,LocalDate.now(),this.morada3));
+            this.faturaList3.add(new Fatura(this.pessoa3,preco,10,consumo,LocalDate.now(),this.morada3));
             consumo = i * 90 + 65;
             preco = this.comerciante4.getPreco() * consumo;
-            this.faturaList4.add(new Fatura(this.pessoa1,preco,consumo,LocalDate.now(),this.morada4));
+            this.faturaList4.add(new Fatura(this.pessoa1,preco,10,consumo,LocalDate.now(),this.morada4));
             consumo = i * 105 + 45;
             preco = this.comerciante5.getPreco() * consumo;
-            this.faturaList5.add(new Fatura(this.pessoa2,preco,consumo,LocalDate.now(),this.morada5));
+            this.faturaList5.add(new Fatura(this.pessoa2,preco,10,consumo,LocalDate.now(),this.morada5));
             consumo = i * 80 + 100;
             preco = this.comerciante6.getPreco() * consumo;
-            this.faturaList6.add(new Fatura(this.pessoa3,preco,consumo,LocalDate.now(),this.morada6));
+            this.faturaList6.add(new Fatura(this.pessoa3,preco,10,consumo,LocalDate.now(),this.morada6));
         }
         for(int i = 0; i < 10; i++)
         {
@@ -156,7 +156,7 @@ public class TestComerciante
         assertEquals(this.comerciante4.numFaturasEmitidas(),10);
         assertEquals(this.comerciante5.numFaturasEmitidas(),10);
         assertEquals(this.comerciante6.numFaturasEmitidas(),10);
-        this.faturaList1.get(0).setLocal(new Morada());
+        this.faturaList1.get(0).setLocal("");
         this.faturaList2.get(1).setCliente(new Pessoa());
         this.faturaList3.get(2).setDataEmissao(LocalDate.of(2000,2,2));
         this.faturaList4.get(3).setPreco(200);

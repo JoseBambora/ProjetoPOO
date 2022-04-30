@@ -128,7 +128,7 @@ public class SmartSpeaker extends SmartDevices
                 .append("Volume: ").append(this.volume).append("\n")
                 .append("Canal: ").append(this.canal).append("\n")
                 .append("Marca: ").append(this.marca).append("\n")
-                .append("Consumo Diario").append(consumoDiario).append("\n");
+                .append("Consumo Diario: ").append(consumoDiario).append("\n");
         return sb.toString();
     }
 

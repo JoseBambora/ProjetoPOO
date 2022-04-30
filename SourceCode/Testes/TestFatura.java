@@ -9,9 +9,9 @@ public class TestFatura
     private Pessoa pessoa1 = new Pessoa("Jose",20);
     private Pessoa pessoa2 = new Pessoa("Rita",19);
     private Pessoa pessoa3 = new Pessoa("Miguel",18);
-    private Morada morada1 = new Morada("Lisboa",12);
-    private Morada morada2 = new Morada("Porto",13);
-    private Morada morada3 = new Morada("Braga",14);
+    private String morada1 = "Lisboa";
+    private String morada2 = "Porto";
+    private String morada3 = "Braga";
     private Fatura fatura1;
     private Fatura fatura2;
     private Fatura fatura3;
@@ -21,20 +21,23 @@ public class TestFatura
     @BeforeEach
     public void atribui()
     {
-        this.fatura1 = new Fatura(this.pessoa1,20,10,LocalDate.of(2020,1,1),morada1);
-        this.fatura2 = new Fatura(this.pessoa1,30,13,LocalDate.of(2021,1,1),morada1);
-        this.fatura3 = new Fatura(this.pessoa2,40,15,LocalDate.of(2020,1,1),morada2);
-        this.fatura4 = new Fatura(this.pessoa2,50,23,LocalDate.of(2021,1,1),morada2);
-        this.fatura5 = new Fatura(this.pessoa3,60,26,LocalDate.of(2020,1,1),morada3);
-        this.fatura6 = new Fatura(this.pessoa3,70,33,LocalDate.of(2021,1,1),morada3);
+        this.fatura1 = new Fatura(this.pessoa1,20,10,10,LocalDate.of(2020,1,1),morada1);
+        this.fatura2 = new Fatura(this.pessoa1,30,10,13,LocalDate.of(2021,1,1),morada1);
+        this.fatura3 = new Fatura(this.pessoa2,40,10,15,LocalDate.of(2020,1,1),morada2);
+        this.fatura4 = new Fatura(this.pessoa2,50,10,23,LocalDate.of(2021,1,1),morada2);
+        this.fatura5 = new Fatura(this.pessoa3,60,10,26,LocalDate.of(2020,1,1),morada3);
+        this.fatura6 = new Fatura(this.pessoa3,70,10,33,LocalDate.of(2021,1,1),morada3);
     }
     @Test
     public void testGetters()
     {
-        this.morada2 = new Morada();
-        this.morada3 = new Morada(this.morada1);
+        this.morada2 = "";
+        this.morada3 = this.morada1;
         this.pessoa2 = new Pessoa();
         this.pessoa3 = new Pessoa(this.pessoa1);
+
+        assertEquals(this.fatura1.getImposto(),this.fatura2.getImposto());
+        assertEquals(this.fatura3.getImposto(),10);
 
         assertEquals(this.fatura1.getCliente(),this.fatura2.getCliente(),"Get Cliente 1 Errado");
         assertEquals(this.fatura3.getCliente(),this.fatura4.getCliente(),"Get Cliente 2 Errado");
@@ -71,7 +74,7 @@ public class TestFatura
         this.fatura5.setDataEmissao(LocalDate.of(2020,5,5));
         this.fatura2.setDataEmissao(this.fatura5.getDataEmissao());
         this.fatura6.setCliente(this.fatura1.getCliente());
-        this.morada2 = new Morada();
+        this.morada2 = "";
         assertEquals(this.fatura1.getCliente(),this.fatura3.getCliente(),"Set Cliente 1 Errado");
         assertEquals(this.fatura3.getCliente(),this.fatura4.getCliente(),"Set Cliente 2 Errado");
         assertEquals(this.fatura3.getCliente(),this.fatura6.getCliente(),"Set Cliente 3 Errado");
@@ -120,8 +123,8 @@ public class TestFatura
     @Test
     public void testAgregação()
     {
-        Fatura faturaT1 = new Fatura(pessoa1, 20, 10,LocalDate.of(2020,1,1),morada1);
-        Fatura faturaT2 = new Fatura(pessoa2, 20, 10,LocalDate.of(2020,1,1),morada1);
+        Fatura faturaT1 = new Fatura(pessoa1, 20,10, 10,LocalDate.of(2020,1,1),morada1);
+        Fatura faturaT2 = new Fatura(pessoa2, 20,10, 10,LocalDate.of(2020,1,1),morada1);
         this.pessoa1.setNome("Alberto");
         this.pessoa2.setNome("Josefa");
         assertEquals(faturaT1.getCliente(), this.pessoa1, "Agregação Errada");

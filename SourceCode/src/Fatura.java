@@ -5,23 +5,26 @@ public class Fatura {
     private Pessoa cliente;
     private double preco;
     private double consumo;
+    private int imposto;
     private LocalDate dataEmissao;
-    private Morada local;
+    private String local;
 
     public Fatura(){
         this.cliente = new Pessoa();
         this.preco = 0;
         this.consumo = 0;
         this.dataEmissao = LocalDate.now();
-        this.local = new Morada();
+        this.imposto = 0;
+        this.local = "";
     }
 
-    public Fatura(Pessoa cliente, double preco, double consumo, LocalDate date, Morada local){
+    public Fatura(Pessoa cliente, double preco, int imposto, double consumo, LocalDate date, String local){
         this.cliente = cliente.clone();
         this.preco = preco;
         this.consumo = consumo;
         this.dataEmissao = date;
-        this.local = local.clone();
+        this.local = local;
+        this.imposto = imposto;
     }
 
     public Fatura(Fatura fatura){
@@ -30,6 +33,11 @@ public class Fatura {
         this.consumo = fatura.getConsumo();
         this.dataEmissao = fatura.getDataEmissao();
         this.local = fatura.getLocal();
+        this.imposto = fatura.getImposto();
+    }
+
+    public int getImposto() {
+        return this.imposto;
     }
 
     public Pessoa getCliente() {
@@ -44,12 +52,16 @@ public class Fatura {
         return this.consumo;
     }
 
-    public Morada getLocal() {
-        return this.local.clone();
+    public String getLocal() {
+        return this.local;
     }
 
     public LocalDate getDataEmissao() {
         return this.dataEmissao;
+    }
+
+    public void setImposto(int imposto) {
+        this.imposto = imposto;
     }
 
     public void setCliente(Pessoa cliente) {
@@ -64,8 +76,8 @@ public class Fatura {
         this.consumo = consumo;
     }
 
-    public void setLocal(Morada local) {
-        this.local = local.clone();
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public void setDataEmissao(LocalDate dataEmissao) {
