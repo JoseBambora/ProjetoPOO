@@ -2,7 +2,7 @@ public class SmartSpeaker extends SmartDevices
 {
     private static final int MAX = 20;
     private int volume;
-    private int canal;
+    private String canal;
     private String marca;
 
     /**
@@ -12,7 +12,7 @@ public class SmartSpeaker extends SmartDevices
     {
         super();
         this.volume = 0;
-        this.canal = 0;
+        this.canal = "";
         this.marca = "";
     }
 
@@ -24,7 +24,7 @@ public class SmartSpeaker extends SmartDevices
     {
         super(id, on,consumo);
         this.volume = 0;
-        this.canal = 0;
+        this.canal = "";
         this.marca = "";
     }
 
@@ -35,7 +35,7 @@ public class SmartSpeaker extends SmartDevices
      * @param canal
      * @param marca
      */
-    public SmartSpeaker(String id, boolean on, int volume,int canal,String marca,double consumo)
+    public SmartSpeaker(String id, boolean on, int volume,String canal,String marca,double consumo)
     {
         super(id, on, consumo);
         this.setVolume(volume);
@@ -57,7 +57,7 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @return
      */
-    public int getCanal() { return this.canal; }
+    public String getCanal() { return this.canal; }
 
     /**
      * @return
@@ -72,7 +72,7 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @param canal
      */
-    public void setCanal(int canal) { this.canal = canal; }
+    public void setCanal(String canal) { this.canal = canal; }
 
     /**
      * @param marca

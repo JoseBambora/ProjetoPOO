@@ -50,10 +50,10 @@ public class TestHouse
         this.b3 = new SmartBulb("b3",true,0,16,23);
         this.b4 = new SmartBulb("b4",true,1,10,15);
 
-        this.s1 = new SmartSpeaker("s1",true,9,30,"LG",20);
-        this.s2 = new SmartSpeaker("s2",true,10,2,"LG",20);
-        this.s3 = new SmartSpeaker("s3",true,16,6,"Samsung",10);
-        this.s4 = new SmartSpeaker("s4",true,5,20,"Sony",30);
+        this.s1 = new SmartSpeaker("s1",true,9,"RFM","LG",20);
+        this.s2 = new SmartSpeaker("s2",true,10,"RR","LG",20);
+        this.s3 = new SmartSpeaker("s3",true,16,"RC","Samsung",10);
+        this.s4 = new SmartSpeaker("s4",true,5,"MH","Sony",30);
 
         this.c1 = new SmartCamera("c1",true,5,1920,1080,30);
         this.c2 = new SmartCamera("c2",true,10,1090,920,20);

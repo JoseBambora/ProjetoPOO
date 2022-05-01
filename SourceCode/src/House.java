@@ -236,4 +236,9 @@ public class House {
     {
         return this.devices.containsKey(id);
     }
+
+    public void addDivisao(String id)
+    {
+        this.divisoes.put(id,new ArrayList<>());
+    }
 }

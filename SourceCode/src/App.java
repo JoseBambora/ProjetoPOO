@@ -10,6 +10,8 @@ public class App
     private final Map<String,House> casas;
     private final Map<String,SmartDevices> devices;
     private final Map<String,Pessoa> pessoas;
+    private String lastCasa;
+    private String lastDivisao;
     App(int imposto)
     {
         this.dataPrograma = LocalDate.now();
@@ -25,18 +27,28 @@ public class App
     }
     public void addDevice(SmartDevices smartDevices)
     {
-        this.devices.put(smartDevices.getId(), smartDevices.clone());
+        SmartDevices smartDevices1 = smartDevices.clone();
+        smartDevices1.setId(Integer.toString(this.devices.size() + 1));
+        this.devices.put(smartDevices1.getId(), smartDevices1);
+        this.casas.get(this.lastCasa).addDevice(this.lastDivisao,smartDevices1);
     }
     public void addPessoa(Pessoa pessoa)
     {
         this.pessoas.put(pessoa.getNome(),pessoa.clone());
     }
-
-    public void addCasa(House house,String pessoa, String fornecedor)
+    public void addDivisao(String divisao)
     {
+        if(this.casas.containsKey(this.lastCasa))
+            this.casas.get(this.lastCasa).addDivisao(divisao);
+        this.lastDivisao = divisao;
+    }
+    public void addCasa(String pessoa, String fornecedor)
+    {
+        this.lastCasa = Integer.toString(this.casas.size());
+        House house = new House(null,null, this.lastCasa);
         house.setProprietario(this.pessoas.get(pessoa));
         house.setFornecedor(this.fornecedores.get(fornecedor));
-        this.casas.put(house.getLocal(),house.clone());
+        this.casas.put(house.getLocal(),house);
     }
     public void avancaDias(int dias)
     {
@@ -82,6 +94,13 @@ public class App
         if(this.casas.containsKey(idHouse))
             if(this.pessoas.containsKey(pessoa))
                 this.casas.get(idHouse).setProprietario(this.pessoas.get(pessoa));
+    }
+
+    public void changeFornecedor(String idHouse, String fornecedor)
+    {
+        if(this.casas.containsKey(idHouse))
+            if(this.fornecedores.containsKey(fornecedor))
+                this.casas.get(idHouse).setFornecedor(this.fornecedores.get(fornecedor));
     }
 
     public void setHouseComerciante(String idHouse, String comerciante)
@@ -197,5 +216,21 @@ public class App
         Comparator<Fatura> comparator = (f1,f2) -> (int) (f2.getConsumo() - f1.getConsumo());
         allFaturas.sort(comparator);
         return allFaturas.stream().map(Fatura::getCliente).collect(Collectors.toList());
+    }
+    // SÓ PARA TESTES !!!
+    public Map<String, Comerciante> getFornecedores() {
+        return fornecedores;
+    }
+    // SÓ PARA TESTES !!!
+    public Map<String, House> getCasas() {
+        return casas;
+    }
+    // SÓ PARA TESTES !!!
+    public Map<String, Pessoa> getPessoas() {
+        return pessoas;
+    }
+    // SÓ PARA TESTES !!!
+    public Map<String, SmartDevices> getDevices() {
+        return devices;
     }
 }

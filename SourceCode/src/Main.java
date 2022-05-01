@@ -1,4 +1,10 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Scanner;
 
@@ -9,12 +15,99 @@ public class Main {
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
     static Scanner iteracao = new Scanner(System.in);
+
+
+    public static List<String> lerFicheiro(String nomeFich) {
+        List<String> lines;
+        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
+        catch(IOException exc) { lines = new ArrayList<>(); }
+        return lines;
+    }
+
+    public static void parseCasa(String input){
+        String[] campos = input.split(",");
+        String nome = campos[0];
+        int nif = Integer.parseInt(campos[1]);
+        app.addPessoa(new Pessoa(nome,nif));
+        String fornecedor = campos[2];
+        app.addCasa(nome,fornecedor);
+    }
+    public static void parseSmartBulb(String string)
+    {
+        String[] campos = string.split(",");
+        int tone;
+        switch (campos[0])
+        {
+            case "Warm":
+                tone = SmartBulb.WARM;
+                break;
+            case "Neutral":
+                tone = SmartBulb.NEUTRAL;
+                break;
+            default:
+                tone = SmartBulb.COLD;
+                break;
+        }
+        double tamanho = Integer.parseInt(campos[1]);
+        double consumo = Double.parseDouble(campos[2]);
+        app.addDevice(new SmartBulb("",true,tone,tamanho,consumo));
+    }
+    public static void parseSmartCamera(String string)
+    {
+        String[] campos = string.split(",");
+        int x, y;
+        campos[0] = campos[0].substring(1,campos[0].length() - 1);
+        String []resolucao = campos[0].split("x");
+        x = Integer.parseInt(resolucao[0]);
+        y = Integer.parseInt(resolucao[1]);
+        double tamanho = Integer.parseInt(campos[1]);
+        double consumo = Double.parseDouble(campos[2]);
+        app.addDevice(new SmartCamera("",true,consumo,x,y,tamanho));
+    }
+    public static void parseSmartSpeaker(String string)
+    {
+        String[] campos = string.split(",");
+        int volume = Integer.parseInt(campos[0]);
+        double consumo = Double.parseDouble(campos[3]);
+        app.addDevice(new SmartSpeaker("",true,volume,campos[1],campos[2],consumo));
+    }
+    public static void parse(){
+
+        List<String> linhas = lerFicheiro("log.txt");
+        String[] linhaPartida;
+        for (String linha : linhas) {
+            linhaPartida = linha.split(":", 2);
+            switch(linhaPartida[0]){
+                case "Casa":
+                    parseCasa(linhaPartida[1]);
+                    break;
+                case "Divisao":
+                    app.addDivisao(linhaPartida[1]);
+                    break;
+                case "SmartBulb":
+                    parseSmartBulb(linhaPartida[1]);
+                    break;
+                case "SmartSpeaker":
+                    parseSmartSpeaker(linhaPartida[1]);
+                    break;
+                case "SmartCamera":
+                    parseSmartCamera(linhaPartida[1]);
+                    break;
+                case "Fornecedor":
+                    app.addFornecedor(new Comerciante(linhaPartida[1],app.numberFornecedores()+1));
+                    break;
+                default:
+                    System.out.println(linhaPartida[0] + " " + linhaPartida[1]);
+                    break;
+            }
+        }
+        System.out.println("done! " + linhas.size());
+    }
+
     public static void addDevice()
     {
         System.out.println("Tipo do SmartDevice? SB -> SmartBulb, SC -> SmartCamera, SS -> SmartSpeaker");
         String tipoDevice = iteracao.next();
-        System.out.println("Introduza o id do device");
-        String idDevice = iteracao.next();
         System.out.println("Ligado ou desligado?");
         boolean modo;
         switch (iteracao.next())
@@ -42,7 +135,7 @@ public class Main {
                 int tone = iteracao.nextInt();
                 System.out.println("Qual a dimensão?");
                 double dimensao = iteracao.nextDouble();
-                SmartBulb sb = new SmartBulb(idDevice,modo,tone,dimensao,consumo);
+                SmartBulb sb = new SmartBulb("",modo,tone,dimensao,consumo);
                 app.addDevice(sb);
                 System.out.println("Smart Bulb adicionado com sucesso " + sb);
                 break;
@@ -52,8 +145,8 @@ public class Main {
                 System.out.println("Qual o volume?");
                 int volume = iteracao.nextInt();
                 System.out.println("Qual o canal?");
-                int canal = iteracao.nextInt();
-                SmartSpeaker add = new SmartSpeaker(idDevice,modo,volume,canal,marca,consumo);
+                String canal = iteracao.next();
+                SmartSpeaker add = new SmartSpeaker("",modo,volume,canal,marca,consumo);
                 app.addDevice(add);
                 System.out.println("Smart Speaker adicionado com sucesso " + add);
                 break;
@@ -63,7 +156,7 @@ public class Main {
                 String[] resolucoes = resolucao.split("x");
                 System.out.println("Qual é o Tamanho?");
                 double tamanho = iteracao.nextDouble();
-                SmartCamera sc = new SmartCamera(idDevice,modo,consumo,parseInt(resolucoes[0]),parseInt(resolucoes[1]),tamanho);
+                SmartCamera sc = new SmartCamera("",modo,consumo,parseInt(resolucoes[0]),parseInt(resolucoes[1]),tamanho);
                 System.out.println("Smart Camera adicionado com sucesso " + sc);
                 break;
         }
@@ -84,13 +177,8 @@ public class Main {
         String nome = iteracao.next();
         System.out.println("Qual o nome do Comerciante?");
         String cm = iteracao.next();
-        System.out.println("Qual o local");
-        String local = iteracao.next();
-        House newH = new House (null,null ,local);
-        app.addCasa(newH, nome, cm);
-        System.out.println("Casa adicionada com sucesso " + newH);
-
-
+        app.addCasa(nome, cm);
+        System.out.println("Casa adicionada com sucesso " + nome + " " + cm);
     }
     public static void addPessoa()
     {
@@ -108,6 +196,11 @@ public class Main {
         String input = "";
         System.out.println("Qual o imposto inicial?");
         app = new App(iteracao.nextInt());
+        parse();
+        System.out.println(app.numberDevices());
+        System.out.println(app.numberCasas());
+        System.out.println(app.numberFornecedores());
+        System.out.println(app.numberPessoas());
         System.out.println(string);
         for(input = iteracao.next(); !input.equals("Sair"); input = iteracao.next())
         {
