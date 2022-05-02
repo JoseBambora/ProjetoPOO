@@ -44,18 +44,11 @@ public class App
     }
     public void addCasa(String pessoa, String fornecedor) throws NullPointerNotExistException
     {
-        try {
-            this.lastCasa = Integer.toString(this.casas.size());
-            House house = new House(null,null, this.lastCasa);
-            house.setProprietario(this.pessoas.get(pessoa));
-            house.setFornecedor(this.fornecedores.get(fornecedor));
-            this.casas.put(house.getLocal(),house);
-        }
-        catch (NullPointerNotExistException e)
-        {
-            System.out.println(e.getMessage());
-        }
-
+        this.lastCasa = Integer.toString(this.casas.size());
+        House house = new House(null,null, this.lastCasa);
+        house.setProprietario(this.pessoas.get(pessoa));
+        house.setFornecedor(this.fornecedores.get(fornecedor));
+        this.casas.put(house.getLocal(),house);
     }
     public void avancaDias(int dias) throws NullPointerNotExistException {
         LocalDate oldDate = this.dataPrograma;
