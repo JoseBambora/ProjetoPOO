@@ -13,23 +13,35 @@ public class TestSmartDevices
     @BeforeEach
     public void atribui()
     {
-        this.smartBulb1 = new SmartBulb("1",true,1,10,5); 
-        this.smartBulb2 = new SmartBulb("2",false,0,20,10); 
-        this.smartSpeaker1 = new SmartSpeaker("3",false,30,"RFM","LG",10);
-        this.smartSpeaker2 = new SmartSpeaker("4",true,10,"MH","LG",20);
-        this.smartCamera1 = new SmartCamera("5",true,10,1920,1080,10);
-        this.smartCamera2 = new SmartCamera("6",false,20,1920,1080,40);
+        try {
+            this.smartBulb1 = new SmartBulb("1",true,1,10,5);
+            this.smartBulb2 = new SmartBulb("2",false,0,20,10);
+            this.smartSpeaker1 = new SmartSpeaker("3",false,30,"RFM","LG",10);
+            this.smartSpeaker2 = new SmartSpeaker("4",true,10,"MH","LG",20);
+            this.smartCamera1 = new SmartCamera("5",true,10,1920,1080,10);
+            this.smartCamera2 = new SmartCamera("6",false,20,1920,1080,40);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testEquals()
     {
-        SmartSpeaker smartSpeaker = new SmartSpeaker(smartSpeaker1);
-        assertEquals(smartSpeaker,this.smartSpeaker1,"Smart Speaker 1 errado");
-        assertNotEquals(smartSpeaker,this.smartSpeaker2,"Smart Speaker 2 errado");
-        SmartBulb sb = new SmartBulb (smartBulb1);
-        assertEquals(sb, this.smartBulb1,"Smart Bulb 1 errado");
-        assertNotEquals(sb,this.smartBulb2,"Smart Bulb 2 errado");
+        try {
+            SmartSpeaker smartSpeaker = new SmartSpeaker(smartSpeaker1);
+            assertEquals(smartSpeaker,this.smartSpeaker1,"Smart Speaker 1 errado");
+            assertNotEquals(smartSpeaker,this.smartSpeaker2,"Smart Speaker 2 errado");
+            SmartBulb sb = new SmartBulb (smartBulb1);
+            assertEquals(sb, this.smartBulb1,"Smart Bulb 1 errado");
+            assertNotEquals(sb,this.smartBulb2,"Smart Bulb 2 errado");
 
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testGetId()

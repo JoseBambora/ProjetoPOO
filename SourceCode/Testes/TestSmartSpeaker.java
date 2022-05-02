@@ -14,12 +14,18 @@ public class TestSmartSpeaker
     @BeforeEach
     public void atribui()
     {
-        this.smartSpeaker1 = new SmartSpeaker();
-        this.smartSpeaker2 = new SmartSpeaker("1",true,0);
-        this.smartSpeaker3 = new SmartSpeaker("2",false,10,"RFM","Samsung",10);
-        this.smartSpeaker4 = new SmartSpeaker("3",true,-2,"RC","LG",30);
-        this.smartSpeaker5 = new SmartSpeaker("4",true,30,"RR","Sony",5);
-        this.smartSpeaker6 = new SmartSpeaker("4",true,30,"MH","Sony",5);
+        try {
+            this.smartSpeaker1 = new SmartSpeaker();
+            this.smartSpeaker2 = new SmartSpeaker("1",true,0);
+            this.smartSpeaker3 = new SmartSpeaker("2",false,10,"RFM","Samsung",10);
+            this.smartSpeaker4 = new SmartSpeaker("3",true,-2,"RC","LG",30);
+            this.smartSpeaker5 = new SmartSpeaker("4",true,30,"RR","Sony",5);
+            this.smartSpeaker6 = new SmartSpeaker("4",true,30,"MH","Sony",5);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testGetters()
@@ -33,22 +39,28 @@ public class TestSmartSpeaker
     @Test
     public void testSetters()
     {
-        this.smartSpeaker1.setCanal("A1");
-        this.smartSpeaker1.setVolume(19);
-        this.smartSpeaker2.setCanal("A2");
-        this.smartSpeaker2.setVolume(30);
-        this.smartSpeaker3.setMarca("LG");
-        this.smartSpeaker3.setConsumo(9);
-        this.smartSpeaker4.setMarca("Sony");
-        this.smartSpeaker4.setConsumo(4);
-        this.smartSpeaker5.setMarca("Samsung");
-        this.smartSpeaker5.setConsumo(19);
-        assertTrue(this.smartSpeaker1.getCanal().equals("A1") && this.smartSpeaker1.getVolume() == 19, "Construtor 1 Errado");
-        assertTrue(this.smartSpeaker2.getCanal().equals("A2") && this.smartSpeaker2.getVolume() == 20, "Construtor 2 Errado");
-        assertTrue(this.smartSpeaker3.getCanal().equals("RFM") && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("LG")      && this.smartSpeaker3.getConsumo() == 9 , "Construtor 3 Errado");
-        assertTrue(this.smartSpeaker4.getCanal().equals("RC") && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("Sony")    && this.smartSpeaker4.getConsumo() == 4 , "Construtor 4 Errado");
-        assertTrue(this.smartSpeaker5.getCanal().equals("RR")  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Samsung") && this.smartSpeaker5.getConsumo() == 19, "Construtor 5 Errado");
+        try {
+            this.smartSpeaker1.setCanal("A1");
+            this.smartSpeaker1.setVolume(19);
+            this.smartSpeaker2.setCanal("A2");
+            this.smartSpeaker2.setVolume(30);
+            this.smartSpeaker3.setMarca("LG");
+            this.smartSpeaker3.setConsumo(9);
+            this.smartSpeaker4.setMarca("Sony");
+            this.smartSpeaker4.setConsumo(4);
+            this.smartSpeaker5.setMarca("Samsung");
+            this.smartSpeaker5.setConsumo(19);
+            assertTrue(this.smartSpeaker1.getCanal().equals("A1") && this.smartSpeaker1.getVolume() == 19, "Construtor 1 Errado");
+            assertTrue(this.smartSpeaker2.getCanal().equals("A2") && this.smartSpeaker2.getVolume() == 20, "Construtor 2 Errado");
+            assertTrue(this.smartSpeaker3.getCanal().equals("RFM") && this.smartSpeaker3.getVolume() == 10 && this.smartSpeaker3.getMarca().equals("LG")      && this.smartSpeaker3.getConsumo() == 9 , "Construtor 3 Errado");
+            assertTrue(this.smartSpeaker4.getCanal().equals("RC") && this.smartSpeaker4.getVolume() == 0  && this.smartSpeaker4.getMarca().equals("Sony")    && this.smartSpeaker4.getConsumo() == 4 , "Construtor 4 Errado");
+            assertTrue(this.smartSpeaker5.getCanal().equals("RR")  && this.smartSpeaker5.getVolume() == 20 && this.smartSpeaker5.getMarca().equals("Samsung") && this.smartSpeaker5.getConsumo() == 19, "Construtor 5 Errado");
 
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testEquals()
@@ -84,12 +96,18 @@ public class TestSmartSpeaker
     @Test
     public void testClone()
     {
-        SmartSpeaker smartSpeaker7 = this.smartSpeaker6.clone();
-        assertEquals(smartSpeaker7,this.smartSpeaker6);
-        assertNotEquals(smartSpeaker7,this.smartSpeaker5);
-        smartSpeaker7 = this.smartSpeaker1;
-        assertEquals(smartSpeaker7,smartSpeaker1);
-        assertNotEquals(smartSpeaker7,this.smartSpeaker6);
+        try {
+            SmartSpeaker smartSpeaker7 = this.smartSpeaker6.cloneDevice();
+            assertEquals(smartSpeaker7,this.smartSpeaker6);
+            assertNotEquals(smartSpeaker7,this.smartSpeaker5);
+            smartSpeaker7 = this.smartSpeaker1;
+            assertEquals(smartSpeaker7,smartSpeaker1);
+            assertNotEquals(smartSpeaker7,this.smartSpeaker6);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testCalculaConsumo()
