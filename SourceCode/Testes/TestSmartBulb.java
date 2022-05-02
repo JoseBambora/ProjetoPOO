@@ -148,7 +148,7 @@ public class TestSmartBulb {
 
             sb1  = new SmartBulb("b1", true, 1,4, 4);
             sb2  = new SmartBulb("b2", true, 0,9, 10);
-            SmartBulb sb7 = this.sb1.cloneDevice();
+            SmartBulb sb7 = this.sb1.clone();
             assertEquals(sb7,this.sb1);
             assertNotEquals(sb7,this.sb2);
             SmartBulb sb8 = this.sb1;

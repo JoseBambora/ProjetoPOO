@@ -121,15 +121,9 @@ public class TestSmartCamera {
 
     @Test
     public void testClone(){
-        try {
-            SmartCamera clonada = smartCamera1.cloneDevice();
-            assertNotEquals(clonada,smartCamera2);
-            assertEquals(clonada,smartCamera1);
-        }
-        catch (ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        SmartCamera clonada = smartCamera1.clone();
+        assertNotEquals(clonada,smartCamera2);
+        assertEquals(clonada,smartCamera1);
     }
 
     @Test

@@ -61,30 +61,27 @@ public class TestHouse
             this.c3 = new SmartCamera("c3",true,15,920,600,15);
             this.c4 = new SmartCamera("c4",true,20,800,500,10);
 
-        }
-        catch (ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        this.comerciante1 = new Comerciante("EDP",20);
-        this.comerciante2 = new Comerciante("Eneba",15);
-        this.comerciante3 = new Comerciante("Galp",17);
-        this.morada1 = "Braga";
-        this.morada2 = "Porto";
-        this.morada3 = "Lisboa";
-        this.morada4 = "Bragança";
-        this.morada5 = "Algarve";
-        this.morada6 = "Setubal";
-        this.pessoa1 = new Pessoa("Jose",1234);
-        this.pessoa2 = new Pessoa("Miguel",123);
-        this.pessoa3 = new Pessoa("Rita",12);
-        this.house1 = new House(this.pessoa1,this.comerciante1,this.morada1);
-        this.house2 = new House(this.pessoa1,this.comerciante1,this.morada2);
-        this.house3 = new House(this.pessoa2,this.comerciante2,this.morada3);
-        this.house4 = new House(this.pessoa2,this.comerciante2,this.morada4);
-        this.house5 = new House(this.pessoa3,this.comerciante3,this.morada5);
-        this.house6 = new House(this.pessoa3,this.comerciante3,this.morada6);
-        try {
+
+            this.comerciante1 = new Comerciante("EDP",20);
+            this.comerciante2 = new Comerciante("Eneba",15);
+            this.comerciante3 = new Comerciante("Galp",17);
+            this.morada1 = "Braga";
+            this.morada2 = "Porto";
+            this.morada3 = "Lisboa";
+            this.morada4 = "Bragança";
+            this.morada5 = "Algarve";
+            this.morada6 = "Setubal";
+            this.pessoa1 = new Pessoa("Jose",1234);
+            this.pessoa2 = new Pessoa("Miguel",123);
+            this.pessoa3 = new Pessoa("Rita",12);
+
+            this.house1 = new House(this.pessoa1,this.comerciante1,this.morada1);
+            this.house2 = new House(this.pessoa1,this.comerciante1,this.morada2);
+            this.house3 = new House(this.pessoa2,this.comerciante2,this.morada3);
+            this.house4 = new House(this.pessoa2,this.comerciante2,this.morada4);
+            this.house5 = new House(this.pessoa3,this.comerciante3,this.morada5);
+            this.house6 = new House(this.pessoa3,this.comerciante3,this.morada6);
+
             this.house1.addDevice("Sala",b1);
             this.house1.addDevice("Sala",b2);
             this.house1.addDevice("Quarto",c1);
@@ -133,7 +130,7 @@ public class TestHouse
             this.house6.addDevice("WC",b2);
             this.house6.addDevice("WC",s3);
         }
-        catch (ValorNegativoException e)
+        catch (ValorNegativoException | NullPointerNotExistException e)
         {
             System.out.println(e.getMessage());
         }
@@ -141,26 +138,19 @@ public class TestHouse
     @Test
     public void testGetters() {
         Map<String, SmartDevices> devices = new HashMap<>();
-        try {
-            assertEquals(this.house1.getFornecedor(), this.comerciante1, "Erro equals 1");
-            assertEquals(this.house2.getFornecedor(), this.comerciante1, "Erro equals 2");
-            assertEquals(this.house3.getFornecedor(), this.comerciante2, "Erro equals 3");
-            assertEquals(this.house4.getFornecedor(), this.comerciante2, "Erro equals 4");
-            assertEquals(this.house5.getFornecedor(), this.comerciante3, "Erro equals 5");
-            assertEquals(this.house6.getFornecedor(), this.comerciante3, "Erro equals 6");
-            assertEquals(this.house1.getProprietario(), this.pessoa1, "Erro equals 7");
-            assertEquals(this.house2.getProprietario(), this.pessoa1, "Erro equals 8");
-            assertEquals(this.house3.getProprietario(), this.pessoa2, "Erro equals 9");
-            assertEquals(this.house4.getProprietario(), this.pessoa2, "Erro equals 10");
-            assertEquals(this.house5.getProprietario(), this.pessoa3, "Erro equals 11");
-            assertEquals(this.house6.getProprietario(), this.pessoa3, "Erro equals 12");
-            devices = this.house1.getDevices();
-
-        }
-        catch (NullPointerNotExistException | ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        assertEquals(this.house1.getFornecedor(), this.comerciante1, "Erro equals 1");
+        assertEquals(this.house2.getFornecedor(), this.comerciante1, "Erro equals 2");
+        assertEquals(this.house3.getFornecedor(), this.comerciante2, "Erro equals 3");
+        assertEquals(this.house4.getFornecedor(), this.comerciante2, "Erro equals 4");
+        assertEquals(this.house5.getFornecedor(), this.comerciante3, "Erro equals 5");
+        assertEquals(this.house6.getFornecedor(), this.comerciante3, "Erro equals 6");
+        assertEquals(this.house1.getProprietario(), this.pessoa1, "Erro equals 7");
+        assertEquals(this.house2.getProprietario(), this.pessoa1, "Erro equals 8");
+        assertEquals(this.house3.getProprietario(), this.pessoa2, "Erro equals 9");
+        assertEquals(this.house4.getProprietario(), this.pessoa2, "Erro equals 10");
+        assertEquals(this.house5.getProprietario(), this.pessoa3, "Erro equals 11");
+        assertEquals(this.house6.getProprietario(), this.pessoa3, "Erro equals 12");
+        devices = this.house1.getDevices();
         assertEquals(this.house1.getLocal(), this.morada1, "Erro equals 13");
         assertEquals(this.house2.getLocal(), this.morada2, "Erro equals 14");
         assertEquals(this.house3.getLocal(), this.morada3, "Erro equals 15");
@@ -189,36 +179,30 @@ public class TestHouse
     @Test
     public void testComposicaoAgregacao()
     {
-        try {
-            this.pessoa1.setNIF(90);
-            assertEquals(this.house1.getProprietario(),this.pessoa1, "Erro agregação 1");
-            assertEquals(this.house2.getProprietario(),this.pessoa1, "Erro agregação 2");
-            this.comerciante2.setNome("Repsol");
-            assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
-            assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
-            assertNotEquals(this.house3.getLocal(),this.morada5, "Erro composição 5");
-            Map<String, List<String>> divisoes = this.house1.getDivisoes();
-            Map<String, SmartDevices> devices = this.house1.getDevices();
-            this.b1.setTone(0);
-            this.c2.setOn(false);
-            this.s2.setMarca("Sony");
-            assertNotEquals(devices.get("b1"), this.b1);
-            assertEquals(devices.get("c2"), this.c2);
-            assertNotEquals(devices.get("s2"), this.s2);
-            devices.remove("b1");
-            assertFalse(devices.containsKey("b1"));
-            assertTrue(this.house1.getDevices().containsKey("b1"));
-            divisoes.remove("Sala");
-            assertFalse(divisoes.containsKey("Sala"));
-            assertTrue(this.house1.getDivisoes().containsKey("Sala"));
-            this.house3.setDeviceOff("b4");
-            assertFalse(this.house3.getDevices().get("b4").isOn());
-            assertTrue(this.house2.getDevices().get("b4").isOn());
-        }
-        catch (NullPointerNotExistException | ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        this.pessoa1.setNIF(90);
+        assertEquals(this.house1.getProprietario(),this.pessoa1, "Erro agregação 1");
+        assertEquals(this.house2.getProprietario(),this.pessoa1, "Erro agregação 2");
+        this.comerciante2.setNome("Repsol");
+        assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
+        assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
+        assertNotEquals(this.house3.getLocal(),this.morada5, "Erro composição 5");
+        Map<String, List<String>> divisoes = this.house1.getDivisoes();
+        Map<String, SmartDevices> devices = this.house1.getDevices();
+        this.b1.setTone(0);
+        this.c2.setOn(false);
+        this.s2.setMarca("Sony");
+        assertNotEquals(devices.get("b1"), this.b1);
+        assertEquals(devices.get("c2"), this.c2);
+        assertNotEquals(devices.get("s2"), this.s2);
+        devices.remove("b1");
+        assertFalse(devices.containsKey("b1"));
+        assertTrue(this.house1.getDevices().containsKey("b1"));
+        divisoes.remove("Sala");
+        assertFalse(divisoes.containsKey("Sala"));
+        assertTrue(this.house1.getDivisoes().containsKey("Sala"));
+        this.house3.setDeviceOff("b4");
+        assertFalse(this.house3.getDevices().get("b4").isOn());
+        assertTrue(this.house2.getDevices().get("b4").isOn());
     }
     @Test
     public void testSetters()
@@ -270,7 +254,7 @@ public class TestHouse
             assertTrue(devices.containsKey("s1") && devices.get("s1").equals(this.s1));
             assertFalse(devices.containsKey("s2") && devices.get("s2").equals(this.s2));
         }
-        catch (NullPointerNotExistException | ValorNegativoException e)
+        catch (NullPointerNotExistException e)
         {
             System.out.println(e.getMessage());
         }
@@ -279,7 +263,7 @@ public class TestHouse
     public void testClone()
     {
         try {
-            House house = this.house6.cloneHouse();
+            House house = this.house6.clone();
             assertEquals(house, this.house6);
             assertEquals(house.getFornecedor(), this.house6.getFornecedor());
             house.setFornecedor(this.comerciante1);
@@ -308,7 +292,7 @@ public class TestHouse
             for (SmartDevices smartDevices : devices1.values())
                 assertEquals(smartDevices, devices2.get(smartDevices.getId()));
         }
-        catch (NullPointerNotExistException | ValorNegativoException e)
+        catch (NullPointerNotExistException e)
         {
             System.out.println(e.getMessage());
         }
@@ -317,70 +301,61 @@ public class TestHouse
     @Test
     public void testOnOff()
     {
-        try {
-            this.house4.setAllOff();
-            Map<String, SmartDevices> devices = this.house4.getDevices();
-            for(SmartDevices device : devices.values())
-                assertFalse(device.isOn());
-            this.house4.setAllOn();
-            for(SmartDevices device : devices.values())
-                assertFalse(device.isOn());
-            devices = this.house4.getDevices();
-            for(SmartDevices device : devices.values())
+        this.house4.setAllOff();
+        Map<String, SmartDevices> devices = this.house4.getDevices();
+        for(SmartDevices device : devices.values())
+            assertFalse(device.isOn());
+        this.house4.setAllOn();
+        for(SmartDevices device : devices.values())
+            assertFalse(device.isOn());
+        devices = this.house4.getDevices();
+        for(SmartDevices device : devices.values())
+            assertTrue(device.isOn());
+        this.house4.setDeviceOff("b3");
+        this.house4.setDeviceOff("b4");
+        this.house4.setDeviceOff("c4");
+        this.house4.setDeviceOff("s1");
+        this.house4.setDeviceOff("s2");
+        devices = this.house4.getDevices();
+        for(SmartDevices device : devices.values())
+            if(device.getId().equals("b3") || device.getId().equals("b4") || device.getId().equals("c4") || device.getId().equals("s1") || device.getId().equals("s2"))
+                assertFalse(device.isOn(),"device " + device.getId());
+            else
+                assertTrue(device.isOn());
+        this.house4.setDeviceOn("b3");
+        this.house4.setDeviceOn("b4");
+        this.house4.setDeviceOn("c4");
+        this.house4.setDeviceOn("s1");
+        this.house4.setDeviceOn("s2");
+        devices = this.house4.getDevices();
+        for(SmartDevices device : devices.values())
+            assertTrue(device.isOn());
+
+        this.house4.setDivisaoOff("Sala");
+        this.house4.setDivisaoOff("WC");
+        devices = this.house4.getDevices();
+        Map<String, List<String>> divisoes = this.house4.getDivisoes();
+        for(SmartDevices device : devices.values())
+            if(divisoes.get("Sala").contains(device.getId()) || divisoes.get("WC").contains(device.getId()))
+                assertFalse(device.isOn(),"device " + device.getId());
+            else
                 assertTrue(device.isOn());
 
-            this.house4.setDeviceOff("b3");
-            this.house4.setDeviceOff("b4");
-            this.house4.setDeviceOff("c4");
-            this.house4.setDeviceOff("s1");
-            this.house4.setDeviceOff("s2");
-            devices = this.house4.getDevices();
-            for(SmartDevices device : devices.values())
-                if(device.getId().equals("b3") || device.getId().equals("b4") || device.getId().equals("c4") || device.getId().equals("s1") || device.getId().equals("s2"))
-                    assertFalse(device.isOn(),"device " + device.getId());
-                else
-                    assertTrue(device.isOn());
+        this.house4.setDivisaoOn("Sala");
+        this.house4.setDivisaoOn("WC");
+        devices = this.house4.getDevices();
+        for(SmartDevices device : devices.values())
+            assertTrue(device.isOn());
 
-            this.house4.setDeviceOn("b3");
-            this.house4.setDeviceOn("b4");
-            this.house4.setDeviceOn("c4");
-            this.house4.setDeviceOn("s1");
-            this.house4.setDeviceOn("s2");
-            devices = this.house4.getDevices();
-            for(SmartDevices device : devices.values())
-                assertTrue(device.isOn());
+        House house = this.house3.clone();
+        house.setAllOff();
+        devices = this.house3.getDevices();
+        for(SmartDevices smartDevices : devices.values())
+            assertTrue(smartDevices.isOn());
 
-            this.house4.setDivisaoOff("Sala");
-            this.house4.setDivisaoOff("WC");
-            devices = this.house4.getDevices();
-            Map<String, List<String>> divisoes = this.house4.getDivisoes();
-            for(SmartDevices device : devices.values())
-                if(divisoes.get("Sala").contains(device.getId()) || divisoes.get("WC").contains(device.getId()))
-                    assertFalse(device.isOn(),"device " + device.getId());
-                else
-                    assertTrue(device.isOn());
-
-            this.house4.setDivisaoOn("Sala");
-            this.house4.setDivisaoOn("WC");
-            devices = this.house4.getDevices();
-            for(SmartDevices device : devices.values())
-                assertTrue(device.isOn());
-
-
-            House house = this.house3.cloneHouse();
-            house.setAllOff();
-            devices = this.house3.getDevices();
-            for(SmartDevices smartDevices : devices.values())
-                assertTrue(smartDevices.isOn());
-
-            devices = house.getDevices();
-            for(SmartDevices smartDevices : devices.values())
-                assertFalse(smartDevices.isOn());
-        }
-        catch (NullPointerNotExistException | ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        devices = house.getDevices();
+        for(SmartDevices smartDevices : devices.values())
+            assertFalse(smartDevices.isOn());
     }
 
     @Test
@@ -416,26 +391,20 @@ public class TestHouse
         {
             assertFalse(list.contains("b1") || list.contains("b3") || list.contains("s4"));
         }
-        try {
-            Map<String, SmartDevices> devices = this.house3.getDevices();
-            assertFalse(devices.containsKey("b1"));
-            assertFalse(devices.containsKey("b3"));
-            assertFalse(devices.containsKey("s4"));
-            assertTrue(devices.containsKey("c2"));
-            this.house4.removeDivisao("Sala");
-            this.house4.removeDivisao("WC");
-            Map<String, List<String>> divisoes2 = this.house4.getDivisoes();
-            Map<String, SmartDevices> devices2 = this.house4.getDevices();
-            assertFalse(divisoes2.containsKey("Sala"));
-            assertFalse(divisoes2.containsKey("WC"));
-            assertFalse(devices2.containsKey("b2"));
-            assertFalse(devices2.containsKey("b3"));
-            assertFalse(devices2.containsKey("b1"));
-            assertFalse(devices2.containsKey("s4"));
-        }
-        catch (ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        Map<String, SmartDevices> devices = this.house3.getDevices();
+        assertFalse(devices.containsKey("b1"));
+        assertFalse(devices.containsKey("b3"));
+        assertFalse(devices.containsKey("s4"));
+        assertTrue(devices.containsKey("c2"));
+        this.house4.removeDivisao("Sala");
+        this.house4.removeDivisao("WC");
+        Map<String, List<String>> divisoes2 = this.house4.getDivisoes();
+        Map<String, SmartDevices> devices2 = this.house4.getDevices();
+        assertFalse(divisoes2.containsKey("Sala"));
+        assertFalse(divisoes2.containsKey("WC"));
+        assertFalse(devices2.containsKey("b2"));
+        assertFalse(devices2.containsKey("b3"));
+        assertFalse(devices2.containsKey("b1"));
+        assertFalse(devices2.containsKey("s4"));
     }
 }

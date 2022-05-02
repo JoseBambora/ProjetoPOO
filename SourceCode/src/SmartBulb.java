@@ -32,8 +32,8 @@ public class SmartBulb extends SmartDevices {
         this.setDimensao(dimensao); // if the dimensao is >=0 it's okay to use it otherwise, it's initialized as 0
     }
 
-    public SmartBulb (SmartBulb sb)  throws ValorNegativoException{
-        super(sb.getId(), sb.isOn(),sb.getConsumo());
+    public SmartBulb (SmartBulb sb){
+        super(sb);
         this.tone = sb.getTone();
         this.dimensao = sb.getDimensao();
     }
@@ -78,7 +78,7 @@ public class SmartBulb extends SmartDevices {
     }
 
 
-    public SmartBulb cloneDevice() throws ValorNegativoException{
+    public SmartBulb clone(){
         return new SmartBulb(this);
     }
     /**

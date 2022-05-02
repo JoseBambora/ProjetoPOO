@@ -96,18 +96,12 @@ public class TestSmartSpeaker
     @Test
     public void testClone()
     {
-        try {
-            SmartSpeaker smartSpeaker7 = this.smartSpeaker6.cloneDevice();
-            assertEquals(smartSpeaker7,this.smartSpeaker6);
-            assertNotEquals(smartSpeaker7,this.smartSpeaker5);
-            smartSpeaker7 = this.smartSpeaker1;
-            assertEquals(smartSpeaker7,smartSpeaker1);
-            assertNotEquals(smartSpeaker7,this.smartSpeaker6);
-        }
-        catch (ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        SmartSpeaker smartSpeaker7 = this.smartSpeaker6.clone();
+        assertEquals(smartSpeaker7,this.smartSpeaker6);
+        assertNotEquals(smartSpeaker7,this.smartSpeaker5);
+        smartSpeaker7 = this.smartSpeaker1;
+        assertEquals(smartSpeaker7,smartSpeaker1);
+        assertNotEquals(smartSpeaker7,this.smartSpeaker6);
     }
     @Test
     public void testCalculaConsumo()

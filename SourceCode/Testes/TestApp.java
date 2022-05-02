@@ -17,9 +17,8 @@ public class TestApp
     static App app = new App(10);
     public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
     {
-        SmartBulb add = null;
         try {
-            add = new SmartBulb("",mode,tone,tamanho,consumo);
+            SmartBulb add  = new SmartBulb("",mode,tone,tamanho,consumo);
             app.addDevice(add);
         }
         catch (ValorNegativoException e)
@@ -29,9 +28,8 @@ public class TestApp
     }
     public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
     {
-        SmartSpeaker add = null;
         try {
-            add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
+            SmartSpeaker add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
             app.addDevice(add);
         }
         catch (ValorNegativoException e)
@@ -41,9 +39,8 @@ public class TestApp
     }
     public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
     {
-        SmartCamera add = null;
         try {
-            add = new SmartCamera("",mode,consumo,x,y,tamanho);
+            SmartCamera add = new SmartCamera("",mode,consumo,x,y,tamanho);
             app.addDevice(add);
         }
         catch (ValorNegativoException e)

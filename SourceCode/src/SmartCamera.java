@@ -39,9 +39,9 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public SmartCamera(SmartCamera smartCamera) throws ValorNegativoException
+    public SmartCamera(SmartCamera smartCamera)
     {
-        super(smartCamera.getId(),smartCamera.isOn(),smartCamera.getConsumo());
+        super(smartCamera);
         this.resolucaoX = smartCamera.getResolucaoX();
         this.resolucaoY = smartCamera.getResolucaoY();
         this.tamanho = smartCamera.getTamanho();
@@ -108,7 +108,7 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public SmartCamera cloneDevice() throws ValorNegativoException { return new SmartCamera(this); }
+    public SmartCamera clone(){ return new SmartCamera(this); }
 
 
     /**

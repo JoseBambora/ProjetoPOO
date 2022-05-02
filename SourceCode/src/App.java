@@ -25,9 +25,9 @@ public class App
     {
         this.fornecedores.put(comerciante.getNome(),comerciante.clone());
     }
-    public void addDevice(SmartDevices smartDevices) throws ValorNegativoException
+    public void addDevice(SmartDevices smartDevices)
     {
-        SmartDevices smartDevices1 = smartDevices.cloneDevice();
+        SmartDevices smartDevices1 = smartDevices.clone();
         smartDevices1.setId(Integer.toString(this.devices.size() + 1));
         this.devices.put(smartDevices1.getId(), smartDevices1);
         this.casas.get(this.lastCasa).addDevice(this.lastDivisao,smartDevices1);
@@ -45,9 +45,7 @@ public class App
     public void addCasa(String pessoa, String fornecedor) throws NullPointerNotExistException
     {
         this.lastCasa = Integer.toString(this.casas.size());
-        House house = new House(null,null, this.lastCasa);
-        house.setProprietario(this.pessoas.get(pessoa));
-        house.setFornecedor(this.fornecedores.get(fornecedor));
+        House house = new House(this.pessoas.get(pessoa),this.fornecedores.get(fornecedor), this.lastCasa);
         this.casas.put(house.getLocal(),house);
     }
     public void avancaDias(int dias) throws NullPointerNotExistException {

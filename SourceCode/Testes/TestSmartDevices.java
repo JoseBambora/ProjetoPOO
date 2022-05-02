@@ -29,19 +29,12 @@ public class TestSmartDevices
     @Test
     public void testEquals()
     {
-        try {
-            SmartSpeaker smartSpeaker = new SmartSpeaker(smartSpeaker1);
-            assertEquals(smartSpeaker,this.smartSpeaker1,"Smart Speaker 1 errado");
-            assertNotEquals(smartSpeaker,this.smartSpeaker2,"Smart Speaker 2 errado");
-            SmartBulb sb = new SmartBulb (smartBulb1);
-            assertEquals(sb, this.smartBulb1,"Smart Bulb 1 errado");
-            assertNotEquals(sb,this.smartBulb2,"Smart Bulb 2 errado");
-
-        }
-        catch (ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        SmartSpeaker smartSpeaker = new SmartSpeaker(this.smartSpeaker1);
+        assertEquals(smartSpeaker,this.smartSpeaker1,"Smart Speaker 1 errado");
+        assertNotEquals(smartSpeaker,this.smartSpeaker2,"Smart Speaker 2 errado");
+        SmartBulb sb = new SmartBulb (smartBulb1);
+        assertEquals(sb, this.smartBulb1,"Smart Bulb 1 errado");
+        assertNotEquals(sb,this.smartBulb2,"Smart Bulb 2 errado");
     }
     @Test
     public void testGetId()

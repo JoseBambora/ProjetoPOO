@@ -24,6 +24,12 @@ public abstract class SmartDevices
         this.on = on;
         this.setConsumo(consumo);
     }
+    public SmartDevices(SmartDevices smartDevices)
+    {
+        this.id = smartDevices.getId();
+        this.on = smartDevices.isOn();
+        this.consumo = smartDevices.getConsumo();
+    }
     public abstract double calculaConsumo(int dias);
     public void turnOn()
     {
@@ -69,5 +75,5 @@ public abstract class SmartDevices
                 .append("Consumo: ").append(this.consumo).append("\n");
         return sb.toString();
     }
-    public abstract SmartDevices cloneDevice() throws ValorNegativoException;
+    public abstract SmartDevices clone();
 }
