@@ -20,7 +20,7 @@ public class SmartSpeaker extends SmartDevices
      * @param id
      * @param on
      */
-    public SmartSpeaker(String id, boolean on, double consumo)
+    public SmartSpeaker(String id, boolean on, double consumo)  throws ValorNegativoException
     {
         super(id, on,consumo);
         this.volume = 0;
@@ -35,7 +35,7 @@ public class SmartSpeaker extends SmartDevices
      * @param canal
      * @param marca
      */
-    public SmartSpeaker(String id, boolean on, int volume,String canal,String marca,double consumo)
+    public SmartSpeaker(String id, boolean on, int volume,String canal,String marca,double consumo)  throws ValorNegativoException
     {
         super(id, on, consumo);
         this.setVolume(volume);
@@ -46,7 +46,7 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @param smartSpeaker
      */
-    public SmartSpeaker(SmartSpeaker smartSpeaker)
+    public SmartSpeaker(SmartSpeaker smartSpeaker)  throws ValorNegativoException
     {
         super(smartSpeaker.getId(), smartSpeaker.isOn(), smartSpeaker.getConsumo());
         this.volume = smartSpeaker.getVolume();
@@ -159,7 +159,7 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @return
      */
-    public SmartSpeaker clone() { return new SmartSpeaker(this); }
+    public SmartSpeaker cloneDevice() throws ValorNegativoException{ return new SmartSpeaker(this); }
     /**
      * @param dias
      * @return

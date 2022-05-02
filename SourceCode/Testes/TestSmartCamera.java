@@ -13,18 +13,19 @@ public class TestSmartCamera {
 
     @BeforeEach
     public void atribuicao() {
-        this.smartCamera1 = new SmartCamera("1", true, 10, 1920, 1080, 10);
 
-        this.smartCamera2 = new SmartCamera("2", false, 20, 1920, 1080, 40);
-
-        this.smartCamera3 = new SmartCamera("3", true, 10, 1640, 1440, 30);
-
-        this.smartCamera4 = new SmartCamera("4", false, 5, 1280, 720, 55);
-
-        this.smartCamera5 = new SmartCamera("5", true, 10, 1920, 1080, 70);
-
-        this.smartCamera6 = new SmartCamera("6", false, 10, 580, 450, 12);
-
+        try {
+            this.smartCamera1 = new SmartCamera("1", true, 10, 1920, 1080, 10);
+            this.smartCamera2 = new SmartCamera("2", false, 20, 1920, 1080, 40);
+            this.smartCamera3 = new SmartCamera("3", true, 10, 1640, 1440, 30);
+            this.smartCamera4 = new SmartCamera("4", false, 5, 1280, 720, 55);
+            this.smartCamera5 = new SmartCamera("5", true, 10, 1920, 1080, 70);
+            this.smartCamera6 = new SmartCamera("6", false, 10, 580, 450, 12);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -65,12 +66,19 @@ public class TestSmartCamera {
 
     @Test
     public void testSetConsumo(){
-        smartCamera1.setConsumo(10);
-        assertEquals(10, smartCamera1.getConsumo());
-        smartCamera1.setConsumo(12);
-        assertEquals(12, smartCamera1.getConsumo());
-        smartCamera1.setConsumo(10);
-        assertEquals(10, smartCamera1.getConsumo());
+        try {
+            smartCamera1.setConsumo(10);
+            assertEquals(10, smartCamera1.getConsumo());
+            smartCamera1.setConsumo(12);
+            assertEquals(12, smartCamera1.getConsumo());
+            smartCamera1.setConsumo(10);
+            assertEquals(10, smartCamera1.getConsumo());
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Test
@@ -100,16 +108,28 @@ public class TestSmartCamera {
 
     @Test
     public void testEquals(){
-    assertNotEquals(this.smartCamera1,this.smartCamera2);
-    SmartCamera igual = new SmartCamera("1", true, 10, 1920, 1080, 10);
-    assertEquals(this.smartCamera1,igual);
+        try {
+            assertNotEquals(this.smartCamera1,this.smartCamera2);
+            SmartCamera igual = new SmartCamera("1", true, 10, 1920, 1080, 10);
+            assertEquals(this.smartCamera1,igual);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
     public void testClone(){
-        SmartCamera clonada = smartCamera1.clone();
-        assertNotEquals(clonada,smartCamera2);
-        assertEquals(clonada,smartCamera1);
+        try {
+            SmartCamera clonada = smartCamera1.cloneDevice();
+            assertNotEquals(clonada,smartCamera2);
+            assertEquals(clonada,smartCamera1);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test

@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.zip.CheckedOutputStream;
 
 public class House {
     private Map<String,SmartDevices> devices;
@@ -25,7 +26,8 @@ public class House {
         this.divisoes = new HashMap<>();
     }
 
-    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap){
+    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap) throws ValorNegativoException
+    {
         this.proprietario = proprietario;
         this.local = local;
         this.fornecedor = comerciante;
@@ -34,7 +36,8 @@ public class House {
         this.setDevices(smartDevicesMap);
     }
 
-    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap){
+    public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap, Map<String,List<String>> listMap) throws ValorNegativoException
+    {
         this.proprietario = proprietario;
         this.local = local;
         this.fornecedor = comerciante;
@@ -43,7 +46,7 @@ public class House {
         this.setDevices(smartDevicesMap);
         this.setDivisoes(listMap);
     }
-    public House(House house){
+    public House(House house) throws NullPointerNotExistException , ValorNegativoException{
         this.proprietario = house.getProprietario();
         this.local = house.getLocal();
         this.fornecedor = house.getFornecedor();
@@ -51,7 +54,9 @@ public class House {
         this.divisoes = house.getDivisoes();
     }
 
-    public Pessoa getProprietario() {
+    public Pessoa getProprietario() throws NullPointerNotExistException {
+        if(this.proprietario == null)
+            throw new NullPointerNotExistException("Pessoa não existe na casa " + this.getLocal());
         return this.proprietario;
     }
 
@@ -72,24 +77,29 @@ public class House {
         return result;
     }
 
-    public Map<String, SmartDevices> getDevices() {
+    public Map<String, SmartDevices> getDevices()  throws ValorNegativoException{
         Map<String, SmartDevices> result = new HashMap<>();
         for(String s: this.devices.keySet())
-            result.put(s,this.devices.get(s).clone());
+            result.put(s,this.devices.get(s).cloneDevice());
         return result;
     }
 
-    public Comerciante getFornecedor() {
+    public Comerciante getFornecedor() throws NullPointerNotExistException
+    {
+        if(this.fornecedor == null)
+            throw new NullPointerNotExistException("Fornecedor não existe na casa " + this.getLocal());
         return this.fornecedor;
     }
 
-    public void setDevices(Map<String, SmartDevices> devices) {
+    public void setDevices(Map<String, SmartDevices> devices) throws ValorNegativoException{
         this.devices.clear();
         for(String s: devices.keySet())
-            this.devices.put(s,devices.get(s).clone());
+            this.devices.put(s,devices.get(s).cloneDevice());
     }
 
-    public void setFornecedor(Comerciante fornecedor) {
+    public void setFornecedor(Comerciante fornecedor) throws NullPointerNotExistException{
+        if(fornecedor == null)
+            throw new NullPointerNotExistException("Set Comerciante nulo na casa " + this.getLocal());
         this.fornecedor = fornecedor;
     }
 
@@ -97,7 +107,9 @@ public class House {
         this.local = local;
     }
 
-    public void setProprietario(Pessoa proprietario) {
+    public void setProprietario(Pessoa proprietario) throws NullPointerNotExistException{
+        if(proprietario == null)
+            throw new NullPointerNotExistException("Set Proprietário nulo na casa " + this.getLocal());
         this.proprietario = proprietario;
     }
 
@@ -173,12 +185,19 @@ public class House {
         }
     }
 
-    public void addDevice(SmartDevices smartDevices)
+    public void addDevice(SmartDevices smartDevices) throws ValorNegativoException
     {
-        this.devices.put(smartDevices.getId(),smartDevices.clone());
+        try
+        {
+            this.devices.put(smartDevices.getId(),smartDevices.cloneDevice());
+        }
+        catch (ValorNegativoException e)
+        {
+            throw new ValorNegativoException("Na casa " +this.getLocal() + " " +e.getMessage());
+        }
     }
 
-    public void addDevice(String divisao, SmartDevices smartDevices)
+    public void addDevice(String divisao, SmartDevices smartDevices) throws ValorNegativoException
     {
         if(!this.divisoes.containsKey(divisao))
             this.divisoes.put(divisao,new ArrayList<>());
@@ -206,9 +225,11 @@ public class House {
         }
     }
 
-    public House clone()
+    public House cloneHouse () throws NullPointerNotExistException, ValorNegativoException
     {
-        return new House(this);
+        House r;
+        r = new House(this);
+        return r;
     }
 
 
@@ -217,7 +238,7 @@ public class House {
         StringBuilder sb = new StringBuilder();
         sb.append("House:\n")
                 .append("Devices: ").append(this.devices).append("\n")
-                .append("Devisoes").append(this.divisoes).append("\n")
+                .append("Divisoes").append(this.divisoes).append("\n")
                 .append("Proprietario: ").append(this.proprietario).append("\n")
                 .append("Local").append(this.local).append("\n")
                 .append("Fornecedor").append(this.fornecedor).append("\n");

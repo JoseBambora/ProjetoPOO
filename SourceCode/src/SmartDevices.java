@@ -18,7 +18,7 @@ public abstract class SmartDevices
         this.on = false;
         this.consumo = 0;
     }
-    public SmartDevices(String id, boolean on, double consumo)
+    public SmartDevices(String id, boolean on, double consumo) throws ValorNegativoException
     {
         this.id = id;
         this.on = on;
@@ -48,7 +48,11 @@ public abstract class SmartDevices
     public void setOn(boolean on) {
         this.on = on;
     }
-    public void setConsumo(double consumo) {this.consumo = Math.abs(consumo);}
+    public void setConsumo(double consumo) throws ValorNegativoException {
+        if(consumo < 0)
+            throw new ValorNegativoException("Consumo negativo no dispotivo com o id " +this.getId());
+        this.consumo = consumo;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,5 +69,5 @@ public abstract class SmartDevices
                 .append("Consumo: ").append(this.consumo).append("\n");
         return sb.toString();
     }
-    public abstract SmartDevices clone();
+    public abstract SmartDevices cloneDevice() throws ValorNegativoException;
 }

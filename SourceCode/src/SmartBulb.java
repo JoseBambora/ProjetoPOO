@@ -19,20 +19,20 @@ public class SmartBulb extends SmartDevices {
         this.dimensao =0;
     }
 
-    public SmartBulb(String id, boolean on, double consumo) {
+    public SmartBulb(String id, boolean on, double consumo) throws ValorNegativoException{
         super(id,on,consumo);
         this.tone = NEUTRAL;
         this.dimensao =0;
     }
 
-    public SmartBulb(String id, boolean on, int tone, double dimensao, double consumo){
+    public SmartBulb(String id, boolean on, int tone, double dimensao, double consumo)  throws ValorNegativoException{
         // initialise instance variables
         super(id,on,consumo);
         this.setTone(tone);
         this.setDimensao(dimensao); // if the dimensao is >=0 it's okay to use it otherwise, it's initialized as 0
     }
 
-    public SmartBulb (SmartBulb sb) {
+    public SmartBulb (SmartBulb sb)  throws ValorNegativoException{
         super(sb.getId(), sb.isOn(),sb.getConsumo());
         this.tone = sb.getTone();
         this.dimensao = sb.getDimensao();
@@ -78,7 +78,7 @@ public class SmartBulb extends SmartDevices {
     }
 
 
-    public SmartBulb clone() {
+    public SmartBulb cloneDevice() throws ValorNegativoException{
         return new SmartBulb(this);
     }
     /**

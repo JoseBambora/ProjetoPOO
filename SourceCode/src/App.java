@@ -25,9 +25,9 @@ public class App
     {
         this.fornecedores.put(comerciante.getNome(),comerciante.clone());
     }
-    public void addDevice(SmartDevices smartDevices)
+    public void addDevice(SmartDevices smartDevices) throws ValorNegativoException
     {
-        SmartDevices smartDevices1 = smartDevices.clone();
+        SmartDevices smartDevices1 = smartDevices.cloneDevice();
         smartDevices1.setId(Integer.toString(this.devices.size() + 1));
         this.devices.put(smartDevices1.getId(), smartDevices1);
         this.casas.get(this.lastCasa).addDevice(this.lastDivisao,smartDevices1);
@@ -42,25 +42,34 @@ public class App
             this.casas.get(this.lastCasa).addDivisao(divisao);
         this.lastDivisao = divisao;
     }
-    public void addCasa(String pessoa, String fornecedor)
+    public void addCasa(String pessoa, String fornecedor) throws NullPointerNotExistException
     {
-        this.lastCasa = Integer.toString(this.casas.size());
-        House house = new House(null,null, this.lastCasa);
-        house.setProprietario(this.pessoas.get(pessoa));
-        house.setFornecedor(this.fornecedores.get(fornecedor));
-        this.casas.put(house.getLocal(),house);
+        try {
+            this.lastCasa = Integer.toString(this.casas.size());
+            House house = new House(null,null, this.lastCasa);
+            house.setProprietario(this.pessoas.get(pessoa));
+            house.setFornecedor(this.fornecedores.get(fornecedor));
+            this.casas.put(house.getLocal(),house);
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
-    public void avancaDias(int dias)
-    {
+    public void avancaDias(int dias) throws NullPointerNotExistException {
         LocalDate oldDate = this.dataPrograma;
         LocalDate newDate = this.dataPrograma.plusDays(dias);
         this.dataPrograma = newDate;
         for(House casa : this.casas.values())
         {
             double consumo = casa.getConsumo(dias);
-            Comerciante comerciante = casa.getFornecedor();
+            Comerciante comerciante;
+            Pessoa proprietario;
+            comerciante = casa.getFornecedor();
+            proprietario = casa.getProprietario();
             double preco = consumo * comerciante.getPreco() * (1 + (double) this.imposto / 100);
-            Fatura fatura = new Fatura(casa.getProprietario(),preco,this.imposto,consumo,newDate,casa.getLocal());
+            Fatura fatura = new Fatura(proprietario,preco,this.imposto,consumo,newDate,casa.getLocal());
             comerciante.addFatura(fatura);
         }
     }
@@ -89,27 +98,27 @@ public class App
         }
     }
 
-    public void changeProprietario(String idHouse, String pessoa)
+    public void changeProprietario(String idHouse, String pessoa) throws NullPointerNotExistException
     {
         if(this.casas.containsKey(idHouse))
             if(this.pessoas.containsKey(pessoa))
                 this.casas.get(idHouse).setProprietario(this.pessoas.get(pessoa));
     }
 
-    public void changeFornecedor(String idHouse, String fornecedor)
+    public void changeFornecedor(String idHouse, String fornecedor) throws NullPointerNotExistException
     {
         if(this.casas.containsKey(idHouse))
             if(this.fornecedores.containsKey(fornecedor))
                 this.casas.get(idHouse).setFornecedor(this.fornecedores.get(fornecedor));
     }
 
-    public void setHouseComerciante(String idHouse, String comerciante)
+    public void setHouseComerciante(String idHouse, String comerciante) throws NullPointerNotExistException
     {
         if(this.casas.containsKey(idHouse))
             if(this.fornecedores.containsKey(comerciante))
                 this.casas.get(idHouse).setFornecedor(this.fornecedores.get(comerciante));
     }
-    public void setHouseDevice(String idHouse, String idDevice)
+    public void setHouseDevice(String idHouse, String idDevice) throws ValorNegativoException
     {
         if(this.casas.containsKey(idHouse))
             if(this.devices.containsKey(idDevice))
@@ -148,8 +157,7 @@ public class App
     public LocalDate getDataPrograma() {
         return dataPrograma;
     }
-    public String casasToString()
-    {
+    public String casasToString() throws NullPointerNotExistException {
         StringBuilder result = new StringBuilder();
         result.append("Formato: Localidade | Nome do proprietário\n");
         for(House casa : this.casas.values())

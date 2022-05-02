@@ -15,8 +15,48 @@ public class Main {
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
     static Scanner iteracao = new Scanner(System.in);
-
-
+    public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
+    {
+        SmartBulb add = null;
+        try {
+            add = new SmartBulb("",mode,tone,tamanho,consumo);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        if(add != null)
+            System.out.println("Smart Bulb adicionado com sucesso " + add);
+    }
+    public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
+    {
+        SmartSpeaker add = null;
+        try {
+            add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        if(add != null)
+            System.out.println("Smart Speaker adicionado com sucesso " + add);
+    }
+    public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
+    {
+        SmartCamera add = null;
+        try {
+            add = new SmartCamera("",mode,consumo,x,y,tamanho);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        if(add != null)
+            System.out.println("Smart Camera adicionado com sucesso " + add);
+    }
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -30,7 +70,13 @@ public class Main {
         int nif = Integer.parseInt(campos[1]);
         app.addPessoa(new Pessoa(nome,nif));
         String fornecedor = campos[2];
-        app.addCasa(nome,fornecedor);
+        try {
+            app.addCasa(nome,fornecedor);
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parseSmartBulb(String string)
     {
@@ -50,7 +96,7 @@ public class Main {
         }
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartBulb("",true,tone,tamanho,consumo));
+        addSmartBulb(true,tone,tamanho,consumo);
     }
     public static void parseSmartCamera(String string)
     {
@@ -62,14 +108,14 @@ public class Main {
         y = Integer.parseInt(resolucao[1]);
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartCamera("",true,consumo,x,y,tamanho));
+        addSmartCamera(true,consumo,x,y,tamanho);
     }
     public static void parseSmartSpeaker(String string)
     {
         String[] campos = string.split(",");
         int volume = Integer.parseInt(campos[0]);
         double consumo = Double.parseDouble(campos[3]);
-        app.addDevice(new SmartSpeaker("",true,volume,campos[1],campos[2],consumo));
+        addSmartSpeaker(true,volume,campos[1],campos[2],consumo);
     }
     public static void parse(){
 
@@ -135,9 +181,7 @@ public class Main {
                 int tone = iteracao.nextInt();
                 System.out.println("Qual a dimensão?");
                 double dimensao = iteracao.nextDouble();
-                SmartBulb sb = new SmartBulb("",modo,tone,dimensao,consumo);
-                app.addDevice(sb);
-                System.out.println("Smart Bulb adicionado com sucesso " + sb);
+                addSmartBulb(modo,tone,dimensao,consumo);
                 break;
             case "SS":
                 System.out.println("Qual a marca?");
@@ -146,9 +190,7 @@ public class Main {
                 int volume = iteracao.nextInt();
                 System.out.println("Qual o canal?");
                 String canal = iteracao.next();
-                SmartSpeaker add = new SmartSpeaker("",modo,volume,canal,marca,consumo);
-                app.addDevice(add);
-                System.out.println("Smart Speaker adicionado com sucesso " + add);
+                addSmartSpeaker(modo,volume,canal,marca,consumo);
                 break;
             case "SC":
                 System.out.println("Qual é a Resolução? (formato HorizontalxVertical");
@@ -156,8 +198,7 @@ public class Main {
                 String[] resolucoes = resolucao.split("x");
                 System.out.println("Qual é o Tamanho?");
                 double tamanho = iteracao.nextDouble();
-                SmartCamera sc = new SmartCamera("",modo,consumo,parseInt(resolucoes[0]),parseInt(resolucoes[1]),tamanho);
-                System.out.println("Smart Camera adicionado com sucesso " + sc);
+                addSmartCamera(modo,consumo,parseInt(resolucoes[0]),parseInt(resolucoes[1]),tamanho);
                 break;
         }
     }
@@ -177,7 +218,13 @@ public class Main {
         String nome = iteracao.next();
         System.out.println("Qual o nome do Comerciante?");
         String cm = iteracao.next();
-        app.addCasa(nome, cm);
+        try {
+            app.addCasa(nome,cm);
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Casa adicionada com sucesso " + nome + " " + cm);
     }
     public static void addPessoa()

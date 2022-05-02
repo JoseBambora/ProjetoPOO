@@ -15,6 +15,42 @@ import java.util.Map;
 public class TestApp
 {
     static App app = new App(10);
+    public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
+    {
+        SmartBulb add = null;
+        try {
+            add = new SmartBulb("",mode,tone,tamanho,consumo);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
+    {
+        SmartSpeaker add = null;
+        try {
+            add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
+    {
+        SmartCamera add = null;
+        try {
+            add = new SmartCamera("",mode,consumo,x,y,tamanho);
+            app.addDevice(add);
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -28,7 +64,13 @@ public class TestApp
         int nif = Integer.parseInt(campos[1]);
         app.addPessoa(new Pessoa(nome,nif));
         String fornecedor = campos[2];
-        app.addCasa(nome,fornecedor);
+        try {
+            app.addCasa(nome,fornecedor);
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parseSmartBulb(String string)
     {
@@ -48,7 +90,7 @@ public class TestApp
         }
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartBulb("",true,tone,tamanho,consumo));
+        addSmartBulb(true,tone,tamanho,consumo);
     }
     public static void parseSmartCamera(String string)
     {
@@ -60,14 +102,14 @@ public class TestApp
         y = Integer.parseInt(resolucao[1]);
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartCamera("",true,consumo,x,y,tamanho));
+        addSmartCamera(true,consumo,x,y,tamanho);
     }
     public static void parseSmartSpeaker(String string)
     {
         String[] campos = string.split(",");
         int volume = Integer.parseInt(campos[0]);
         double consumo = Double.parseDouble(campos[3]);
-        app.addDevice(new SmartSpeaker("",true,volume,campos[1],campos[2],consumo));
+        addSmartSpeaker(true,volume,campos[1],campos[2],consumo);
     }
     @BeforeAll
     public static void parse(){
@@ -112,26 +154,32 @@ public class TestApp
     @Test
     public void TestInfo()
     {
-        Map<String,Pessoa> pessoas = app.getPessoas();
-        Map<String,Comerciante> fornecedores = app.getFornecedores();
-        Map<String,House> casas = app.getCasas();
-        Map<String,SmartDevices> devices = app.getDevices();
-        assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("111").getProprietario());
-        assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
-        double op = fornecedores.get("Endesa").getPreco();
-        fornecedores.get("Endesa").setPreco(30000);
-        assertEquals(fornecedores.get("Endesa").getPreco(),casas.get("111").getFornecedor().getPreco());
-        app.changeFornecedor("111","EDP Comercial");
-        assertTrue(fornecedores.get("EDP Comercial") == casas.get("111").getFornecedor());
-        app.changeFornecedor("111","Endesa");
-        assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
-        fornecedores.get("Endesa").setPreco(op);
-        Pessoa pessoa = casas.get("110").getProprietario();
-        app.changeProprietario("110","Jose Manuel Antunes de Carvalho");
-        assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
-        assertTrue(casas.get("110").getProprietario() == casas.get("111").getProprietario());
-        app.changeProprietario("110",pessoa.getNome());
-        assertFalse(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
-        assertTrue(pessoas.get(pessoa.getNome()) == casas.get("110").getProprietario());
+        try {
+            Map<String,Pessoa> pessoas = app.getPessoas();
+            Map<String,Comerciante> fornecedores = app.getFornecedores();
+            Map<String,House> casas = app.getCasas();
+            Map<String,SmartDevices> devices = app.getDevices();
+            assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("111").getProprietario());
+            assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
+            double op = fornecedores.get("Endesa").getPreco();
+            fornecedores.get("Endesa").setPreco(30000);
+            assertEquals(fornecedores.get("Endesa").getPreco(),casas.get("111").getFornecedor().getPreco());
+            app.changeFornecedor("111","EDP Comercial");
+            assertTrue(fornecedores.get("EDP Comercial") == casas.get("111").getFornecedor());
+            app.changeFornecedor("111","Endesa");
+            assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
+            fornecedores.get("Endesa").setPreco(op);
+            Pessoa pessoa = casas.get("110").getProprietario();
+            app.changeProprietario("110","Jose Manuel Antunes de Carvalho");
+            assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
+            assertTrue(casas.get("110").getProprietario() == casas.get("111").getProprietario());
+            app.changeProprietario("110",pessoa.getNome());
+            assertFalse(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
+            assertTrue(pessoas.get(pessoa.getNome()) == casas.get("110").getProprietario());
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

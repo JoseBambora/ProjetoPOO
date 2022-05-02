@@ -22,7 +22,13 @@ public class leficheiro
         int nif = Integer.parseInt(campos[1]);
         app.addPessoa(new Pessoa(nome,nif));
         String fornecedor = campos[2];
-        app.addCasa(nome,fornecedor);
+        try {
+            app.addCasa(nome,fornecedor);
+        }
+        catch (NullPointerNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parseSmartBulb(String string)
     {
@@ -42,7 +48,13 @@ public class leficheiro
         }
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartBulb("",true,tone,tamanho,consumo));
+        try {
+            app.addDevice(new SmartBulb("",true,tone,tamanho,consumo));
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parseSmartCamera(String string)
     {
@@ -54,14 +66,27 @@ public class leficheiro
         y = Integer.parseInt(resolucao[1]);
         double tamanho = Integer.parseInt(campos[1]);
         double consumo = Double.parseDouble(campos[2]);
-        app.addDevice(new SmartCamera("",true,consumo,x,y,tamanho));
+        try {
+            app.addDevice(new SmartCamera("",true,consumo,x,y,tamanho));
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parseSmartSpeaker(String string)
     {
         String[] campos = string.split(",");
         int volume = Integer.parseInt(campos[0]);
         double consumo = Double.parseDouble(campos[3]);
-        app.addDevice(new SmartSpeaker("",true,volume,campos[1],campos[2],consumo));
+        try {
+            app.addDevice(new SmartSpeaker("",true,volume,campos[1],campos[2],consumo));
+
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void parse(){
 
