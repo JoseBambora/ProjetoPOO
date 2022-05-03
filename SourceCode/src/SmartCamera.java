@@ -8,6 +8,7 @@ public class SmartCamera extends SmartDevices
      *
      */
     public SmartCamera(){
+        super();
         this.resolucaoX = 0;
         this.resolucaoY = 0;
         this.tamanho = 0;
@@ -17,10 +18,11 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public SmartCamera (int resolucaoX, int resolucaoY, double tamanho){
-        this.resolucaoX = resolucaoX;
-        this.resolucaoY = resolucaoY;
-        this.tamanho = tamanho;
+    public SmartCamera (String id, boolean on, double consumo) throws ValorNegativoException{
+        super(id,on,consumo);
+        this.resolucaoX = 0;
+        this.resolucaoY = 0;
+        this.tamanho = 0;
     }
 
 
@@ -73,7 +75,10 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public void setResolucaoX(int resolucaoX) {
+    public void setResolucaoX(int resolucaoX) throws ValorNegativoException {
+        if(resolucaoX < 0){
+            throw new ValorNegativoException("Resolução Horizontal Negativa no dispositivo "+this.getId());
+        }
         this.resolucaoX = resolucaoX;
     }
 
@@ -81,14 +86,20 @@ public class SmartCamera extends SmartDevices
     /**
      *
      */
-    public void setResolucaoY(int resolucaoY) {
+    public void setResolucaoY(int resolucaoY) throws ValorNegativoException{
+        if(resolucaoY < 0){
+            throw new ValorNegativoException("Resolução Vertical Negativa no dispositivo "+this.getId());
+        }
         this.resolucaoY = resolucaoY;
     }
 
     /**
      *
      */
-    public void setTamanho(double tamanho) {
+    public void setTamanho(double tamanho) throws ValorNegativoException{
+        if(tamanho < 0){
+            throw new ValorNegativoException("Tamanho Negativo no dispositivo "+this.getId());
+        }
         this.tamanho = tamanho;
     }
 
@@ -123,7 +134,10 @@ public class SmartCamera extends SmartDevices
         return sb.toString();
     }
 
-    public double calculaConsumo (int dias) {
+    public double calculaConsumo (int dias) throws ValorNegativoException{
+        if(dias < 0){
+            throw new ValorNegativoException("Dias Negativo "+ dias);
+        }
         return this.isOn() ? (this.getConsumo() * dias) + (resolucaoX*resolucaoY*tamanho) / 1000000 : 0;
     }
 }

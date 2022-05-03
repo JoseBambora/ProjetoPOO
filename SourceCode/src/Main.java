@@ -73,7 +73,7 @@ public class Main {
         try {
             app.addCasa(nome,fornecedor);
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
@@ -221,7 +221,7 @@ public class Main {
         try {
             app.addCasa(nome,cm);
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }

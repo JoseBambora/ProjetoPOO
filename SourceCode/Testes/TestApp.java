@@ -64,7 +64,7 @@ public class TestApp
         try {
             app.addCasa(nome,fornecedor);
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
@@ -174,7 +174,7 @@ public class TestApp
             assertFalse(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
             assertTrue(pessoas.get(pessoa.getNome()) == casas.get("110").getProprietario());
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }

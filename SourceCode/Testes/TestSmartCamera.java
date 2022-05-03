@@ -29,16 +29,6 @@ public class TestSmartCamera {
     }
 
     @Test
-    public void testGetConsumo() {
-        assertEquals(10, smartCamera1.getConsumo());
-        assertEquals(20, smartCamera2.getConsumo());
-        assertEquals(10, smartCamera3.getConsumo());
-        assertEquals(5, smartCamera4.getConsumo());
-        assertEquals(10, smartCamera5.getConsumo());
-        assertEquals(10, smartCamera6.getConsumo());
-    }
-
-    @Test
     public void testGetResolucao(){
         assertEquals(1920, smartCamera1.getResolucaoX());
         assertEquals(1080, smartCamera1.getResolucaoY());
@@ -55,13 +45,13 @@ public class TestSmartCamera {
     }
 
     @Test
-    public void testGetTamanho(){
-        assertEquals(10, smartCamera1.getTamanho());
-        assertEquals(40, smartCamera2.getTamanho());
-        assertEquals(30, smartCamera3.getTamanho());
-        assertEquals(55, smartCamera4.getTamanho());
-        assertEquals(70, smartCamera5.getTamanho());
-        assertEquals(12, smartCamera6.getTamanho());
+    public void testGetTamanho() {
+            assertEquals(10, smartCamera1.getTamanho());
+            assertEquals(40, smartCamera2.getTamanho());
+            assertEquals(30, smartCamera3.getTamanho());
+            assertEquals(55, smartCamera4.getTamanho());
+            assertEquals(70, smartCamera5.getTamanho());
+            assertEquals(12, smartCamera6.getTamanho());
     }
 
     @Test
@@ -82,30 +72,40 @@ public class TestSmartCamera {
     }
 
     @Test
-    public void testSetResolucao(){
-        smartCamera1.setResolucaoX(1920);
-        smartCamera1.setResolucaoY(1080);
-        assertEquals(1920, smartCamera1.getResolucaoX());
-        assertEquals(1080, smartCamera1.getResolucaoY());
-        smartCamera1.setResolucaoX(0);
-        smartCamera1.setResolucaoY(0);
-        assertNotEquals(1920, smartCamera1.getResolucaoX());
-        assertNotEquals(1080, smartCamera1.getResolucaoY());
-        smartCamera1.setResolucaoX(1920);
-        smartCamera1.setResolucaoY(1080);
-        assertEquals(1920, smartCamera1.getResolucaoX());
-        assertEquals(1080, smartCamera1.getResolucaoY());
+    public void testSetResolucao() {
+        try {
+            smartCamera1.setResolucaoX(1920);
+            smartCamera1.setResolucaoY(1080);
+            assertEquals(1920, smartCamera1.getResolucaoX());
+            assertEquals(1080, smartCamera1.getResolucaoY());
+            smartCamera1.setResolucaoX(0);
+            smartCamera1.setResolucaoY(0);
+            assertNotEquals(1920, smartCamera1.getResolucaoX());
+            assertNotEquals(1080, smartCamera1.getResolucaoY());
+            smartCamera1.setResolucaoX(1920);
+            smartCamera1.setResolucaoY(1080);
+            assertEquals(1920, smartCamera1.getResolucaoX());
+            assertEquals(1080, smartCamera1.getResolucaoY());
+        }
+        catch (ValorNegativoException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
-    public void testSetTamanho(){
-        assertEquals(10,smartCamera1.getTamanho());
-        smartCamera1.setTamanho(5);
-        assertEquals(5,smartCamera1.getTamanho());
-        smartCamera1.setTamanho(10);
-        assertEquals(10,smartCamera1.getTamanho());
+    public void testSetTamanho() {
+        try {
+            assertEquals(10, smartCamera1.getTamanho());
+            smartCamera1.setTamanho(5);
+            assertEquals(5, smartCamera1.getTamanho());
+            smartCamera1.setTamanho(10);
+            assertEquals(10, smartCamera1.getTamanho());
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
-
     @Test
     public void testEquals(){
         try {
@@ -127,14 +127,19 @@ public class TestSmartCamera {
     }
 
     @Test
-    public void testConsumo(){
+    public void testConsumo() throws ValorNegativoException {
     int dias = 31;
+    try{
         assertEquals(this.smartCamera1.calculaConsumo(dias),330.736,"Erro Calculo Consumo smartcamera1");
         assertEquals(this.smartCamera2.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera2");
         assertEquals(this.smartCamera3.calculaConsumo(dias),380.848,"Erro Calculo Consumo smartcamera3");
         assertEquals(this.smartCamera4.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera4");
         assertEquals(this.smartCamera5.calculaConsumo(dias),455.152,"Erro Calculo Consumo smartcamera5");
         assertEquals(this.smartCamera6.calculaConsumo(dias),0,"Erro Calculo Consumo smartcamera6");
+    }
+    catch (ValorNegativoException e){
+        System.out.println(e.getMessage());
+        }
     }
 }
 

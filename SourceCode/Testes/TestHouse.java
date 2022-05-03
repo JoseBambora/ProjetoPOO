@@ -130,7 +130,7 @@ public class TestHouse
             this.house6.addDevice("WC",b2);
             this.house6.addDevice("WC",s3);
         }
-        catch (ValorNegativoException | NullPointerNotExistException e)
+        catch (ValorNegativoException | NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
@@ -254,7 +254,7 @@ public class TestHouse
             assertTrue(devices.containsKey("s1") && devices.get("s1").equals(this.s1));
             assertFalse(devices.containsKey("s2") && devices.get("s2").equals(this.s2));
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
@@ -292,7 +292,7 @@ public class TestHouse
             for (SmartDevices smartDevices : devices1.values())
                 assertEquals(smartDevices, devices2.get(smartDevices.getId()));
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
@@ -359,8 +359,7 @@ public class TestHouse
     }
 
     @Test
-    public void testCalculoConsumo()
-    {
+    public void testCalculoConsumo() throws ValorNegativoException {
         this.house4.setAllOff();
 
         assertEquals(this.b1.calculaConsumo(1),56);

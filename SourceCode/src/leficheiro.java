@@ -25,7 +25,7 @@ public class leficheiro
         try {
             app.addCasa(nome,fornecedor);
         }
-        catch (NullPointerNotExistException e)
+        catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }

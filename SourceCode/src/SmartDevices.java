@@ -30,7 +30,7 @@ public abstract class SmartDevices
         this.on = smartDevices.isOn();
         this.consumo = smartDevices.getConsumo();
     }
-    public abstract double calculaConsumo(int dias);
+    public abstract double calculaConsumo(int dias) throws ValorNegativoException;
     public void turnOn()
     {
         this.setOn(true);
