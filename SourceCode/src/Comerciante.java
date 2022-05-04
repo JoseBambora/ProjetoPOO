@@ -115,8 +115,7 @@ public class Comerciante {
         return result.clone();
     }
 
-    public void addFatura(Fatura fatura, int imposto)
-    {
+    public void addFatura(Fatura fatura, int imposto) throws ValorNegativoException {
         if(!this.faturasEmitidas.containsKey(fatura.getDataEmissao()))
             this.faturasEmitidas.put(fatura.getDataEmissao(),new ArrayList<>());
         fatura.setPreco(this.formula.calculaPreco(fatura.getConsumo(),imposto));

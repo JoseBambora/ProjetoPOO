@@ -7,7 +7,7 @@ public class Pessoa
         this.nome = "";
         this.NIF = 0;
     }
-    public Pessoa(String nome, int NIF)
+    public Pessoa(String nome, int NIF) throws ValorNegativoException,NullPointerException
     {
         this.nome = nome;
         this.NIF = NIF;
@@ -25,11 +25,17 @@ public class Pessoa
         return nome;
     }
 
-    public void setNIF(int NIF) {
+    public void setNIF(int NIF) throws ValorNegativoException {
+        if(NIF < 0){
+            throw new ValorNegativoException("NIF negativo na pessoa "+this.getNome());
+        }
         this.NIF = NIF;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NullPointerException {
+        if(nome == null){
+            throw new NullPointerException("Nome nulo na pessoa com o NIF = "+this.getNIF());
+        }
         this.nome = nome;
     }
 

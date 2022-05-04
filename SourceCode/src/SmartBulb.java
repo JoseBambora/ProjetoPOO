@@ -46,13 +46,19 @@ public class SmartBulb extends SmartDevices {
         return this.tone;
     }
 
-    public void setTone(int t) {
+    public void setTone(int t) throws ValorNegativoException{
+        if(tone < 0){
+            throw new ValorNegativoException("Tone Negativo no dispositivo "+this.getId());
+        }
         if (t>WARM) this.tone = WARM;
         else this.tone = Math.max(t, COLD);
     }
 
-    public void setDimensao(double dimensao) {
-       if (dimensao >=0) this.dimensao = dimensao;
+    public void setDimensao(double dimensao) throws ValorNegativoException{
+        if(dimensao < 0){
+            throw new ValorNegativoException("Dimensão negativa no dispositivo "+this.getId());
+        }
+        this.dimensao = dimensao;
     }
 
 

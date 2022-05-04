@@ -60,27 +60,45 @@ public class Fatura {
         return this.dataEmissao;
     }
 
-    public void setImposto(int imposto) {
+    public void setImposto(int imposto) throws ValorNegativoException {
+        if(imposto < 0){
+            throw new ValorNegativoException("Tentativa de imposto negativo na Fatura "+this.toString());
+        }
         this.imposto = imposto;
     }
 
-    public void setCliente(Pessoa cliente) {
+    public void setCliente(Pessoa cliente) throws NullPointerException{
+        if(cliente == null){
+            throw new NullPointerException("Cliente nulo na Fatura "+this.toString());
+        }
         this.cliente = cliente;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(double preco) throws ValorNegativoException {
+        if(preco < 0){
+            throw new ValorNegativoException("Tentativa Preco negativo na Fatura "+this.toString());
+        }
         this.preco = preco;
     }
 
-    public void setConsumo(double consumo) {
+    public void setConsumo(double consumo) throws ValorNegativoException {
+        if(consumo < 0){
+            throw new ValorNegativoException("Tentativa de Consumo negativo na Fatura" +this.toString());
+        }
         this.consumo = consumo;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(String local) throws NullPointerException {
+        if(local == null){
+            throw new NullPointerException("Tentativa de Local nulo na fatura "+this.toString());
+        }
         this.local = local;
     }
 
-    public void setDataEmissao(LocalDate dataEmissao) {
+    public void setDataEmissao(LocalDate dataEmissao) throws NullPointerException {
+        if(dataEmissao == null){
+            throw new NullPointerException("Tentativa de Data de Emissão nula na Fatura "+this.toString());
+        }
         this.dataEmissao = dataEmissao;
     }
 

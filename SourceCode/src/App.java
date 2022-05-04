@@ -11,7 +11,7 @@ public class App
     private Map<String,SmartDevices> devices;
     private Map<String,Pessoa> pessoas;
     private String lastCasa;
-    private String lastDivisao;
+
     App(int imposto)
     {
         this.dataPrograma = LocalDate.now();
@@ -30,7 +30,7 @@ public class App
         SmartBulb smartBulb = new SmartBulb(id,mode,tone,tamanho,consumo);
         this.devices.put(id,smartBulb);
     }
-    public void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo) throws ValorNegativoException {
+    public void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo) throws ValorNegativoException, ValorExcedeMaximoException {
         String id = Integer.toString(this.devices.size() + 1);
         SmartSpeaker smartSpeaker = new SmartSpeaker(id,mode,volume,canal,marca,consumo);
         this.devices.put(id,smartSpeaker);
@@ -40,15 +40,13 @@ public class App
         SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);;
         this.devices.put(id,smartCamera);
     }
-    public void addPessoa(String nome, int nif)
-    {
+    public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
         this.pessoas.put(nome,new Pessoa(nome,nif));
     }
     public void addDivisao(String divisao)
     {
         if(this.casas.containsKey(this.lastCasa))
             this.casas.get(this.lastCasa).addDivisao(divisao);
-        this.lastDivisao = divisao;
     }
     public void addCasa(String pessoa, String fornecedor) throws NullPointerException
     {

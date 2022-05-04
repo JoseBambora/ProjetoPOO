@@ -35,8 +35,7 @@ public class SmartSpeaker extends SmartDevices
      * @param canal
      * @param marca
      */
-    public SmartSpeaker(String id, boolean on, int volume,String canal,String marca,double consumo)  throws ValorNegativoException
-    {
+    public SmartSpeaker(String id, boolean on, int volume,String canal,String marca,double consumo) throws ValorNegativoException, ValorExcedeMaximoException {
         super(id, on, consumo);
         this.setVolume(volume);
         this.canal = canal;
@@ -72,22 +71,35 @@ public class SmartSpeaker extends SmartDevices
     /**
      * @param canal
      */
-    public void setCanal(String canal) { this.canal = canal; }
+    public void setCanal(String canal) throws NullPointerException {
+        if(canal == null){
+            throw new NullPointerException("Canal Inexistente - String Nula no dispositivo "+this.getId());
+        }
+        this.canal = canal;
+    }
 
     /**
      * @param marca
      */
-    public void setMarca(String marca) { this.marca = marca;}
-
+    public void setMarca(String marca) throws NullPointerException {
+        if (canal == null) {
+            throw new NullPointerException("Marca Inexistente - String Nula no dispositivo "+this.getId());
+        }
+            this.marca = marca;
+    }
 
     /**
      * @param volume
      */
-    public void setVolume(int volume)
-    {
+    public void setVolume(int volume) throws ValorExcedeMaximoException,ValorNegativoException{
+
+        if     (this.volume > MAX) {
+            throw new ValorExcedeMaximoException("Volume excede o máximo no dispositvo "+getId());
+        }
+        if(this.volume < 0) {
+            throw new ValorNegativoException("Volume negativo no dispositivo "+this.getId());
+        }
         this.volume = volume;
-        if     (this.volume > MAX) this.volume = MAX;
-        else if(this.volume < 0)   this.volume = 0;
     }
 
     /**
@@ -164,8 +176,11 @@ public class SmartSpeaker extends SmartDevices
      * @param dias
      * @return
      */
-    public double calculaConsumo(int dias)
+    public double calculaConsumo(int dias) throws ValorNegativoException
     {
+        if(dias < 0){
+            throw new ValorNegativoException("Dias Negativo "+ dias);
+        }
         return this.isOn() ? (this.getConsumo() + this.getVolume()) * dias : 0;
     }
 }
