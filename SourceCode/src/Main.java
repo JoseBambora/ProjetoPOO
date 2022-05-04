@@ -17,45 +17,36 @@ public class Main {
     static Scanner iteracao = new Scanner(System.in);
     public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
     {
-        SmartBulb add = null;
         try {
-            add = new SmartBulb("",mode,tone,tamanho,consumo);
-            app.addDevice(add);
+            app.addSmartBulb(mode,tone,tamanho,consumo);
+            System.out.println("Smart Bulb adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException e)
         {
             System.out.println(e.getMessage());
         }
-        if(add != null)
-            System.out.println("Smart Bulb adicionado com sucesso " + add);
     }
     public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
     {
-        SmartSpeaker add = null;
         try {
-            add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
-            app.addDevice(add);
+            app.addSmartSpeaker(mode,volume,canal,marca,consumo);
+            System.out.println("Smart Speaker adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException e)
         {
             System.out.println(e.getMessage());
         }
-        if(add != null)
-            System.out.println("Smart Speaker adicionado com sucesso " + add);
     }
     public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
     {
-        SmartCamera add = null;
         try {
-            add = new SmartCamera("",mode,consumo,x,y,tamanho);
-            app.addDevice(add);
+            app.addSmartCamera(mode,consumo,x,y,tamanho);
+            System.out.println("Smart Camera adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException e)
         {
             System.out.println(e.getMessage());
         }
-        if(add != null)
-            System.out.println("Smart Camera adicionado com sucesso " + add);
     }
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
@@ -68,7 +59,7 @@ public class Main {
         String[] campos = input.split(",");
         String nome = campos[0];
         int nif = Integer.parseInt(campos[1]);
-        app.addPessoa(new Pessoa(nome,nif));
+        app.addPessoa(nome,nif);
         String fornecedor = campos[2];
         try {
             app.addCasa(nome,fornecedor);
@@ -140,7 +131,7 @@ public class Main {
                     parseSmartCamera(linhaPartida[1]);
                     break;
                 case "Fornecedor":
-                    app.addFornecedor(new Comerciante(linhaPartida[1],app.numberFornecedores()+1));
+                    app.addFornecedor(linhaPartida[1],new FormulaCalc1());
                     break;
                 default:
                     System.out.println(linhaPartida[0] + " " + linhaPartida[1]);
@@ -206,11 +197,13 @@ public class Main {
     {
         System.out.println("Qual o nome do Comerciante?");
         String nomeC = iteracao.next();
-        System.out.println("Introduza o preço deste comerciante");
-        double preco = iteracao.nextDouble();
-        Comerciante cm = new Comerciante(nomeC, preco);
-        app.addFornecedor(cm);
-        System.out.println("Comerciante adicionado com sucesso " + cm);
+        System.out.println("Introduza a Formula?");
+        int f = iteracao.nextInt();
+        Formulas formulas = new FormulaCalc1();
+        if(f == 2)
+            formulas = new FormulaCalc2();
+        app.addFornecedor(nomeC, formulas);
+        System.out.println("Comerciante adicionado com sucesso " + nomeC);
     }
     public static void addCasa()
     {
@@ -233,9 +226,8 @@ public class Main {
         String nome = iteracao.next();
         System.out.println("Introduza o NIF da pessoa");
         int NIF = iteracao.nextInt();
-        Pessoa newP = new Pessoa(nome, NIF);
-        app.addPessoa(newP);
-        System.out.println("Pessoa adicionada com sucesso " + newP);
+        app.addPessoa(nome, NIF);
+        System.out.println("Pessoa adicionada com sucesso " + nome + " " + NIF);
 
     }
     public static void main(String[] args)

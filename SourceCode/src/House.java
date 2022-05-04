@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class House {
     private Map<String,SmartDevices> devices;
@@ -162,6 +163,16 @@ public class House {
         }
     }
 
+    public void setDivisaoOnOff(String divisao, boolean on)
+    {
+        if(this.divisoes.containsKey(divisao))
+        {
+            List<String> devices = this.divisoes.get(divisao);
+            for(String device : devices)
+                this.devices.get(device).setOn(on);
+        }
+    }
+
     public void setDeviceOn(String device)
     {
         if(this.devices.containsKey(device))
@@ -177,7 +188,30 @@ public class House {
             this.devices.get(device).turnOff();
         }
     }
-
+    public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
+    {
+        for(SmartDevices smartDevices : this.devices.values())
+            smartDevices.setOn(on,predicate);
+    }
+    public void setDivisaoOn(Predicate<String> predicate, boolean on)
+    {
+        for(String divisoes : this.divisoes.keySet())
+        {
+            if(predicate.test(divisoes))
+                this.setDivisaoOnOff(divisoes,on);
+        }
+    }
+    public void setDivisaoSDOnOff(Predicate<String> predicate, Predicate<SmartDevices> predicate2, boolean on)
+    {
+        for(String divisoes : this.divisoes.keySet())
+        {
+            if(predicate.test(divisoes)) {
+                List<String> sd = this.divisoes.get(divisoes);
+                for(String sd1 : sd)
+                    this.devices.get(sd1).setOn(on,predicate2);
+            }
+        }
+    }
     public void addDevice(SmartDevices smartDevices)
     {
         this.devices.put(smartDevices.getId(),smartDevices.clone());

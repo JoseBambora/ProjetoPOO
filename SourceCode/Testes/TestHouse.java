@@ -62,9 +62,9 @@ public class TestHouse
             this.c4 = new SmartCamera("c4",true,20,800,500,10);
 
 
-            this.comerciante1 = new Comerciante("EDP",20);
-            this.comerciante2 = new Comerciante("Eneba",15);
-            this.comerciante3 = new Comerciante("Galp",17);
+            this.comerciante1 = new Comerciante("EDP",new FormulaCalc1());
+            this.comerciante2 = new Comerciante("Eneba",new FormulaCalc1());
+            this.comerciante3 = new Comerciante("Galp",new FormulaCalc2());
             this.morada1 = "Braga";
             this.morada2 = "Porto";
             this.morada3 = "Lisboa";

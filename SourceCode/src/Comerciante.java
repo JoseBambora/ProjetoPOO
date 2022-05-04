@@ -7,29 +7,29 @@ import java.util.Objects;
 
 public class Comerciante {
     private String nome;
-    private double preco;
+    private Formulas formula;
     private Map<LocalDate,List<Fatura>>faturasEmitidas;
     public Comerciante(){
             this.nome = "";
-            this.preco = 0;
+            this.formula = new FormulaCalc1();
             this.faturasEmitidas = new HashMap<>();
     }
 
-    public Comerciante(String nome, double preco){
+    public Comerciante(String nome, Formulas formulas){
         this.nome = nome;
-        this.preco = preco;
+        this.formula = formulas;
         this.faturasEmitidas = new HashMap<>();
     }
 
     public Comerciante(Comerciante comerciante)
     {
         this.nome = comerciante.getNome();
-        this.preco = comerciante.getPreco();
+        this.formula = comerciante.getFormula();
         this.faturasEmitidas = comerciante.getFaturasEmitidas();
     }
 
-    public double getPreco() {
-        return this.preco;
+    public Formulas getFormula() {
+        return this.formula;
     }
 
     public String getNome() {
@@ -49,8 +49,8 @@ public class Comerciante {
         return result;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setFormula(Formulas formula) {
+        this.formula = formula;
     }
 
     public void setNome(String nome) {
@@ -115,11 +115,11 @@ public class Comerciante {
         return result.clone();
     }
 
-    public void addFatura(Fatura fatura)
+    public void addFatura(Fatura fatura, int imposto)
     {
         if(!this.faturasEmitidas.containsKey(fatura.getDataEmissao()))
             this.faturasEmitidas.put(fatura.getDataEmissao(),new ArrayList<>());
-        fatura.setPreco(fatura.getConsumo() * this.getPreco());
+        fatura.setPreco(this.formula.calculaPreco(fatura.getConsumo(),imposto));
         this.faturasEmitidas.get(fatura.getDataEmissao()).add(fatura.clone());
     }
 
@@ -163,7 +163,6 @@ public class Comerciante {
         StringBuilder sb = new StringBuilder();
         sb.append("Comerciante:\n")
                 .append("Nome: ").append(this.nome).append("\n")
-                .append("Preco: ").append(this.preco).append("\n")
                 .append("Faturas Emitidas: ").append(this.faturasEmitidas).append("\n");
         return sb.toString();
     }

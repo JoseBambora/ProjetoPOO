@@ -6,10 +6,10 @@ public class App
 {
     private LocalDate dataPrograma;
     private int imposto;
-    private final Map<String,Comerciante> fornecedores;
-    private final Map<String,House> casas;
-    private final Map<String,SmartDevices> devices;
-    private final Map<String,Pessoa> pessoas;
+    private Map<String,Comerciante> fornecedores;
+    private Map<String,House> casas;
+    private Map<String,SmartDevices> devices;
+    private Map<String,Pessoa> pessoas;
     private String lastCasa;
     private String lastDivisao;
     App(int imposto)
@@ -21,20 +21,28 @@ public class App
         this.devices = new HashMap<>();
         this.pessoas = new HashMap<>();
     }
-    public void addFornecedor(Comerciante comerciante)
+    public void addFornecedor(String nome, Formulas formulas)
     {
-        this.fornecedores.put(comerciante.getNome(),comerciante.clone());
+        this.fornecedores.put(nome,new Comerciante(nome,formulas));
     }
-    public void addDevice(SmartDevices smartDevices)
-    {
-        SmartDevices smartDevices1 = smartDevices.clone();
-        smartDevices1.setId(Integer.toString(this.devices.size() + 1));
-        this.devices.put(smartDevices1.getId(), smartDevices1);
-        this.casas.get(this.lastCasa).addDevice(this.lastDivisao,smartDevices1);
+    public void addSmartBulb(boolean mode,int tone, double tamanho, double consumo) throws ValorNegativoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartBulb smartBulb = new SmartBulb(id,mode,tone,tamanho,consumo);
+        this.devices.put(id,smartBulb);
     }
-    public void addPessoa(Pessoa pessoa)
+    public void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo) throws ValorNegativoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartSpeaker smartSpeaker = new SmartSpeaker(id,mode,volume,canal,marca,consumo);
+        this.devices.put(id,smartSpeaker);
+    }
+    public void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho) throws ValorNegativoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);;
+        this.devices.put(id,smartCamera);
+    }
+    public void addPessoa(String nome, int nif)
     {
-        this.pessoas.put(pessoa.getNome(),pessoa.clone());
+        this.pessoas.put(nome,new Pessoa(nome,nif));
     }
     public void addDivisao(String divisao)
     {
@@ -59,18 +67,18 @@ public class App
             Pessoa proprietario;
             comerciante = casa.getFornecedor();
             proprietario = casa.getProprietario();
-            double preco = consumo * comerciante.getPreco() * (1 + (double) this.imposto / 100);
+            double preco =  0;
             Fatura fatura = new Fatura(proprietario,preco,this.imposto,consumo,newDate,casa.getLocal());
-            comerciante.addFatura(fatura);
+            comerciante.addFatura(fatura,23);
         }
     }
-    public void mudaPreco( Map<String,Double> atualizacao)
+    public void mudaPreco( Map<String,Formulas> atualizacao)
     {
-        for(Map.Entry<String,Double> valor : atualizacao.entrySet())
+        for(Map.Entry<String,Formulas> valor : atualizacao.entrySet())
         {
             if(this.fornecedores.containsKey(valor.getKey()))
             {
-                this.fornecedores.get(valor.getKey()).setPreco(valor.getValue());
+                this.fornecedores.get(valor.getKey()).setFormula(valor.getValue());
             }
         }
     }
@@ -188,7 +196,7 @@ public class App
         result.append("Formato: Nome Fornecedor | Preco do fornecedor\n");
         for(Comerciante comerciante : this.fornecedores.values())
         {
-            result.append(comerciante.getNome()).append(" ").append(comerciante.getPreco()).append("\n");
+            result.append(comerciante.getNome()).append(" ").append(comerciante.getFormula().toString()).append("\n");
         }
         return result.toString();
     }

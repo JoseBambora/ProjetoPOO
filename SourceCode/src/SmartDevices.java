@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public abstract class SmartDevices
 {
@@ -53,6 +54,11 @@ public abstract class SmartDevices
     }
     public void setOn(boolean on) {
         this.on = on;
+    }
+    public void setOn(boolean on, Predicate<SmartDevices> predicate)
+    {
+        if(predicate.test(this))
+            this.on = on;
     }
     public void setConsumo(double consumo) throws ValorNegativoException {
         if(consumo < 0)

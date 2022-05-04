@@ -33,58 +33,48 @@ public class TestComerciante
     @BeforeEach
     public void atribui()
     {
-        this.comerciante1 = new Comerciante("EDP",20.4);
-        this.comerciante2 = new Comerciante("Eneba",18.3);
-        this.comerciante3 = new Comerciante("Galp",18.8);
-        this.comerciante4 = new Comerciante("Repsol",19.3);
-        this.comerciante5 = new Comerciante("GreenEnergy",14.3);
-        this.comerciante6 = new Comerciante("BP",17.8);
+        int imposto = 23;
+        this.comerciante1 = new Comerciante("EDP",new FormulaCalc1());
+        this.comerciante2 = new Comerciante("Eneba",new FormulaCalc1());
+        this.comerciante3 = new Comerciante("Galp",new FormulaCalc1());
+        this.comerciante4 = new Comerciante("Repsol",new FormulaCalc2());
+        this.comerciante5 = new Comerciante("GreenEnergy",new FormulaCalc2());
+        this.comerciante6 = new Comerciante("BP",new FormulaCalc2());
+        double preco = 0;
         for(int i = 0; i < 10; i++)
         {
             double consumo = i * 100 + 50;
-            double preco = this.comerciante1.getPreco() * consumo;
-            this.faturaList1.add(new Fatura(this.pessoa1,preco,10,consumo,LocalDate.now(),this.morada1));
+            this.faturaList1.add(new Fatura(this.pessoa1,preco,imposto,consumo,LocalDate.now(),this.morada1));
             consumo = i * 75 + 50;
-            preco = this.comerciante2.getPreco() * consumo;
-            this.faturaList2.add(new Fatura(this.pessoa2,preco,10,consumo,LocalDate.now(),this.morada2));
+            this.faturaList2.add(new Fatura(this.pessoa2,preco,imposto,consumo,LocalDate.now(),this.morada2));
             consumo = i * 85 + 97;
-            preco = this.comerciante3.getPreco() * consumo;
-            this.faturaList3.add(new Fatura(this.pessoa3,preco,10,consumo,LocalDate.now(),this.morada3));
+            this.faturaList3.add(new Fatura(this.pessoa3,preco,imposto,consumo,LocalDate.now(),this.morada3));
             consumo = i * 90 + 65;
-            preco = this.comerciante4.getPreco() * consumo;
-            this.faturaList4.add(new Fatura(this.pessoa1,preco,10,consumo,LocalDate.now(),this.morada4));
+            this.faturaList4.add(new Fatura(this.pessoa1,preco,imposto,consumo,LocalDate.now(),this.morada4));
             consumo = i * 105 + 45;
-            preco = this.comerciante5.getPreco() * consumo;
-            this.faturaList5.add(new Fatura(this.pessoa2,preco,10,consumo,LocalDate.now(),this.morada5));
+            this.faturaList5.add(new Fatura(this.pessoa2,preco,imposto,consumo,LocalDate.now(),this.morada5));
             consumo = i * 80 + 100;
-            preco = this.comerciante6.getPreco() * consumo;
-            this.faturaList6.add(new Fatura(this.pessoa3,preco,10,consumo,LocalDate.now(),this.morada6));
+            this.faturaList6.add(new Fatura(this.pessoa3,preco,imposto,consumo,LocalDate.now(),this.morada6));
         }
         for(int i = 0; i < 10; i++)
         {
-            this.comerciante1.addFatura(this.faturaList1.get(i));
-            this.comerciante2.addFatura(this.faturaList2.get(i));
-            this.comerciante3.addFatura(this.faturaList3.get(i));
-            this.comerciante4.addFatura(this.faturaList4.get(i));
-            this.comerciante5.addFatura(this.faturaList5.get(i));
-            this.comerciante6.addFatura(this.faturaList6.get(i));
+            this.comerciante1.addFatura(this.faturaList1.get(i),imposto);
+            this.comerciante2.addFatura(this.faturaList2.get(i),imposto);
+            this.comerciante3.addFatura(this.faturaList3.get(i),imposto);
+            this.comerciante4.addFatura(this.faturaList4.get(i),imposto);
+            this.comerciante5.addFatura(this.faturaList5.get(i),imposto);
+            this.comerciante6.addFatura(this.faturaList6.get(i),imposto);
         }
     }
     @Test
     public void testGetters()
     {
         assertEquals(this.comerciante1.getNome(), "EDP");
-        assertEquals(this.comerciante1.getPreco(), 20.4);
         assertEquals(this.comerciante2.getNome(), "Eneba");
-        assertEquals(this.comerciante2.getPreco(), 18.3);
         assertEquals(this.comerciante3.getNome(), "Galp");
-        assertEquals(this.comerciante3.getPreco(), 18.8);
         assertEquals(this.comerciante4.getNome(), "Repsol");
-        assertEquals(this.comerciante4.getPreco(), 19.3);
         assertEquals(this.comerciante5.getNome(), "GreenEnergy");
-        assertEquals(this.comerciante5.getPreco(), 14.3);
         assertEquals(this.comerciante6.getNome(), "BP");
-        assertEquals(this.comerciante6.getPreco(), 17.8);
         Comerciante aux = this.comerciante2.clone();
         Map<LocalDate, List<Fatura>> map1 = aux.getFaturasEmitidas();
         Map<LocalDate, List<Fatura>> map2 = this.comerciante2.getFaturasEmitidas();
@@ -101,9 +91,9 @@ public class TestComerciante
     public void testSetters()
     {
         this.comerciante1.setNome("Braga");
-        this.comerciante1.setPreco(30.76);
+        this.comerciante1.setFormula(new FormulaCalc2());
         assertEquals(this.comerciante1.getNome(), "Braga");
-        assertEquals(this.comerciante1.getPreco(), 30.76);
+        assertEquals(this.comerciante4.getFormula().calculaPreco(30,23), this.comerciante1.getFormula().calculaPreco(30,23));
         this.comerciante1.setFaturasEmitidas(this.comerciante2.getFaturasEmitidas());
         assertNotEquals(this.comerciante1,this.comerciante2);
         Map<LocalDate, List<Fatura>> map1 = this.comerciante1.getFaturasEmitidas();
@@ -123,7 +113,7 @@ public class TestComerciante
     {
         Comerciante aux = this.comerciante2.clone();
         assertEquals(aux,this.comerciante2);
-        aux.setPreco(30);
+        aux.setFormula(new FormulaCalc1());
         assertEquals(aux,this.comerciante2);
         aux.setNome("Nome");
         assertNotEquals(aux,this.comerciante2);

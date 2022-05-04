@@ -18,8 +18,7 @@ public class TestApp
     public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
     {
         try {
-            SmartBulb add  = new SmartBulb("",mode,tone,tamanho,consumo);
-            app.addDevice(add);
+            app.addSmartBulb(mode,tone,tamanho,consumo);
         }
         catch (ValorNegativoException e)
         {
@@ -29,8 +28,7 @@ public class TestApp
     public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
     {
         try {
-            SmartSpeaker add = new SmartSpeaker("",mode,volume,canal,marca,consumo);
-            app.addDevice(add);
+            app.addSmartSpeaker(mode,volume,canal,marca,consumo);
         }
         catch (ValorNegativoException e)
         {
@@ -40,8 +38,7 @@ public class TestApp
     public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
     {
         try {
-            SmartCamera add = new SmartCamera("",mode,consumo,x,y,tamanho);
-            app.addDevice(add);
+            app.addSmartCamera(mode,consumo,x,y,tamanho);
         }
         catch (ValorNegativoException e)
         {
@@ -59,7 +56,7 @@ public class TestApp
         String[] campos = input.split(",");
         String nome = campos[0];
         int nif = Integer.parseInt(campos[1]);
-        app.addPessoa(new Pessoa(nome,nif));
+        app.addPessoa(nome,nif);
         String fornecedor = campos[2];
         try {
             app.addCasa(nome,fornecedor);
@@ -132,7 +129,7 @@ public class TestApp
                     parseSmartCamera(linhaPartida[1]);
                     break;
                 case "Fornecedor":
-                    app.addFornecedor(new Comerciante(linhaPartida[1],app.numberFornecedores()+1));
+                    app.addFornecedor(linhaPartida[1],new FormulaCalc1());
                     break;
                 default:
                     System.out.println(linhaPartida[0] + " " + linhaPartida[1]);
@@ -158,14 +155,10 @@ public class TestApp
             Map<String,SmartDevices> devices = app.getDevices();
             assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("111").getProprietario());
             assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
-            double op = fornecedores.get("Endesa").getPreco();
-            fornecedores.get("Endesa").setPreco(30000);
-            assertEquals(fornecedores.get("Endesa").getPreco(),casas.get("111").getFornecedor().getPreco());
             app.changeFornecedor("111","EDP Comercial");
             assertTrue(fornecedores.get("EDP Comercial") == casas.get("111").getFornecedor());
             app.changeFornecedor("111","Endesa");
             assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
-            fornecedores.get("Endesa").setPreco(op);
             Pessoa pessoa = casas.get("110").getProprietario();
             app.changeProprietario("110","Jose Manuel Antunes de Carvalho");
             assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
