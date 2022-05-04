@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 public class TestFatura
 {
-    private Pessoa pessoa1 = new Pessoa("Jose",20);
-    private Pessoa pessoa2 = new Pessoa("Rita",19);
-    private Pessoa pessoa3 = new Pessoa("Miguel",18);
+    private Pessoa pessoa1;
+    private Pessoa pessoa2;
+    private Pessoa pessoa3;
     private String morada1 = "Lisboa";
     private String morada2 = "Porto";
     private String morada3 = "Braga";
@@ -21,6 +21,16 @@ public class TestFatura
     @BeforeEach
     public void atribui()
     {
+        try {
+            this.pessoa1 = new Pessoa("Jose",20);
+            this.pessoa2 = new Pessoa("Rita",19);
+            this.pessoa3 = new Pessoa("Miguel",18);
+
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
         this.fatura1 = new Fatura(this.pessoa1,20,10,10,LocalDate.of(2020,1,1),morada1);
         this.fatura2 = new Fatura(this.pessoa1,30,10,13,LocalDate.of(2021,1,1),morada1);
         this.fatura3 = new Fatura(this.pessoa2,40,10,15,LocalDate.of(2020,1,1),morada2);
@@ -65,15 +75,21 @@ public class TestFatura
     @Test
     public void testSetters()
     {
-        this.fatura1.setCliente(this.fatura3.getCliente());
-        this.fatura4.setPreco(100);
-        this.fatura4.setConsumo(60);
-        this.fatura3.setConsumo(this.fatura4.getConsumo());
-        this.fatura3.setPreco(this.fatura4.getPreco());
-        this.fatura6.setLocal(this.morada2);
-        this.fatura5.setDataEmissao(LocalDate.of(2020,5,5));
-        this.fatura2.setDataEmissao(this.fatura5.getDataEmissao());
-        this.fatura6.setCliente(this.fatura1.getCliente());
+        try {
+            this.fatura1.setCliente(this.fatura3.getCliente());
+            this.fatura4.setPreco(100);
+            this.fatura4.setConsumo(60);
+            this.fatura3.setConsumo(this.fatura4.getConsumo());
+            this.fatura3.setPreco(this.fatura4.getPreco());
+            this.fatura6.setLocal(this.morada2);
+            this.fatura5.setDataEmissao(LocalDate.of(2020,5,5));
+            this.fatura2.setDataEmissao(this.fatura5.getDataEmissao());
+            this.fatura6.setCliente(this.fatura1.getCliente());
+        }
+        catch (NullPointerException | ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
         this.morada2 = "";
         assertEquals(this.fatura1.getCliente(),this.fatura3.getCliente(),"Set Cliente 1 Errado");
         assertEquals(this.fatura3.getCliente(),this.fatura4.getCliente(),"Set Cliente 2 Errado");
@@ -111,24 +127,37 @@ public class TestFatura
     @Test
     public void testEquals()
     {
-        Fatura fatura = new Fatura(this.fatura1);
-        Fatura fatura7 = this.fatura4.clone();
-        assertEquals(fatura,this.fatura1,"Equals 1 errado");
-        assertEquals(fatura7,this.fatura4,"Equals 2 errado");
-        this.fatura4.setCliente(this.fatura1.getCliente());
-        assertNotEquals(fatura7,this.fatura4,"Equals 1 errado");
-        assertNotEquals(this.fatura1,this.fatura4,"Equals 1 errado");
+        try {
+            Fatura fatura = new Fatura(this.fatura1);
+            Fatura fatura7 = this.fatura4.clone();
+            assertEquals(fatura,this.fatura1,"Equals 1 errado");
+            assertEquals(fatura7,this.fatura4,"Equals 2 errado");
+            this.fatura4.setCliente(this.fatura1.getCliente());
+            assertNotEquals(fatura7,this.fatura4,"Equals 1 errado");
+            assertNotEquals(this.fatura1,this.fatura4,"Equals 1 errado");
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
 
     }
     @Test
     public void testAgregação()
     {
-        Fatura faturaT1 = new Fatura(pessoa1, 20,10, 10,LocalDate.of(2020,1,1),morada1);
-        Fatura faturaT2 = new Fatura(pessoa2, 20,10, 10,LocalDate.of(2020,1,1),morada1);
-        this.pessoa1.setNome("Alberto");
-        this.pessoa2.setNome("Josefa");
-        assertEquals(faturaT1.getCliente(), this.pessoa1, "Agregação Errada");
-        assertEquals(faturaT2.getCliente(), this.pessoa2, "Agregação Errada");
-    }}
+        try {
+            Fatura faturaT1 = new Fatura(pessoa1, 20, 10, 10, LocalDate.of(2020, 1, 1), morada1);
+            Fatura faturaT2 = new Fatura(pessoa2, 20, 10, 10, LocalDate.of(2020, 1, 1), morada1);
+            this.pessoa1.setNome("Alberto");
+            this.pessoa2.setNome("Josefa");
+            assertEquals(faturaT1.getCliente(), this.pessoa1, "Agregação Errada");
+            assertEquals(faturaT2.getCliente(), this.pessoa2, "Agregação Errada");
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+}
 
 

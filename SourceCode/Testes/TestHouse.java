@@ -50,11 +50,16 @@ public class TestHouse
             this.b2 = new SmartBulb("b2",true,1,20,28);
             this.b3 = new SmartBulb("b3",true,0,16,23);
             this.b4 = new SmartBulb("b4",true,1,10,15);
-
-            this.s1 = new SmartSpeaker("s1",true,9,"RFM","LG",20);
-            this.s2 = new SmartSpeaker("s2",true,10,"RR","LG",20);
-            this.s3 = new SmartSpeaker("s3",true,16,"RC","Samsung",10);
-            this.s4 = new SmartSpeaker("s4",true,5,"MH","Sony",30);
+            try {
+                this.s1 = new SmartSpeaker("s1",true,9,"RFM","LG",20);
+                this.s2 = new SmartSpeaker("s2",true,10,"RR","LG",20);
+                this.s3 = new SmartSpeaker("s3",true,16,"RC","Samsung",10);
+                this.s4 = new SmartSpeaker("s4",true,5,"MH","Sony",30);
+            }
+            catch (ValorExcedeMaximoException e)
+            {
+                System.out.println(e.getMessage());
+            }
 
             this.c1 = new SmartCamera("c1",true,5,1920,1080,30);
             this.c2 = new SmartCamera("c2",true,10,1090,920,20);
@@ -179,30 +184,36 @@ public class TestHouse
     @Test
     public void testComposicaoAgregacao()
     {
-        this.pessoa1.setNIF(90);
-        assertEquals(this.house1.getProprietario(),this.pessoa1, "Erro agregação 1");
-        assertEquals(this.house2.getProprietario(),this.pessoa1, "Erro agregação 2");
-        this.comerciante2.setNome("Repsol");
-        assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
-        assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
-        assertNotEquals(this.house3.getLocal(),this.morada5, "Erro composição 5");
-        Map<String, List<String>> divisoes = this.house1.getDivisoes();
-        Map<String, SmartDevices> devices = this.house1.getDevices();
-        this.b1.setTone(0);
-        this.c2.setOn(false);
-        this.s2.setMarca("Sony");
-        assertNotEquals(devices.get("b1"), this.b1);
-        assertEquals(devices.get("c2"), this.c2);
-        assertNotEquals(devices.get("s2"), this.s2);
-        devices.remove("b1");
-        assertFalse(devices.containsKey("b1"));
-        assertTrue(this.house1.getDevices().containsKey("b1"));
-        divisoes.remove("Sala");
-        assertFalse(divisoes.containsKey("Sala"));
-        assertTrue(this.house1.getDivisoes().containsKey("Sala"));
-        this.house3.setDeviceOff("b4");
-        assertFalse(this.house3.getDevices().get("b4").isOn());
-        assertTrue(this.house2.getDevices().get("b4").isOn());
+        try {
+            this.pessoa1.setNIF(90);
+            assertEquals(this.house1.getProprietario(),this.pessoa1, "Erro agregação 1");
+            assertEquals(this.house2.getProprietario(),this.pessoa1, "Erro agregação 2");
+            this.comerciante2.setNome("Repsol");
+            assertEquals(this.house3.getFornecedor(),this.comerciante2, "Erro composição 3");
+            assertEquals(this.house4.getFornecedor(),this.comerciante2, "Erro composição 4");
+            assertNotEquals(this.house3.getLocal(),this.morada5, "Erro composição 5");
+            Map<String, List<String>> divisoes = this.house1.getDivisoes();
+            Map<String, SmartDevices> devices = this.house1.getDevices();
+            this.b1.setTone(0);
+            this.c2.setOn(false);
+            this.s2.setMarca("Sony");
+            assertNotEquals(devices.get("b1"), this.b1);
+            assertEquals(devices.get("c2"), this.c2);
+            assertNotEquals(devices.get("s2"), this.s2);
+            devices.remove("b1");
+            assertFalse(devices.containsKey("b1"));
+            assertTrue(this.house1.getDevices().containsKey("b1"));
+            divisoes.remove("Sala");
+            assertFalse(divisoes.containsKey("Sala"));
+            assertTrue(this.house1.getDivisoes().containsKey("Sala"));
+            this.house3.setDeviceOff("b4");
+            assertFalse(this.house3.getDevices().get("b4").isOn());
+            assertTrue(this.house2.getDevices().get("b4").isOn());
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testSetters()

@@ -9,8 +9,8 @@ public class Pessoa
     }
     public Pessoa(String nome, int NIF) throws ValorNegativoException,NullPointerException
     {
-        this.nome = nome;
-        this.NIF = NIF;
+        this.setNome(nome);
+        this.setNIF(NIF);
     }
     public Pessoa(Pessoa pessoa)
     {

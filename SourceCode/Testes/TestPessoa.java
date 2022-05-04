@@ -15,11 +15,18 @@ public class TestPessoa
     @BeforeEach
     public void atribui()
     {
-        this.p1 = new Pessoa();
-        this.p2 = new Pessoa("José"  ,12345);
-        this.p3 = new Pessoa("Rita"  ,1234);
-        this.p4 = new Pessoa("Miguel",123);
-        this.p5 = new Pessoa("Marcelo" ,12);
+        try
+        {
+            this.p1 = new Pessoa();
+            this.p2 = new Pessoa("José"  ,12345);
+            this.p3 = new Pessoa("Rita"  ,1234);
+            this.p4 = new Pessoa("Miguel",123);
+            this.p5 = new Pessoa("Marcelo" ,12);
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testGetters()
@@ -38,24 +45,36 @@ public class TestPessoa
     @Test
     public void testSetters()
     {
-        this.p1.setNIF(123456);
-        this.p1.setNome("Cristiano");
-        this.p2.setNIF(234567);
-        this.p2.setNome("Ronaldo");
-        assertEquals(this.p1.getNIF(),123456,"Erro set NIF");
-        assertEquals(this.p1.getNome(),"Cristiano","Erro set NIF");
-        assertEquals(this.p2.getNIF(),234567,"Erro set NIF");
-        assertEquals(this.p2.getNome(),"Ronaldo","Erro set NIF");
+        try {
+            this.p1.setNIF(123456);
+            this.p1.setNome("Cristiano");
+            this.p2.setNIF(234567);
+            this.p2.setNome("Ronaldo");
+            assertEquals(this.p1.getNIF(),123456,"Erro set NIF");
+            assertEquals(this.p1.getNome(),"Cristiano","Erro set NIF");
+            assertEquals(this.p2.getNIF(),234567,"Erro set NIF");
+            assertEquals(this.p2.getNome(),"Ronaldo","Erro set NIF");
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testEquals()
     {
-        Pessoa p6 = new Pessoa();
-        Pessoa p7 = new Pessoa("José",12345);
-        assertEquals(this.p2,p7,"Equals 1 errado");
-        assertEquals(this.p1,p6,"Equals 2 errado");
-        p7.setNIF(123456);
-        assertNotEquals(this.p2,p7,"Equals 3 errado");
+        try {
+            Pessoa p6 = new Pessoa();
+            Pessoa p7 = new Pessoa("José",12345);
+            assertEquals(this.p2,p7,"Equals 1 errado");
+            assertEquals(this.p1,p6,"Equals 2 errado");
+            p7.setNIF(123456);
+            assertNotEquals(this.p2,p7,"Equals 3 errado");
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     @Test
     public void testHashCode()

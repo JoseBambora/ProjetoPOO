@@ -21,7 +21,7 @@ public class TestSmartDevices
             this.smartCamera1 = new SmartCamera("5",true,10,1920,1080,10);
             this.smartCamera2 = new SmartCamera("6",false,20,1920,1080,40);
         }
-        catch (ValorNegativoException e)
+        catch (ValorNegativoException | ValorExcedeMaximoException e)
         {
             System.out.println(e.getMessage());
         }

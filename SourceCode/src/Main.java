@@ -32,7 +32,7 @@ public class Main {
             app.addSmartSpeaker(mode,volume,canal,marca,consumo);
             System.out.println("Smart Speaker adicionado com sucesso " + app.numberDevices());
         }
-        catch (ValorNegativoException e)
+        catch (ValorNegativoException | ValorExcedeMaximoException e)
         {
             System.out.println(e.getMessage());
         }
@@ -56,15 +56,15 @@ public class Main {
     }
 
     public static void parseCasa(String input){
-        String[] campos = input.split(",");
-        String nome = campos[0];
-        int nif = Integer.parseInt(campos[1]);
-        app.addPessoa(nome,nif);
-        String fornecedor = campos[2];
         try {
+            String[] campos = input.split(",");
+            String nome = campos[0];
+            int nif = Integer.parseInt(campos[1]);
+            app.addPessoa(nome,nif);
+            String fornecedor = campos[2];
             app.addCasa(nome,fornecedor);
         }
-        catch (NullPointerException e)
+        catch (NullPointerException |  ValorNegativoException e)
         {
             System.out.println(e.getMessage());
         }
@@ -222,12 +222,19 @@ public class Main {
     }
     public static void addPessoa()
     {
-        System.out.println("Qual o nome da pessoa?");
-        String nome = iteracao.next();
-        System.out.println("Introduza o NIF da pessoa");
-        int NIF = iteracao.nextInt();
-        app.addPessoa(nome, NIF);
-        System.out.println("Pessoa adicionada com sucesso " + nome + " " + NIF);
+        try
+        {
+            System.out.println("Qual o nome da pessoa?");
+            String nome = iteracao.next();
+            System.out.println("Introduza o NIF da pessoa");
+            int NIF = iteracao.nextInt();
+            app.addPessoa(nome, NIF);
+            System.out.println("Pessoa adicionada com sucesso " + nome + " " + NIF);
+        }
+        catch (NullPointerException | ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
 
     }
     public static void main(String[] args)

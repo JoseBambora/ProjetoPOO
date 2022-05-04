@@ -30,7 +30,7 @@ public class TestApp
         try {
             app.addSmartSpeaker(mode,volume,canal,marca,consumo);
         }
-        catch (ValorNegativoException e)
+        catch (ValorNegativoException | ValorExcedeMaximoException e)
         {
             System.out.println(e.getMessage());
         }
@@ -53,15 +53,16 @@ public class TestApp
     }
 
     public static void parseCasa(String input){
-        String[] campos = input.split(",");
-        String nome = campos[0];
-        int nif = Integer.parseInt(campos[1]);
-        app.addPessoa(nome,nif);
-        String fornecedor = campos[2];
         try {
+
+            String[] campos = input.split(",");
+            String nome = campos[0];
+            int nif = Integer.parseInt(campos[1]);
+            app.addPessoa(nome,nif);
+            String fornecedor = campos[2];
             app.addCasa(nome,fornecedor);
         }
-        catch (NullPointerException e)
+        catch (NullPointerException | ValorNegativoException e)
         {
             System.out.println(e.getMessage());
         }

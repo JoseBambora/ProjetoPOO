@@ -27,13 +27,22 @@ public class TestComerciante
     private final String morada4 = "Bragança";
     private final String morada5 = "Algarve";
     private final String morada6 = "Setubal";
-    private final Pessoa pessoa1 = new Pessoa("Jose",1234);
-    private final Pessoa pessoa2 = new Pessoa("Miguel",123);
-    private final Pessoa pessoa3 = new Pessoa("Rita",12);
+    private Pessoa pessoa1;
+    private Pessoa pessoa2;
+    private Pessoa pessoa3;
     @BeforeEach
     public void atribui()
     {
         int imposto = 23;
+        try {
+            this.pessoa1 = new Pessoa("Jose", 1234);
+            this.pessoa2 = new Pessoa("Miguel", 123);
+            this.pessoa3 = new Pessoa("Rita", 12);
+        }
+        catch(ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
         this.comerciante1 = new Comerciante("EDP",new FormulaCalc1());
         this.comerciante2 = new Comerciante("Eneba",new FormulaCalc1());
         this.comerciante3 = new Comerciante("Galp",new FormulaCalc1());
@@ -56,14 +65,20 @@ public class TestComerciante
             consumo = i * 80 + 100;
             this.faturaList6.add(new Fatura(this.pessoa3,preco,imposto,consumo,LocalDate.now(),this.morada6));
         }
-        for(int i = 0; i < 10; i++)
+        try {
+            for(int i = 0; i < 10; i++)
+            {
+                this.comerciante1.addFatura(this.faturaList1.get(i),imposto);
+                this.comerciante2.addFatura(this.faturaList2.get(i),imposto);
+                this.comerciante3.addFatura(this.faturaList3.get(i),imposto);
+                this.comerciante4.addFatura(this.faturaList4.get(i),imposto);
+                this.comerciante5.addFatura(this.faturaList5.get(i),imposto);
+                this.comerciante6.addFatura(this.faturaList6.get(i),imposto);
+            }
+        }
+        catch (ValorNegativoException e)
         {
-            this.comerciante1.addFatura(this.faturaList1.get(i),imposto);
-            this.comerciante2.addFatura(this.faturaList2.get(i),imposto);
-            this.comerciante3.addFatura(this.faturaList3.get(i),imposto);
-            this.comerciante4.addFatura(this.faturaList4.get(i),imposto);
-            this.comerciante5.addFatura(this.faturaList5.get(i),imposto);
-            this.comerciante6.addFatura(this.faturaList6.get(i),imposto);
+            System.out.println(e.getMessage());
         }
     }
     @Test
@@ -146,11 +161,17 @@ public class TestComerciante
         assertEquals(this.comerciante4.numFaturasEmitidas(),10);
         assertEquals(this.comerciante5.numFaturasEmitidas(),10);
         assertEquals(this.comerciante6.numFaturasEmitidas(),10);
-        this.faturaList1.get(0).setLocal("");
-        this.faturaList2.get(1).setCliente(new Pessoa());
-        this.faturaList3.get(2).setDataEmissao(LocalDate.of(2000,2,2));
-        this.faturaList4.get(3).setPreco(200);
-        this.faturaList5.get(4).setConsumo(100000);
+        try {
+            this.faturaList1.get(0).setLocal("");
+            this.faturaList2.get(1).setCliente(new Pessoa());
+            this.faturaList3.get(2).setDataEmissao(LocalDate.of(2000,2,2));
+            this.faturaList4.get(3).setPreco(200);
+            this.faturaList5.get(4).setConsumo(100000);
+        }
+        catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
         assertNotEquals(this.comerciante1.getFaturasEmitidas().get(LocalDate.now()).get(0).getLocal()      , this.faturaList1.get(0).getLocal());
         assertNotEquals(this.comerciante2.getFaturasEmitidas().get(LocalDate.now()).get(1).getCliente()    , this.faturaList2.get(1).getCliente());
         assertNotEquals(this.comerciante3.getFaturasEmitidas().get(LocalDate.now()).get(2).getDataEmissao(), this.faturaList3.get(2).getDataEmissao());

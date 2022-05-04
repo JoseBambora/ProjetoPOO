@@ -1,6 +1,6 @@
 public class SmartSpeaker extends SmartDevices
 {
-    private static final int MAX = 20;
+    private static final int MAX = 100;
     private int volume;
     private String canal;
     private String marca;
@@ -82,10 +82,10 @@ public class SmartSpeaker extends SmartDevices
      * @param marca
      */
     public void setMarca(String marca) throws NullPointerException {
-        if (canal == null) {
+        if (marca == null) {
             throw new NullPointerException("Marca Inexistente - String Nula no dispositivo "+this.getId());
         }
-            this.marca = marca;
+        this.marca = marca;
     }
 
     /**
@@ -93,10 +93,10 @@ public class SmartSpeaker extends SmartDevices
      */
     public void setVolume(int volume) throws ValorExcedeMaximoException,ValorNegativoException{
 
-        if     (this.volume > MAX) {
+        if(volume > MAX) {
             throw new ValorExcedeMaximoException("Volume excede o máximo no dispositvo "+getId());
         }
-        if(this.volume < 0) {
+        if(volume < 0) {
             throw new ValorNegativoException("Volume negativo no dispositivo "+this.getId());
         }
         this.volume = volume;
