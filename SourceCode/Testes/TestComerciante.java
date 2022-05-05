@@ -31,8 +31,7 @@ public class TestComerciante
     private Pessoa pessoa2;
     private Pessoa pessoa3;
     @BeforeEach
-    public void atribui()
-    {
+    public void atribui() throws ValorNegativoException, NullPointerException {
         int imposto = 23;
         try {
             this.pessoa1 = new Pessoa("Jose", 1234);

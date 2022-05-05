@@ -1,9 +1,6 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.function.Predicate;
 
 public class Comerciante {
     private String nome;

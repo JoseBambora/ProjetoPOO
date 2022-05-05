@@ -10,10 +10,10 @@ public class House {
     private Pessoa proprietario;
     private String local;
     private Comerciante fornecedor;
-    public House(Comerciante comerciante){
+    public House(Comerciante comerciante) throws NullPointerException {
         this.proprietario = new Pessoa();
         this.local = "";
-        this.fornecedor = comerciante;
+        this.setFornecedor(comerciante);
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
@@ -97,7 +97,9 @@ public class House {
         this.fornecedor = fornecedor;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(String local) throws NullPointerException{
+        if (local == null)
+            throw new NullPointerException("Local nulo na casa " +this.toString());
         this.local = local;
     }
 

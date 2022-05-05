@@ -18,13 +18,13 @@ public class Fatura {
         this.local = "";
     }
 
-    public Fatura(Pessoa cliente, double preco, int imposto, double consumo, LocalDate date, String local){
-        this.cliente = cliente.clone();
-        this.preco = preco;
-        this.consumo = consumo;
-        this.dataEmissao = date;
-        this.local = local;
-        this.imposto = imposto;
+    public Fatura(Pessoa cliente, double preco, int imposto, double consumo, LocalDate date, String local) throws NullPointerException, ValorNegativoException {
+        this.setCliente(cliente);
+        this.setPreco(preco);
+        this.setConsumo(consumo);
+        this.setDataEmissao(date);
+        this.setLocal(local);
+        this.setImposto(imposto);
     }
 
     public Fatura(Fatura fatura){

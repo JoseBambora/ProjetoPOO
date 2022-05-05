@@ -19,8 +19,7 @@ public class TestFatura
     private Fatura fatura5;
     private Fatura fatura6;
     @BeforeEach
-    public void atribui()
-    {
+    public void atribui() throws ValorNegativoException, NullPointerException {
         try {
             this.pessoa1 = new Pessoa("Jose",20);
             this.pessoa2 = new Pessoa("Rita",19);
@@ -153,7 +152,7 @@ public class TestFatura
             assertEquals(faturaT1.getCliente(), this.pessoa1, "Agregação Errada");
             assertEquals(faturaT2.getCliente(), this.pessoa2, "Agregação Errada");
         }
-        catch (NullPointerException e)
+        catch(ValorNegativoException | NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
