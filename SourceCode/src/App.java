@@ -147,7 +147,7 @@ public class App
         return this.fornecedores.size();
     }
 
-    public boolean temPessoa (String nome) {return this.pessoas.containsKey(nome);}
+    public boolean temPessoa (Integer nif) {return this.pessoas.containsKey(nif);}
     public int getImposto() {
         return imposto;
     }
