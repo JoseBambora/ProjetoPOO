@@ -140,6 +140,29 @@ public class Comerciante {
         }
         return result.toString();
     }
+    public void changeFormula (Predicate <Comerciante> p, Formulas fm) {
+        if (p.test(this)){
+            this.setFormula(fm);
+        }
+    }
+
+    public Integer getNrdeFaturasDoComerciante (Predicate <Comerciante> p) {
+        int r = 0;
+        if (p.test(this)){
+            r= numFaturasEmitidas();
+        }
+        return r;
+    }
+
+    public List<Fatura> getFaturasDoComerciante (Predicate <Comerciante> p) {
+        Map<LocalDate,List<Fatura>> faturas= this.getFaturasEmitidas();
+        List<Fatura> faturasR = new ArrayList<>();
+        for (List<Fatura> f : faturas.values()){
+            faturasR.addAll(f);
+        }
+        return faturasR;
+    }
+
 
     public Comerciante clone()
     {
