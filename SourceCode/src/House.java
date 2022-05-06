@@ -190,6 +190,13 @@ public class House {
             this.devices.get(device).turnOff();
         }
     }
+
+    public void setDeviceOnOff(String id, boolean estadoDispositivo){
+        if(this.devices.containsKey(id)) this.devices.get(id).setOn(estadoDispositivo);
+    }
+
+
+
     public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
     {
         for(SmartDevices smartDevices : this.devices.values())

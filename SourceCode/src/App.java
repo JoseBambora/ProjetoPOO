@@ -90,7 +90,7 @@ public class App
             {
                 if(house.hasDevice(id))
                 {
-                    house.setDeviceOn(id);
+                    house.setDeviceOnOff(id,estadoDispositivos.get(id));
                 }
             }
         }
