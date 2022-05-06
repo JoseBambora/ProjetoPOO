@@ -11,6 +11,7 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class Main {
+    static ControladorFornecedor controladorFornecedor;
     static String menu = "Entrou menu";
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
@@ -131,7 +132,7 @@ public class Main {
                     parseSmartCamera(linhaPartida[1]);
                     break;
                 case "Fornecedor":
-                    app.addFornecedor(linhaPartida[1],new FormulaCalc1());
+                    controladorFornecedor.addFornecedor(linhaPartida[1],new FormulaCalc1());
                     break;
                 default:
                     System.out.println(linhaPartida[0] + " " + linhaPartida[1]);
@@ -193,18 +194,6 @@ public class Main {
                 break;
         }
     }
-    public static void addFornecedor()
-    {
-        System.out.println("Qual o nome do Comerciante?");
-        String nomeC = iteracao.next();
-        System.out.println("Introduza a Formula?");
-        int f = iteracao.nextInt();
-        Formulas formulas = new FormulaCalc1();
-        if(f == 2)
-            formulas = new FormulaCalc2();
-        app.addFornecedor(nomeC, formulas);
-        System.out.println("Comerciante adicionado com sucesso " + nomeC);
-    }
     public static void addCasa()
     {
         System.out.println("Qual o  Nif do proprietario?");
@@ -237,11 +226,11 @@ public class Main {
         }
 
     }
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
         String input = "";
         System.out.println("Qual o imposto inicial?");
         app = new App(iteracao.nextInt());
+        controladorFornecedor = new ControladorFornecedor(app);
         parse();
         System.out.println(app.numberDevices());
         System.out.println(app.numberCasas());
@@ -266,13 +255,16 @@ public class Main {
                     addCasa();
                     break;
                 case "AF":
-                    addFornecedor();
+                    controladorFornecedor.addFornecedor();
                     break;
                 case "AP":
                     addPessoa();
                     break;
                 case "ND":
                     System.out.println("Número de Smart Devices: " + app.numberDevices());
+                    break;
+                case "F":
+                    controladorFornecedor.whatOperation();
                     break;
                 default:
                     System.out.println("Comando inválido");

@@ -146,19 +146,22 @@ public class Comerciante {
         }
     }
 
-    public Integer getNrdeFaturasDoComerciante (Predicate <Comerciante> p) {
+    public int getNrdeFaturasDoComerciante (Predicate <Comerciante> p) {
         int r = 0;
         if (p.test(this)){
-            r= numFaturasEmitidas();
+            r= this.numFaturasEmitidas();
         }
         return r;
     }
 
     public List<Fatura> getFaturasDoComerciante (Predicate <Comerciante> p) {
-        Map<LocalDate,List<Fatura>> faturas= this.getFaturasEmitidas();
         List<Fatura> faturasR = new ArrayList<>();
-        for (List<Fatura> f : faturas.values()){
-            faturasR.addAll(f);
+        if(p.test(this))
+        {
+            Map<LocalDate, List<Fatura>> faturas = this.getFaturasEmitidas();
+            for (List<Fatura> f : faturas.values()) {
+                faturasR.addAll(f);
+            }
         }
         return faturasR;
     }
@@ -184,5 +187,9 @@ public class Comerciante {
                 .append("Nome: ").append(this.nome).append("\n")
                 .append("Faturas Emitidas: ").append(this.faturasEmitidas).append("\n");
         return sb.toString();
+    }
+    public int numberFaturas()
+    {
+        return this.faturasEmitidas.size();
     }
 }

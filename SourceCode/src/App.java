@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class App
@@ -266,7 +267,75 @@ public class App
         }
         return faturasR;
     }
+    public void changeFormulaFornecedor(Predicate<Comerciante> predicate, Formulas formula)
+    {
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            if(predicate.test(comerciante))
+            {
+               comerciante.setFormula(formula);
+            }
+        }
+    }
+    public int numeroFaturas(Predicate<Comerciante> predicate)
+    {
+        int r = 0;
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            if(predicate.test(comerciante))
+            {
+                r += comerciante.numberFaturas();
+            }
+        }
+        return r;
+    }
 
+    public double lucro(Predicate<Comerciante> predicate)
+    {
+        double r = 0;
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            if(predicate.test(comerciante))
+            {
+                r += comerciante.getLucro();
+            }
+        }
+        return r;
+    }
+    public int respectPredicate(Predicate<Comerciante> predicate)
+    {
+        int r = 0;
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            if(predicate.test(comerciante))
+            {
+                r++;
+            }
+        }
+        return r;
+    }
+    public List<Formulas> getFormulasPredicate(Predicate<Comerciante> predicate)
+    {
+        List<Formulas> formulas = new ArrayList<>();
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            if(predicate.test(comerciante))
+            {
+                formulas.add(comerciante.getFormula());
+            }
+        }
+        return formulas;
+    }
+
+    public List<Fatura> queryFaturas(Predicate<Comerciante> predicate)
+    {
+        List<Fatura> faturas = new ArrayList<>();
+        for(Comerciante comerciante : this.fornecedores.values())
+        {
+            faturas.addAll(comerciante.getFaturasDoComerciante(predicate));
+        }
+        return faturas;
+    }
     // SÓ PARA TESTES !!!
     public Map<String, Comerciante> getFornecedores() {
         return fornecedores;
