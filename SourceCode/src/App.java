@@ -38,7 +38,7 @@ public class App
     }
     public void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho) throws ValorNegativoException {
         String id = Integer.toString(this.devices.size() + 1);
-        SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);;
+        SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);
         this.devices.put(id,smartCamera);
     }
     public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
@@ -224,6 +224,7 @@ public class App
         allFaturas.sort(comparator);
         return allFaturas;
     }
+
     public Map<Integer, Double> consumoPessoa (List <Fatura> faturas)
     {
         Map <Integer, Double> newMapConsumidor = new HashMap<>();
@@ -255,6 +256,15 @@ public class App
         Comparator<Pessoa> cPessoa  = (p1,p2) -> (int) (newMapConsumidor.get(p2.getNIF())- newMapConsumidor.get(p1.getNIF()));
         newPessoa.sort(cPessoa);
         return newPessoa;
+    }
+
+    public List<Fatura> queryFaturas(String comerciante){
+        Map<LocalDate,List<Fatura>> faturas= this.fornecedores.get(comerciante).getFaturasEmitidas();
+        List<Fatura> faturasR = new ArrayList<>();
+        for (List<Fatura> f : faturas.values()){
+            faturasR.addAll(f);
+        }
+        return faturasR;
     }
 
     // SÓ PARA TESTES !!!
