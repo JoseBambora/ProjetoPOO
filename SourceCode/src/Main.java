@@ -62,7 +62,7 @@ public class Main {
             int nif = Integer.parseInt(campos[1]);
             app.addPessoa(nome,nif);
             String fornecedor = campos[2];
-            app.addCasa(nome,fornecedor);
+            app.addCasa(nif,fornecedor);
         }
         catch (NullPointerException |  ValorNegativoException e)
         {
@@ -207,18 +207,18 @@ public class Main {
     }
     public static void addCasa()
     {
-        System.out.println("Qual o Nome do proprietario?");
-        String nome = iteracao.next();
+        System.out.println("Qual o  Nif do proprietario?");
+        Integer nif = iteracao.nextInt();
         System.out.println("Qual o nome do Comerciante?");
         String cm = iteracao.next();
         try {
-            app.addCasa(nome,cm);
+            app.addCasa(nif,cm);
         }
         catch (NullPointerException e)
         {
             System.out.println(e.getMessage());
         }
-        System.out.println("Casa adicionada com sucesso " + nome + " " + cm);
+        System.out.println("Casa adicionada com sucesso " + nif + " " + cm);
     }
     public static void addPessoa()
     {

@@ -6,10 +6,11 @@ public class App
 {
     private LocalDate dataPrograma;
     private int imposto;
+    private LocalDate lastUpdate;
     private Map<String,Comerciante> fornecedores;
     private Map<String,House> casas;
     private Map<String,SmartDevices> devices;
-    private Map<String,Pessoa> pessoas;
+    private Map<Integer,Pessoa> pessoas;
     private String lastCasa;
 
     App(int imposto)
@@ -41,21 +42,21 @@ public class App
         this.devices.put(id,smartCamera);
     }
     public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
-        this.pessoas.put(nome,new Pessoa(nome,nif));
+        this.pessoas.put(nif,new Pessoa(nome,nif));
     }
     public void addDivisao(String divisao)
     {
         if(this.casas.containsKey(this.lastCasa))
             this.casas.get(this.lastCasa).addDivisao(divisao);
     }
-    public void addCasa(String pessoa, String fornecedor) throws NullPointerException
+    public void addCasa(Integer pessoa, String fornecedor) throws NullPointerException
     {
         this.lastCasa = Integer.toString(this.casas.size());
         House house = new House(this.pessoas.get(pessoa),this.fornecedores.get(fornecedor), this.lastCasa);
         this.casas.put(house.getLocal(),house);
     }
     public void avancaDias(int dias) throws NullPointerException, ValorNegativoException {
-        LocalDate oldDate = this.dataPrograma;
+        this.lastUpdate =  this.dataPrograma;
         LocalDate newDate = this.dataPrograma.plusDays(dias);
         this.dataPrograma = newDate;
         for(House casa : this.casas.values())
@@ -95,7 +96,7 @@ public class App
         }
     }
 
-    public void changeProprietario(String idHouse, String pessoa) throws NullPointerException
+    public void changeProprietario(String idHouse,Integer pessoa) throws NullPointerException
     {
         if(this.casas.containsKey(idHouse))
             if(this.pessoas.containsKey(pessoa))
@@ -198,6 +199,7 @@ public class App
         }
         return result.toString();
     }
+
     public Comerciante queryMaiorFornecedor()
     {
         double lucro = -1;
@@ -213,15 +215,48 @@ public class App
         }
         return result.clone();
     }
-    public List<Pessoa> queryMaioresConsumidores(LocalDate d1, LocalDate d2)
+    public List <Fatura> getFaturasTotal (LocalDate d1, LocalDate d2)
     {
         List<Fatura> allFaturas = new ArrayList<>();
         for(Comerciante comerciante : this.fornecedores.values())
             allFaturas.addAll(comerciante.getFaturasEmitidas(d1,d2));
         Comparator<Fatura> comparator = (f1,f2) -> (int) (f2.getConsumo() - f1.getConsumo());
         allFaturas.sort(comparator);
-        return allFaturas.stream().map(Fatura::getCliente).collect(Collectors.toList());
+        return allFaturas;
     }
+    public Map<Integer, Double> consumoPessoa (List <Fatura> faturas)
+    {
+        Map <Integer, Double> newMapConsumidor = new HashMap<>();
+        for (Fatura newF : faturas ) {
+            if ( ! newMapConsumidor.containsKey(newF.getCliente().getNIF())){
+                newMapConsumidor.put (newF.getCliente().getNIF(), 0.0);
+            }
+            newMapConsumidor.put (newF.getCliente().getNIF(), newMapConsumidor.get(newF.getCliente().getNIF()) + newF.getConsumo() ); // update the key
+        }
+        return newMapConsumidor;
+    }
+    public Pessoa queryMaiorConsumidor(){
+        List <Fatura> faturas = getFaturasTotal(this.lastUpdate, this.dataPrograma);
+        Map <Integer, Double> newMapConsumidor= this.consumoPessoa(faturas);
+        Integer maiorNif = -1;
+        for (Integer nifC : newMapConsumidor.keySet() ) {
+            if (maiorNif == -1 || newMapConsumidor.get(nifC)> newMapConsumidor.get(maiorNif)) maiorNif = nifC;
+        }
+        return this.pessoas.get(maiorNif).clone();
+    }
+    public List<Pessoa> queryMaioresConsumidores(LocalDate d1, LocalDate d2)
+    {
+        List <Fatura> faturas = getFaturasTotal(d1, d2);
+        Map <Integer, Double> newMapConsumidor= this.consumoPessoa(faturas);
+        List <Pessoa> newPessoa = new ArrayList<>();
+        for (Integer nifC : newMapConsumidor.keySet() ) {
+            newPessoa.add(this.pessoas.get(nifC).clone());
+        }
+        Comparator<Pessoa> cPessoa  = (p1,p2) -> (int) (newMapConsumidor.get(p2.getNIF())- newMapConsumidor.get(p1.getNIF()));
+        newPessoa.sort(cPessoa);
+        return newPessoa;
+    }
+
     // SÓ PARA TESTES !!!
     public Map<String, Comerciante> getFornecedores() {
         return fornecedores;
@@ -231,7 +266,7 @@ public class App
         return casas;
     }
     // SÓ PARA TESTES !!!
-    public Map<String, Pessoa> getPessoas() {
+    public Map<Integer, Pessoa> getPessoas() {
         return pessoas;
     }
     // SÓ PARA TESTES !!!

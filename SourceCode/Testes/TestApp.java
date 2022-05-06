@@ -60,7 +60,7 @@ public class TestApp
             int nif = Integer.parseInt(campos[1]);
             app.addPessoa(nome,nif);
             String fornecedor = campos[2];
-            app.addCasa(nome,fornecedor);
+            app.addCasa(nif,fornecedor);
         }
         catch (NullPointerException | ValorNegativoException e)
         {
@@ -150,23 +150,23 @@ public class TestApp
     public void TestInfo()
     {
         try {
-            Map<String,Pessoa> pessoas = app.getPessoas();
+            Map<Integer,Pessoa> pessoas = app.getPessoas();
             Map<String,Comerciante> fornecedores = app.getFornecedores();
             Map<String,House> casas = app.getCasas();
             Map<String,SmartDevices> devices = app.getDevices();
-            assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("111").getProprietario());
+            assertTrue(pessoas.get(758618872) == casas.get("111").getProprietario());
             assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
             app.changeFornecedor("111","EDP Comercial");
             assertTrue(fornecedores.get("EDP Comercial") == casas.get("111").getFornecedor());
             app.changeFornecedor("111","Endesa");
             assertTrue(fornecedores.get("Endesa") == casas.get("111").getFornecedor());
             Pessoa pessoa = casas.get("110").getProprietario();
-            app.changeProprietario("110","Jose Manuel Antunes de Carvalho");
-            assertTrue(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
+            app.changeProprietario("110",758618872);
+            assertTrue(pessoas.get(758618872) == casas.get("110").getProprietario());
             assertTrue(casas.get("110").getProprietario() == casas.get("111").getProprietario());
-            app.changeProprietario("110",pessoa.getNome());
-            assertFalse(pessoas.get("Jose Manuel Antunes de Carvalho") == casas.get("110").getProprietario());
-            assertTrue(pessoas.get(pessoa.getNome()) == casas.get("110").getProprietario());
+            app.changeProprietario("110",pessoa.getNIF());
+            assertFalse(pessoas.get(758618872) == casas.get("110").getProprietario());
+            assertTrue(pessoas.get(pessoa.getNIF()) == casas.get("110").getProprietario());
         }
         catch (NullPointerException e)
         {
