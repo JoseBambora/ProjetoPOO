@@ -295,4 +295,16 @@ public class House {
     {
         this.divisoes.put(id,new ArrayList<>());
     }
+
+    public boolean hasDivisao(String id) {
+        return this.divisoes.containsKey(id);
+    }
+    public int numberDivisoes()
+    {
+        return this.divisoes.size();
+    }
+    public int numberDevices()
+    {
+        return this.devices.size();
+    }
 }

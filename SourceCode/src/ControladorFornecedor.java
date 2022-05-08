@@ -10,7 +10,7 @@ public class ControladorFornecedor
         this.app = app;
         this.view = new ViewFornecedor();
     }
-    public Formulas convertNumberFormula(int n)
+    private Formulas convertNumberFormula(int n)
     {
         Formulas formulas;
         switch (n)
