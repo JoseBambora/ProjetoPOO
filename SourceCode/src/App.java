@@ -380,6 +380,26 @@ public class App
             }
         }
     }
+    public List<Pessoa> nifsMaioresQueX (Predicate <Pessoa> p, int x) {
+        List<Pessoa> list = new ArrayList<>();
+        for(Pessoa pessoa : this.pessoas.values())
+        {
+            if(p.test(pessoa)  && (pessoa.getNIF() > x) )
+                list.add(pessoa.clone());
+        }
+        return list;
+    }
+
+    public List<Pessoa> nomeIgualaX (Predicate <Pessoa> p, String x) {
+        List<Pessoa> list = new ArrayList<>();
+        for(Pessoa pessoa : this.pessoas.values())
+        {
+            if(p.test(pessoa)  && pessoa.getNome().equals(x))
+                list.add(pessoa.clone());
+        }
+        return list;
+    }
+
     // SÓ PARA TESTES !!!
     public Map<String, Comerciante> getFornecedores() {
         return fornecedores;
