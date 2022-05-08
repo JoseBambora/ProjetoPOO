@@ -15,9 +15,9 @@ public class ViewDevices {
     //Geral
     public int getDevice() {
         System.out.println("Insira o tipo do dispositivo a adicionar:");
-        System.out.println("0: SmartBulb");
-        System.out.println("0: SmartCamera");
-        System.out.println("0: SmartSpeaker");
+        System.out.println("1: SmartBulb");
+        System.out.println("2: SmartCamera");
+        System.out.println("3: SmartSpeaker");
         int option = input.nextInt();
         return option;
     }
