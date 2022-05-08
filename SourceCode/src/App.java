@@ -336,6 +336,50 @@ public class App
         }
         return faturas;
     }
+
+    public List<SmartDevices> consultaDevice(Predicate<SmartDevices> predicate){
+        List<SmartDevices> list = new ArrayList<>();
+        for(SmartDevices smartDevice : this.devices.values())
+        {
+            if(predicate.test(smartDevice))
+                list.add(smartDevice.clone());
+        }
+        return list;
+    }
+
+    public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
+    {
+        for(SmartDevices smartDevices : this.devices.values())
+            smartDevices.setOn(on,predicate);
+    }
+    public void setConsumoDevices(Predicate<SmartDevices> predicate, double consumo) throws ValorNegativoException {
+        for(SmartDevices smartDevices : this.devices.values()){
+            if(predicate.test(smartDevices)){
+                smartDevices.setConsumo(consumo);
+            }
+        }
+    }
+    public void changeToneDevices(Predicate<SmartDevices> predicate, int tone) throws ValorNegativoException {
+        for(SmartDevices smartDevices : this.devices.values()){
+            if(smartDevices instanceof SmartBulb && predicate.test(smartDevices)){
+                ((SmartBulb) smartDevices).setTone(tone);
+            }
+        }
+    }
+    public void changeVolumeDevices(Predicate<SmartDevices> predicate, int volume) throws ValorNegativoException, ValorExcedeMaximoException {
+        for(SmartDevices smartDevices : this.devices.values()){
+            if(smartDevices instanceof SmartSpeaker && predicate.test(smartDevices)){
+                ((SmartSpeaker) smartDevices).setVolume(volume);
+            }
+        }
+    }
+    public void changeCanalDevices(Predicate<SmartDevices> predicate, String canal) throws NullPointerException {
+        for(SmartDevices smartDevices : this.devices.values()){
+            if(smartDevices instanceof SmartSpeaker && predicate.test(smartDevices)){
+                ((SmartSpeaker) smartDevices).setCanal(canal);
+            }
+        }
+    }
     // SÓ PARA TESTES !!!
     public Map<String, Comerciante> getFornecedores() {
         return fornecedores;
