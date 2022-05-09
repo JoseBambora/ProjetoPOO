@@ -43,7 +43,7 @@ public class ControladorPessoa {
         return pred;
     }
 
-    public void consultaDados() throws ValorNegativoException, NullPointerException {
+    public String consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
         Predicate<Pessoa> pessoa = this.pessoaPredicate();
         int n = viewP.consultarOsDados();
@@ -57,6 +57,7 @@ public class ControladorPessoa {
             default:
                 break;
         }
+        return r;
     }
 
     public void selecionouConsultaDados()
