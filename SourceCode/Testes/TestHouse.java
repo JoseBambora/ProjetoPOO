@@ -208,7 +208,7 @@ public class TestHouse
             assertTrue(this.house1.getDivisoes().containsKey("Sala"));
             this.house3.setDeviceOff("b4");
             assertFalse(this.house3.getDevices().get("b4").isOn());
-            assertTrue(this.house2.getDevices().get("b4").isOn());
+            assertFalse(this.house2.getDevices().get("b4").isOn());
         }
         catch (ValorNegativoException | NullPointerException e)
         {
@@ -373,19 +373,20 @@ public class TestHouse
     public void testCalculoConsumo() throws ValorNegativoException {
         this.house4.setAllOff();
 
-        assertEquals(this.b1.calculaConsumo(1),56);
-        assertEquals(this.b2.calculaConsumo(1),68);
-        assertEquals(this.b3.calculaConsumo(1),39);
+        assertEquals(this.b1.calculaConsumo(1),0);
+        assertEquals(this.b2.calculaConsumo(1),0);
+        assertEquals(this.b3.calculaConsumo(1),0);
         assertEquals(this.b4.calculaConsumo(1),35);
-        assertEquals(this.s1.calculaConsumo(1),29);
+        assertEquals(this.s1.calculaConsumo(1),0);
         assertEquals(this.s2.calculaConsumo(1),30);
         assertEquals(this.s3.calculaConsumo(1),26);
-        assertEquals(this.s4.calculaConsumo(1),35);
+        assertEquals(this.s4.calculaConsumo(1),0);
+        assertEquals(this.house4.getConsumo(9),0); // b3 + b2 + c4 + s1 + c1 + b1 + s4
 
+        this.house4.setAllOn();
         assertEquals(this.house1.getConsumo(1),319.26,.01); // b1 + b2 + c1 + s2 + c2 + b3 + s1 = 319
         assertEquals(this.house2.getConsumo(3),667,.01); // b4 + b2 + c4 + s1 + c4 + b3 + s2 = 667
         assertEquals(this.house3.getConsumo(6),1366.34,.01); // b4 + b3 + c2 + s2 + c3 + b2 + s3 = 1366
-        assertEquals(this.house4.getConsumo(9),0); // b3 + b2 + c4 + s1 + c1 + b1 + s4
         assertEquals(this.house5.getConsumo(12),2782.49,.01); // b3 + b2 + c3 + s1 + c1 + b4 + s4 = 2782
         assertEquals(this.house6.getConsumo(15),3807.28,.01); // b1 + b3 + c4 + s1 + c3 + b2 + s3 = 3807
     }

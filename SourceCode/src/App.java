@@ -13,6 +13,7 @@ public class App
     private Map<String,SmartDevices> devices;
     private Map<Integer,Pessoa> pessoas;
     private String lastCasa;
+    private String lastDivisao;
 
     App(int imposto)
     {
@@ -42,13 +43,34 @@ public class App
         SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);
         this.devices.put(id,smartCamera);
     }
+    public void addSmartBulbP(boolean mode,int tone, double tamanho, double consumo) throws ValorNegativoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartBulb smartBulb = new SmartBulb(id,mode,tone,tamanho,consumo);
+        this.devices.put(id,smartBulb);
+        this.casas.get(lastCasa).addDevice(lastDivisao,smartBulb);
+    }
+    public void addSmartSpeakerP(boolean mode, int volume, String canal, String marca, double consumo) throws ValorNegativoException, ValorExcedeMaximoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartSpeaker smartSpeaker = new SmartSpeaker(id,mode,volume,canal,marca,consumo);
+        this.devices.put(id,smartSpeaker);
+        this.casas.get(lastCasa).addDevice(lastDivisao,smartSpeaker);
+    }
+    public void addSmartCameraP(boolean mode,double consumo, int x, int y, double tamanho) throws ValorNegativoException {
+        String id = Integer.toString(this.devices.size() + 1);
+        SmartCamera smartCamera = new SmartCamera(id,mode,consumo,x,y,tamanho);
+        this.devices.put(id,smartCamera);
+        this.casas.get(lastCasa).addDevice(lastDivisao,smartCamera);
+    }
     public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
         this.pessoas.put(nif,new Pessoa(nome,nif));
     }
     public void addDivisao(String divisao)
     {
         if(this.casas.containsKey(this.lastCasa))
+        {
+            this.lastDivisao = divisao;
             this.casas.get(this.lastCasa).addDivisao(divisao);
+        }
     }
     public void addCasa(Integer pessoa, String fornecedor) throws NullPointerException
     {
@@ -415,5 +437,156 @@ public class App
     // SÓ PARA TESTES !!!
     public Map<String, SmartDevices> getDevices() {
         return devices;
+    }
+
+    // CRIAR EXCEPTION
+    public Pessoa getPessoa(Integer nif)
+    {
+        return this.pessoas.get(nif).clone();
+    }
+    // CRIAR EXCEPTION
+    public Comerciante getFornecedor(String nome)
+    {
+        return this.fornecedores.get(nome).clone();
+    }
+
+    public Map<String,List<String>> getComerciantesCasas(Predicate<House> predicate)
+    {
+        Map<String,List<String>> r = new HashMap<>();
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                String key = house.getFornecedor().getNome();
+                if(!r.containsKey(key))
+                    r.put(key,new ArrayList<>());
+                r.get(key).add(house.getLocal());
+            }
+        }
+        return r;
+    }
+    public Map<Integer,List<String>> getPropreitarioCasas(Predicate<House> predicate)
+    {
+        Map<Integer,List<String>> r = new HashMap<>();
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                Integer key = house.getProprietario().getNIF();
+                if(!r.containsKey(key))
+                    r.put(key,new ArrayList<>());
+                r.get(key).add(house.getLocal());
+            }
+        }
+        return r;
+    }
+    public Map<String,List<String>> getDevicesCasas(Predicate<House> predicate)
+    {
+        Map<String,List<String>> r = new HashMap<>();
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                String key = house.getLocal();
+                r.put(key,new ArrayList<>());
+                r.get(key).addAll(house.getDevices().values().stream().map(SmartDevices :: getId).collect(Collectors.toList()));
+            }
+        }
+        return r;
+    }
+    public Map<String,List<String>> getDivisoesCasas(Predicate<House> predicate)
+    {
+        Map<String,List<String>> r = new HashMap<>();
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                String key = house.getLocal();
+                r.put(key,new ArrayList<>());
+                r.get(key).addAll(house.getDivisoes().keySet());
+            }
+        }
+        return r;
+    }
+    public List<String> getLocalidadeCasas(Predicate<House> predicate)
+    {
+        List<String> r = new ArrayList<>();
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                r.add(house.getLocal());
+            }
+        }
+        return r;
+    }
+    public String getIdLastDeviceAdd()
+    {
+        return this.devices.get(Integer.toString(this.devices.size()-1)).getId();
+    }
+    public void associaHouse(Predicate<House> predicate,Map<String, String> map)
+    {
+        int lid = this.devices.size()-1;
+        // diferenciação nos ids
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                for(Map.Entry<String,String> entry : map.entrySet())
+                {
+                    house.addDevice(entry.getValue(),this.devices.get(entry.getKey()));
+                }
+            }
+        }
+    }
+    public void addDivisoes(Predicate<House> predicate,List<String> divisoes)
+    {
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                for(String div : divisoes)
+                    house.addDivisao(div);
+            }
+        }
+    }
+    public void movedivisao(String local, String divisao, String device)
+    {
+        if(this.casas.containsKey(local))
+            this.casas.get(local).moveDivisao(divisao,device);
+    }
+    public void changeStateDevice(Predicate<House> predicate, boolean mode, String div)
+    {
+        for(House house : this.casas.values())
+        {
+            if(predicate.test(house))
+            {
+                house.setDivisaoOnOff(div,mode);
+            }
+        }
+    }
+    public void changeFornecedor(Predicate<House> predicate, String nome) throws NullPointerException {
+        if(this.fornecedores.containsKey(nome))
+        {
+            for(House house : this.casas.values())
+            {
+                if(predicate.test(house))
+                {
+                    house.setFornecedor(this.fornecedores.get(nome));
+                }
+            }
+        }
+    }
+    public void changeProprietario(Predicate<House> predicate, Integer nif) throws NullPointerException {
+        if(this.pessoas.containsKey(nif))
+        {
+            for(House house : this.casas.values())
+            {
+                if(predicate.test(house))
+                {
+                    house.setProprietario(this.pessoas.get(nif));
+                }
+            }
+        }
     }
 }

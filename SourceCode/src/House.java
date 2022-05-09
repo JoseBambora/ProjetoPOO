@@ -223,7 +223,7 @@ public class House {
     }
     public void addDevice(SmartDevices smartDevices)
     {
-        this.devices.put(smartDevices.getId(),smartDevices.clone());
+        this.devices.put(smartDevices.getId(),smartDevices);
     }
 
     public void addDevice(String divisao, SmartDevices smartDevices)
@@ -293,7 +293,7 @@ public class House {
 
     public void addDivisao(String id)
     {
-        this.divisoes.put(id,new ArrayList<>());
+        if(!this.devices.containsKey(id))this.divisoes.put(id,new ArrayList<>());
     }
 
     public boolean hasDivisao(String id) {
@@ -306,5 +306,20 @@ public class House {
     public int numberDevices()
     {
         return this.devices.size();
+    }
+    public void moveDivisao(String divisao, String id)
+    {
+        if(this.devices.containsKey(id) && this.divisoes.containsKey(divisao))
+        {
+            for(List<String> string : this.divisoes.values())
+            {
+                if(string.contains(id))
+                {
+                    string.remove(id);
+                    break;
+                }
+            }
+            this.divisoes.get(divisao).add(id);
+        }
     }
 }

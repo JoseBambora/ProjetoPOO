@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ViewHouse
@@ -10,14 +11,14 @@ public class ViewHouse
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
-    public double getNumber()
+    public double getNumber(String str)
     {
-        System.out.println("Insira um número");
+        System.out.println("Insira um número " + str);
         return this.input.nextDouble();
     }
-    public String getStr()
+    public String getStr(String str)
     {
-        System.out.println("Insira uma string");
+        System.out.println("Insira uma string para " +str);
         return input.next();
     }
     public int predicate()
@@ -54,7 +55,7 @@ public class ViewHouse
     }
     public int decideAlterar()
     {
-        System.out.println("O que deseja consultar?");
+        System.out.println("O que deseja consultar/alterar?");
         System.out.println("1 - Acrescentar n devices");
         System.out.println("2 - Acrescentar n divisões");
         System.out.println("3 - Mover n devices para uma divisão (Só funciona para 1 casa)");
@@ -105,5 +106,27 @@ public class ViewHouse
     public void printMessage(String message)
     {
         System.out.println(message);
+    }
+    public void printMaps1(Map<String,List<String>> map)
+    {
+        for(String key : map.keySet())
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String value : map.get(key))
+                stringBuilder.append(value).append(" ");
+            System.out.println(key + ":" + stringBuilder);
+
+        }
+    }
+    public void printMaps2(Map<Integer,List<String>> map)
+    {
+        for(Integer key : map.keySet())
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String value : map.get(key))
+                stringBuilder.append(value).append(" ");
+            System.out.println(key.toString() + ":" + stringBuilder);
+
+        }
     }
 }

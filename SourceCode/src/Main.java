@@ -12,6 +12,7 @@ import static java.lang.Integer.parseInt;
 
 public class Main {
     static ControladorFornecedor controladorFornecedor;
+    static ControladorHouse controladorHouse;
     static String menu = "Entrou menu";
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
@@ -19,7 +20,7 @@ public class Main {
     public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
     {
         try {
-            app.addSmartBulb(mode,tone,tamanho,consumo);
+            app.addSmartBulbP(mode,tone,tamanho,consumo);
             System.out.println("Smart Bulb adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException e)
@@ -30,7 +31,7 @@ public class Main {
     public static void addSmartSpeaker(boolean mode, int volume, String canal, String marca, double consumo)
     {
         try {
-            app.addSmartSpeaker(mode,volume,canal,marca,consumo);
+            app.addSmartSpeakerP(mode,volume,canal,marca,consumo);
             System.out.println("Smart Speaker adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException | ValorExcedeMaximoException e)
@@ -41,7 +42,7 @@ public class Main {
     public static void addSmartCamera(boolean mode,double consumo, int x, int y, double tamanho)
     {
         try {
-            app.addSmartCamera(mode,consumo,x,y,tamanho);
+            app.addSmartCameraP(mode,consumo,x,y,tamanho);
             System.out.println("Smart Camera adicionado com sucesso " + app.numberDevices());
         }
         catch (ValorNegativoException e)
@@ -63,7 +64,7 @@ public class Main {
             int nif = Integer.parseInt(campos[1]);
             app.addPessoa(nome,nif);
             String fornecedor = campos[2];
-            app.addCasa(nif,fornecedor);
+            controladorHouse.addCasaApp(nif,fornecedor);
         }
         catch (NullPointerException |  ValorNegativoException e)
         {
@@ -194,21 +195,6 @@ public class Main {
                 break;
         }
     }
-    public static void addCasa()
-    {
-        System.out.println("Qual o  Nif do proprietario?");
-        Integer nif = iteracao.nextInt();
-        System.out.println("Qual o nome do Comerciante?");
-        String cm = iteracao.next();
-        try {
-            app.addCasa(nif,cm);
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Casa adicionada com sucesso " + nif + " " + cm);
-    }
     public static void addPessoa()
     {
         try
@@ -226,11 +212,12 @@ public class Main {
         }
 
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws NullPointerException {
         String input = "";
         System.out.println("Qual o imposto inicial?");
         app = new App(iteracao.nextInt());
         controladorFornecedor = new ControladorFornecedor(app);
+        controladorHouse = new ControladorHouse(app);
         parse();
         System.out.println(app.numberDevices());
         System.out.println(app.numberCasas());
@@ -252,7 +239,7 @@ public class Main {
                     addDevice();
                     break;
                 case "AC":
-                    addCasa();
+                    controladorHouse.addCasaApp();
                     break;
                 case "AF":
                     controladorFornecedor.addFornecedor();
@@ -265,6 +252,9 @@ public class Main {
                     break;
                 case "F":
                     controladorFornecedor.whatOperation();
+                    break;
+                case "C":
+                    controladorHouse.whatOperation();
                     break;
                 default:
                     System.out.println("Comando inválido");

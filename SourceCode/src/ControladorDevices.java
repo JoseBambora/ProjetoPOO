@@ -11,24 +11,24 @@ public class ControladorDevices {
     }
 
     public void addDevice() throws ValorNegativoException, ValorExcedeMaximoException {
+        int option = view.getDevice(); // 1 -> smartbulb, 2 -> smartcamera, 3 -> smartspeaker
         boolean on = view.getOn();
         double consumo = view.getConsumo();
-        int option = view.getDevice(); // 0 -> smartbulb, 1 -> smartcamera, 2 -> smartspeaker
         switch(option)
         {
-            case 0:
+            case 1:
                 int tone = view.getTone();
                 double dimensao = view.getDimensao();
                 app.addSmartBulb(on,tone,dimensao,consumo);
                 view.sucess();
                 break;
-            case 1:
+            case 2:
                 String[] res = view.getResolucao().split("x");
                 double tamanho = view.getTamanho();
                 app.addSmartCamera(on,consumo,Integer.parseInt(res[0]),Integer.parseInt(res[1]),tamanho);
                 view.sucess();
                 break;
-            case 2:
+            case 3:
                 int volume = view.getVolume();
                 String canal = view.getCanal();
                 String marca = view.getMarca();
