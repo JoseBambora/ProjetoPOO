@@ -402,24 +402,20 @@ public class App
             }
         }
     }
-    public List<Pessoa> nifsMaioresQueX (Predicate <Pessoa> p, int x) {
-        List<Pessoa> list = new ArrayList<>();
-        for(Pessoa pessoa : this.pessoas.values())
-        {
-            if(p.test(pessoa)  && (pessoa.getNIF() > x) )
-                list.add(pessoa.clone());
+    public List<String> getNomePessoas (){
+        List <String> newPessoaList= new ArrayList<>();
+        for (Pessoa p : this.pessoas.values()) {
+            newPessoaList.add(p.getNome());
         }
-        return list;
+        return newPessoaList;
     }
 
-    public List<Pessoa> nomeIgualaX (Predicate <Pessoa> p, String x) {
-        List<Pessoa> list = new ArrayList<>();
-        for(Pessoa pessoa : this.pessoas.values())
-        {
-            if(p.test(pessoa)  && pessoa.getNome().equals(x))
-                list.add(pessoa.clone());
+    public List<Integer> getNIFPessoas (){
+        List <Integer> newPessoaList= new ArrayList<>();
+        for (Pessoa p : this.pessoas.values()) {
+            newPessoaList.add(p.getNIF());
         }
-        return list;
+        return newPessoaList;
     }
 
     // SÓ PARA TESTES !!!
