@@ -23,7 +23,7 @@ public class ViewDevices {
     }
 
     public boolean getOn() {
-        System.out.println("Qual é o estado do dispositivo?");
+        System.out.println("Qual é o estado do dispositivo (Booleano: true - ligado ou false - desligado)?");
         return input.nextBoolean();
     }
 
@@ -45,7 +45,7 @@ public class ViewDevices {
 
     //Smart Bulb
     public int getTone() {
-        System.out.println("Qual é o tom da luz emitida pela lâmpada?");
+        System.out.println("Qual é o tom da luz emitida pela lâmpada (0, 1 ou 2)?");
         return input.nextInt();
     }
 
@@ -56,7 +56,7 @@ public class ViewDevices {
 
     //Smart Speaker
     public int getVolume() {
-        System.out.println("Qual é o Volume do dispositivo?");
+        System.out.println("Qual é o Volume do dispositivo (valor inteiro entre 0 e 20)?");
         return input.nextInt();
     }
 
@@ -106,8 +106,8 @@ public class ViewDevices {
     public int mudaEstado() {
         System.out.println("O que deseja mudar?");
         System.out.println("1 - Estado do dispositivo (ligar/desligar) ou o consumo diário");
-        System.out.println("2 - Mudar o tom (SmartBulb");
-        System.out.println("3 - Canal e volume (SmartSpeaker");
+        System.out.println("2 - Mudar o tom (SmartBulb) (Valor igual a 0, 1 ou 2)");
+        System.out.println("3 - Canal e volume (SmartSpeaker) ");
         return input.nextInt();
     }
 

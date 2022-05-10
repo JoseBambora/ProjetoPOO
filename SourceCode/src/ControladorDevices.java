@@ -9,7 +9,42 @@ public class ControladorDevices {
         this.app = app;
         this.view = new ViewDevices();
     }
-
+    public void parseSmartBulb(String string) throws ValorNegativoException {
+        String[] campos = string.split(",");
+        int tone;
+        switch (campos[0])
+        {
+            case "Warm":
+                tone = SmartBulb.WARM;
+                break;
+            case "Neutral":
+                tone = SmartBulb.NEUTRAL;
+                break;
+            default:
+                tone = SmartBulb.COLD;
+                break;
+        }
+        double tamanho = Integer.parseInt(campos[1]);
+        double consumo = Double.parseDouble(campos[2]);
+        app.addSmartBulbP(true,tone,tamanho,consumo);
+    }
+    public void parseSmartCamera(String string) throws ValorNegativoException {
+        String[] campos = string.split(",");
+        int x, y;
+        campos[0] = campos[0].substring(1,campos[0].length() - 1);
+        String []resolucao = campos[0].split("x");
+        x = Integer.parseInt(resolucao[0]);
+        y = Integer.parseInt(resolucao[1]);
+        double tamanho = Integer.parseInt(campos[1]);
+        double consumo = Double.parseDouble(campos[2]);
+        app.addSmartCameraP(true,consumo,x,y,tamanho);
+    }
+    public void parseSmartSpeaker(String string) throws ValorNegativoException, ValorExcedeMaximoException {
+        String[] campos = string.split(",");
+        int volume = Integer.parseInt(campos[0]);
+        double consumo = Double.parseDouble(campos[3]);
+        app.addSmartSpeakerP(true,volume,campos[1],campos[2],consumo);
+    }
     public void addDevice() throws ValorNegativoException, ValorExcedeMaximoException {
         int option = view.getDevice(); // 1 -> smartbulb, 2 -> smartcamera, 3 -> smartspeaker
         boolean on = view.getOn();
