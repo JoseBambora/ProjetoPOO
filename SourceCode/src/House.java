@@ -195,8 +195,6 @@ public class House {
         if(this.devices.containsKey(id)) this.devices.get(id).setOn(estadoDispositivo);
     }
 
-
-
     public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
     {
         for(SmartDevices smartDevices : this.devices.values())
@@ -210,12 +208,12 @@ public class House {
                 this.setDivisaoOnOff(divisoes,on);
         }
     }
-    public void setDivisaoSDOnOff(Predicate<String> predicate, Predicate<SmartDevices> predicate2, boolean on)
+    public void setDivisaoSDOnOff(Predicate<Map.Entry<String,List<String>>> predicate, Predicate<SmartDevices> predicate2, boolean on)
     {
-        for(String divisoes : this.divisoes.keySet())
+        for(Map.Entry<String,List<String>> divisoes : this.divisoes.entrySet())
         {
             if(predicate.test(divisoes)) {
-                List<String> sd = this.divisoes.get(divisoes);
+                List<String> sd = divisoes.getValue();
                 for(String sd1 : sd)
                     this.devices.get(sd1).setOn(on,predicate2);
             }
@@ -321,5 +319,22 @@ public class House {
             }
             this.divisoes.get(divisao).add(id);
         }
+    }
+    public List<String> respectPredicate(Predicate<Map.Entry<String,List<String>>> predicate2, Predicate<SmartDevices> predicate1)
+    {
+        List<String> r = new ArrayList<>();
+        Map<String,List<String>> map = this.divisoes;
+        for(Map.Entry<String,List<String>> entry : map.entrySet())
+        {
+            if(predicate2.test(entry))
+            {
+                for(String id : entry.getValue())
+                {
+                    if(predicate1.test(this.devices.get(id)))
+                        r.add(id);
+                }
+            }
+        }
+        return r;
     }
 }

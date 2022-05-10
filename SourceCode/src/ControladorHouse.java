@@ -58,6 +58,25 @@ public class ControladorHouse
         }
         return r;
     }
+    private Predicate<Map.Entry<String,List<String>>> divisaoPredicate() throws ValorNegativoException, NullPointerException {
+        int n = viewHouse.predicateDiv();
+        Predicate<Map.Entry<String,List<String>>> r = null;
+        switch (n)
+        {
+            case 2:
+                int num = (int) viewHouse.getNumber("para quantos dispositivos a mais");
+                r = h -> h.getValue().size() > num;
+                break;
+            case 3:
+                String div = viewHouse.getStr(" para o nome da divisao");
+                r = h -> h.getKey().equals(div);
+                break;
+            default:
+                r = Objects::nonNull;
+                break;
+        }
+        return r;
+    }
     public void consultaDados() throws ValorNegativoException, NullPointerException {
         String print = "";
         Predicate<House> ph = this.housePredicate();
@@ -71,7 +90,9 @@ public class ControladorHouse
                 viewHouse.printMaps2(app.getPropreitarioCasas(ph));
                 break;
             case 3:
-                viewHouse.printMaps1(app.getDevicesCasas(ph));
+                Predicate<Map.Entry<String,List<String>>> predicate2 = this.divisaoPredicate();
+                Predicate<SmartDevices> smartDevicesPredicate = controladorDevices.devicesPredicate();
+                viewHouse.printMaps1(app.getDevicesCasas(ph,predicate2,smartDevicesPredicate));
                 break;
             case 4:
                 viewHouse.printMaps1(app.getDivisoesCasas(ph));
@@ -130,11 +151,12 @@ public class ControladorHouse
             case 4:
                 ph = this.housePredicate();
                 int number = viewHouse.ligarDesligar();
-                String div = viewHouse.getStr("qual divisão?");
+                Predicate<Map.Entry<String,List<String>>> predicate2 = this.divisaoPredicate();
+                Predicate<SmartDevices> smartDevicesPredicate = controladorDevices.devicesPredicate();
                 if(number == 1)
-                    app.changeStateDevice(ph,true,div);
+                    app.changeStateDevice(ph,smartDevicesPredicate,predicate2,true);
                 else if(number == 2)
-                    app.changeStateDevice(ph,false,div);
+                    app.changeStateDevice(ph,smartDevicesPredicate,predicate2,false);
                 break;
             case 5:
                 ph = this.housePredicate();

@@ -476,7 +476,7 @@ public class App
         }
         return r;
     }
-    public Map<String,List<String>> getDevicesCasas(Predicate<House> predicate)
+    public Map<String,List<String>> getDevicesCasas(Predicate<House> predicate,Predicate<Map.Entry<String,List<String>>> predicate2, Predicate<SmartDevices> predicate1)
     {
         Map<String,List<String>> r = new HashMap<>();
         for(House house : this.casas.values())
@@ -484,8 +484,8 @@ public class App
             if(predicate.test(house))
             {
                 String key = house.getLocal();
-                r.put(key,new ArrayList<>());
-                r.get(key).addAll(house.getDevices().values().stream().map(SmartDevices :: getId).collect(Collectors.toList()));
+                r.put(key,house.respectPredicate(predicate2,predicate1));
+
             }
         }
         return r;
@@ -551,13 +551,13 @@ public class App
         if(this.casas.containsKey(local))
             this.casas.get(local).moveDivisao(divisao,device);
     }
-    public void changeStateDevice(Predicate<House> predicate, boolean mode, String div)
+    public void changeStateDevice(Predicate<House> predicate, Predicate<SmartDevices> predicateSD, Predicate<Map.Entry<String,List<String>>> divPredicate, boolean mode)
     {
         for(House house : this.casas.values())
         {
             if(predicate.test(house))
             {
-                house.setDivisaoOnOff(div,mode);
+                house.setDivisaoSDOnOff(divPredicate,predicateSD,mode);
             }
         }
     }

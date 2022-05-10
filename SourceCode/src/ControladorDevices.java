@@ -52,7 +52,7 @@ public class ControladorDevices {
         app.addSmartSpeaker(on,volume,canal,marca,consumo);
         view.sucess();
     }
-    private Predicate<SmartDevices> devicesPredicate(){
+    public Predicate<SmartDevices> devicesPredicate(){
         int n = view.predicates();
         Predicate<SmartDevices> r;
         switch (n){

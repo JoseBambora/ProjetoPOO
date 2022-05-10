@@ -23,7 +23,7 @@ public class ViewHouse
     }
     public int predicate()
     {
-        System.out.println("Qual o critério de filtragem?");
+        System.out.println("Algum o critério de filtragem para a casa?");
         System.out.println("1 - Não");
         System.out.println("2 - Localidade");
         System.out.println("3 - Têm um certa divisão");
@@ -32,6 +32,14 @@ public class ViewHouse
         System.out.println("6 - Têm um certo número de devices");
         System.out.println("7 - Têm um certo proprietario");
         System.out.println("8 - Têm um certo fornecedor");
+        return input.nextInt();
+    }
+    public int predicateDiv()
+    {
+        System.out.println("Algum o critério de filtragem para as divisões?");
+        System.out.println("1 - Não");
+        System.out.println("2 - Têm mais que x dispositivos");
+        System.out.println("3 - Têm um certo nome");
         return input.nextInt();
     }
     public int consultarChange()
@@ -48,7 +56,7 @@ public class ViewHouse
         System.out.println("O que deseja consultar?");
         System.out.println("1 - Comerciante");
         System.out.println("2 - Proprietário");
-        System.out.println("3 - Lista de devices");
+        System.out.println("3 - Lista de devices seguindo um certo predicado");
         System.out.println("4 - Lista de divisões");
         System.out.println("5 - Lista de localidades");
         return input.nextInt();
@@ -59,7 +67,7 @@ public class ViewHouse
         System.out.println("1 - Acrescentar n devices");
         System.out.println("2 - Acrescentar n divisões");
         System.out.println("3 - Mover n devices para uma divisão (Só funciona para 1 casa)");
-        System.out.println("4 - Ligar ou desligar devices");
+        System.out.println("4 - Ligar ou desligar devices seguindo um certo predicado");
         System.out.println("5 - Mudar fornecedor");
         System.out.println("6 - Mudar Proprietário");
         return input.nextInt();
