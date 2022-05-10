@@ -13,6 +13,24 @@ public class ControladorHouse
         this.controladorDevices = new ControladorDevices(app);
         this.viewHouse = new ViewHouse();
     }
+    public void parseCasa(String input){
+        try {
+            String[] campos = input.split(",");
+            String nome = campos[0];
+            int nif = Integer.parseInt(campos[1]);
+            app.addPessoa(nome,nif);
+            String fornecedor = campos[2];
+            this.addCasaApp(nif,fornecedor);
+        }
+        catch (NullPointerException |  ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void addDivisao(String divisao)
+    {
+        app.addDivisao(divisao);
+    }
     public void addCasaApp() throws NullPointerException {
         this.app.addCasa((int) viewHouse.getNumber("nif do dono"), viewHouse.getStr("nome do comerciante"));
     }

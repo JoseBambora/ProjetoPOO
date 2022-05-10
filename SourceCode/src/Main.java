@@ -57,20 +57,7 @@ public class Main {
         return lines;
     }
 
-    public static void parseCasa(String input){
-        try {
-            String[] campos = input.split(",");
-            String nome = campos[0];
-            int nif = Integer.parseInt(campos[1]);
-            app.addPessoa(nome,nif);
-            String fornecedor = campos[2];
-            controladorHouse.addCasaApp(nif,fornecedor);
-        }
-        catch (NullPointerException |  ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
+
     public static void parseSmartBulb(String string)
     {
         String[] campos = string.split(",");
@@ -118,10 +105,10 @@ public class Main {
             linhaPartida = linha.split(":", 2);
             switch(linhaPartida[0]){
                 case "Casa":
-                    parseCasa(linhaPartida[1]);
+                    controladorHouse.parseCasa(linhaPartida[1]);
                     break;
                 case "Divisao":
-                    app.addDivisao(linhaPartida[1]);
+                    controladorHouse.addDivisao(linhaPartida[1]);
                     break;
                 case "SmartBulb":
                     parseSmartBulb(linhaPartida[1]);
