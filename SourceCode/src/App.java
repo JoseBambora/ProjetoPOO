@@ -1,17 +1,16 @@
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class App
 {
     private LocalDate dataPrograma;
     private int imposto;
     private LocalDate lastUpdate;
-    private Map<String,Comerciante> fornecedores;
-    private Map<String,House> casas;
-    private Map<String,SmartDevices> devices;
-    private Map<Integer,Pessoa> pessoas;
+    private final Map<String,Comerciante> fornecedores;
+    private final Map<String,House> casas;
+    private final Map<String,SmartDevices> devices;
+    private final Map<Integer,Pessoa> pessoas;
     private String lastCasa;
     private String lastDivisao;
 
@@ -24,6 +23,7 @@ public class App
         this.devices = new HashMap<>();
         this.pessoas = new HashMap<>();
     }
+
     public void addFornecedor(String nome, Formulas formulas) throws NullPointerException {
         this.fornecedores.put(nome,new Comerciante(nome,formulas));
     }
@@ -113,26 +113,10 @@ public class App
 
     }
 
-    public void setHouseComerciante(String idHouse, String comerciante) throws NullPointerException
-    {
-        if(this.casas.containsKey(idHouse))
-            if(this.fornecedores.containsKey(comerciante))
-                this.casas.get(idHouse).setFornecedor(this.fornecedores.get(comerciante));
-    }
-    public void setHouseDevice(String idHouse, String idDevice) throws ValorNegativoException
-    {
-        if(this.casas.containsKey(idHouse))
-            if(this.devices.containsKey(idDevice))
-                this.casas.get(idHouse).addDevice(this.devices.get(idDevice));
-    }
-
     public void setImposto(int imposto) {
         this.imposto = imposto;
     }
 
-    public void setDataPrograma(LocalDate dataPrograma) {
-        this.dataPrograma = dataPrograma;
-    }
     public int numberDevices()
     {
         return this.devices.size();
@@ -150,58 +134,10 @@ public class App
         return this.fornecedores.size();
     }
 
-    public boolean temPessoa (Integer nif) {return this.pessoas.containsKey(nif);}
     public int getImposto() {
         return imposto;
     }
 
-    public LocalDate getDataPrograma() {
-        return dataPrograma;
-    }
-    public String casasToString() throws NullPointerException {
-        StringBuilder result = new StringBuilder();
-        result.append("Formato: Localidade | Nome do proprietário\n");
-        for(House casa : this.casas.values())
-        {
-            result.append(casa.getLocal()).append(" ").append(casa.getProprietario().getNome()).append("\n");
-        }
-        return result.toString();
-    }
-    public String pessoasToString()
-    {
-        StringBuilder result = new StringBuilder();
-        result.append("Formato: Localidade | Nome do proprietário\n");
-        for(Pessoa pessoa : this.pessoas.values())
-        {
-            result.append(pessoa.getNome()).append(" ").append(pessoa.getNIF()).append("\n");
-        }
-        return result.toString();
-    }
-    public String devicesToString()
-    {
-        StringBuilder result = new StringBuilder();
-        result.append("Formato: Id Device | Ligado ou Desligado\n");
-        for(SmartDevices smartDevices : this.devices.values())
-        {
-            String on = "";
-            if(smartDevices.isOn())
-                on = "Ligado";
-            else
-                on = "Desligado";
-            result.append(smartDevices.getId()).append(" ").append(on).append("\n");
-        }
-        return result.toString();
-    }
-    public String fornecedoresToString()
-    {
-        StringBuilder result = new StringBuilder();
-        result.append("Formato: Nome Fornecedor | Preco do fornecedor\n");
-        for(Comerciante comerciante : this.fornecedores.values())
-        {
-            result.append(comerciante.getNome()).append(" ").append(comerciante.getFormula().toString()).append("\n");
-        }
-        return result.toString();
-    }
 
     public Comerciante queryMaiorFornecedor()
     {
@@ -261,21 +197,10 @@ public class App
         return newPessoa;
     }
 
-    public List<Fatura> queryFaturas(String comerciante){
-        Map<LocalDate,List<Fatura>> faturas= this.fornecedores.get(comerciante).getFaturasEmitidas();
-        List<Fatura> faturasR = new ArrayList<>();
-        for (List<Fatura> f : faturas.values()){
-            faturasR.addAll(f);
-        }
-        return faturasR;
-    }
     public void changeFormulaFornecedor(Predicate<Comerciante> predicate, Formulas formula) throws NullPointerException {
         for(Comerciante comerciante : this.fornecedores.values())
         {
-            if(predicate.test(comerciante))
-            {
-               comerciante.setFormula(formula);
-            }
+            comerciante.changeFormula(predicate,formula);
         }
     }
     public int numeroFaturas(Predicate<Comerciante> predicate)
@@ -283,10 +208,7 @@ public class App
         int r = 0;
         for(Comerciante comerciante : this.fornecedores.values())
         {
-            if(predicate.test(comerciante))
-            {
-                r += comerciante.numberFaturas();
-            }
+            r += comerciante.getNrdeFaturasDoComerciante(predicate);
         }
         return r;
     }
@@ -414,13 +336,12 @@ public class App
         return devices;
     }
 
-    // CRIAR EXCEPTION
     public Pessoa getPessoa(Integer nif) throws PessoaNotExistException {
         if(!this.pessoas.containsKey(nif))
             throw new PessoaNotExistException("Pessoa não existe na aplicação");
         return this.pessoas.get(nif).clone();
     }
-    // CRIAR EXCEPTION
+
     public Comerciante getFornecedor(String nome) throws FornecedorNotExistException {
         if(!this.fornecedores.containsKey(nome))
             throw new FornecedorNotExistException("Fornecedor não existe na aplicação");

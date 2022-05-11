@@ -1,30 +1,49 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class ViewFornecedor
 {
-    private final Scanner input;
+    private Scanner input;
     ViewFornecedor()
     {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
+    private int scannerInt()
+    {
+        int r = -1;
+        try {
+            r = input.nextInt();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
+    }
     public String getNome(){
         System.out.println("Qual o nome do Comerciante?");
-        return input.next();
+        String r = "";
+        try {
+             r = input.next();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
     }
     public int getFormula()
     {
         System.out.println("Introduza a Formula? Insira um número entre 1 e 2");
-        return input.nextInt();
+        return this.scannerInt();
     }
     public int getOperation(char c)
     {
         if(c == 'm') System.out.println("O que quer mudar? 1 - Formula");
         else         System.out.println("O que quer consultar? 1 - Formula, 2 - Faturas do fornecedor, 3 - Número de faturas, 4 - Lucro do fornecedor, 5 - Número de Fornecedores");
-        return input.nextInt();
+        return this.scannerInt();
     }
     public void sucess()
     {
@@ -38,18 +57,27 @@ public class ViewFornecedor
         System.out.println("3 - Têm volume de faturação maior ou igual a um certo número real");
         System.out.println("4 - Segue uma determinada Formula");
         System.out.println("5 - Têm um certo nome");
-        return input.nextInt();
+        return this.scannerInt();
     }
     public int numeroCompareI()
     {
         System.out.println("Número para comparar?");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
     public double numeroCompareD()
     {
         System.out.println("Número para comparar?");
-        return input.nextDouble();
+        double r = -1;
+        try {
+            r = input.nextDouble();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
     }
     public void printInfVF(String s)
     {
@@ -62,6 +90,6 @@ public class ViewFornecedor
         System.out.println("1 - Consultar");
         System.out.println("2 - Alterar");
         System.out.println("3 - Nada");
-        return input.nextInt();
+        return this.scannerInt();
     }
 }

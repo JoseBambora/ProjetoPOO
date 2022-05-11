@@ -28,7 +28,7 @@ public class ControladorQueries {
     }
 
 
-    public String consultaDados() throws ValorNegativoException, NullPointerException {
+    public void consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
         int n = viewQ.consultarOsDados();
         switch (n) {
@@ -50,15 +50,21 @@ public class ControladorQueries {
             default:
                 break;
         }
-        viewQ.success();
-        return r;
+        viewQ.printResult(r);
     }
-
+    public void mudaDados()
+    {
+        int imposto = viewQ.inserInteger();
+        app.setImposto(imposto);
+    }
     public void selecionouConsultaDados() {
         try {
             int n = viewQ.atividadeConsultar();
             if (n == 1)
                 this.consultaDados();
+            else if(n == 2)
+                this.mudaDados();
+
         } catch (ValorNegativoException | NullPointerException e) {
             System.out.println(e.getMessage());
         }

@@ -26,6 +26,11 @@ public class ViewQueries {
         return d1;
     }
 
+    public void printResult(String result)
+    {
+        System.out.println(result);
+    }
+
     public void success(){
         System.out.println("Os dados necessários para estatísticas do estado do programa  foram introduzidos com sucesso!");
     }
@@ -47,7 +52,7 @@ public class ViewQueries {
 
     public int consultarOsDados()
     {
-        System.out.println("O que pretende consultar??");
+        System.out.println("O que pretende consultar?");
         System.out.println("1 - Qual o comercializador com maior volume de faturação");
         System.out.println("2 - A casa que gastou mais naquele período");
         System.out.println("3 - Dar uma ordenação dos maiores consumidores de energia num período a determinar");
@@ -57,9 +62,9 @@ public class ViewQueries {
     }
     public int atividadeConsultar()
     {
-        System.out.println("Pretende consultar  estatísticas sobre o estado do programa?");
-        System.out.println("1 - Sim");
-        System.out.println("2 - Não ");
+        System.out.println("Pretende consultar estatísticas sobre o estado do programa ou mudar o fornecedor?");
+        System.out.println("1 - Consultar estatísticas");
+        System.out.println("2 - Mudar imposto");
         return input.nextInt();
     }
 

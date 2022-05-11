@@ -39,7 +39,10 @@ public class ControladorHouse
         }
     }
     public void addCasaApp() throws NullPointerException {
-        this.app.addCasa((int) viewHouse.getNumber("nif do dono"), viewHouse.getStr("nome do comerciante"));
+        int number = (int) viewHouse.getNumber("nif do dono");
+        String str = viewHouse.getStr("nome do comerciante");
+        if(number != -1 && str != null)
+            this.app.addCasa(number,str);
     }
     public void addCasaApp(int nif, String nome){
         try {
@@ -55,31 +58,42 @@ public class ControladorHouse
         Predicate<House> r = null;
         switch (n)
         {
+            case 1:
+                r = Objects::nonNull;
+                break;
             case 2:
                 String local = viewHouse.getStr("local");
-                r = h -> h.getLocal().equals(local);
+                if(!local.equals(""))
+                    r = h -> h.getLocal().equals(local);
                 break;
             case 3:
                 String div = viewHouse.getStr("divisao");
-                r = h -> h.hasDivisao(div);
+                if(!div.equals(""))
+                    r = h -> h.hasDivisao(div);
                 break;
             case 4:
                 int number = (int) viewHouse.getNumber("numero de divisoes");
-                r = h -> h.numberDivisoes() > number;
+                if(number != -1)
+                    r = h -> h.numberDivisoes() > number;
                 break;
             case 5:
                 String id = viewHouse.getStr("id do device");
-                r = h -> h.hasDevice(id);
+                if(!id.equals(""))
+                    r = h -> h.hasDevice(id);
                 break;
             case 6:
                 number = (int) viewHouse.getNumber("numero de devices");
-                r = h -> h.numberDevices() > number;
+                if(number != -1)
+                    r = h -> h.numberDevices() > number;
                 break;
             case 7:
                 try {
                     number = (int) viewHouse.getNumber("nif da pessoa");
-                    Pessoa p = app.getPessoa(number);
-                    r = h -> h.getProprietario().equals(p);
+                    if(number != -1)
+                    {
+                        Pessoa p = app.getPessoa(number);
+                        r = h -> h.getProprietario().equals(p);
+                    }
                 }
                 catch (PessoaNotExistException e)
                 {
@@ -89,8 +103,10 @@ public class ControladorHouse
             case 8:
                 try {
                     String nome = viewHouse.getStr("nome do fornecedor");
-                    Comerciante comerciante = app.getFornecedor(nome);
-                    r = h -> h.getFornecedor().equals(comerciante);
+                    if (!nome.equals("")) {
+                        Comerciante comerciante = app.getFornecedor(nome);
+                        r = h -> h.getFornecedor().equals(comerciante);
+                    }
                 }
                 catch (FornecedorNotExistException e)
                 {
@@ -98,7 +114,6 @@ public class ControladorHouse
                 }
                 break;
             default:
-                r = Objects::nonNull;
                 break;
             }
         return r;
@@ -108,6 +123,9 @@ public class ControladorHouse
         Predicate<Map.Entry<String,List<String>>> r = null;
         switch (n)
         {
+            case 1:
+                r = Objects::nonNull;
+                break;
             case 2:
                 int num = (int) viewHouse.getNumber("para quantos dispositivos a mais");
                 r = h -> h.getValue().size() > num;
@@ -117,7 +135,6 @@ public class ControladorHouse
                 r = h -> h.getKey().equals(div);
                 break;
             default:
-                r = Objects::nonNull;
                 break;
         }
         return r;
@@ -125,6 +142,8 @@ public class ControladorHouse
     public void consultaDados(){
         String print = "";
         Predicate<House> ph = this.housePredicate();
+        if(ph == null)
+            return;
         int n = viewHouse.decideConsulta();
         switch (n)
         {
@@ -137,7 +156,8 @@ public class ControladorHouse
             case 3:
                 Predicate<Map.Entry<String,List<String>>> predicate2 = this.divisaoPredicate();
                 Predicate<SmartDevices> smartDevicesPredicate = controladorDevices.devicesPredicate();
-                viewHouse.printMaps1(app.getDevicesCasas(ph,predicate2,smartDevicesPredicate));
+                if(predicate2 != null&& smartDevicesPredicate != null)
+                    viewHouse.printMaps1(app.getDevicesCasas(ph,predicate2,smartDevicesPredicate));
                 break;
             case 4:
                 viewHouse.printMaps1(app.getDivisoesCasas(ph));
@@ -159,7 +179,7 @@ public class ControladorHouse
             String divisao = viewHouse.getStr("divisao");
             aux.put(app.getIdLastDeviceAdd(),divisao);
         }
-        app.associaHouse(ph,aux);
+        if(number != -1)app.associaHouse(ph,aux);
     }
     private void acrescentarDivisoes(Predicate<House> ph)
     {
@@ -178,10 +198,13 @@ public class ControladorHouse
         try {
             int number = (int) viewHouse.getNumber("mover quantos devices?");
             String local = viewHouse.getStr("local da casa");
-            for (int i = 0; i < number; i++) {
-                String id = viewHouse.getStr("id do device");
-                String divisao = viewHouse.getStr("para qual a divisao");
-                app.movedivisao(local, divisao, id);
+            if(!local.equals(""))
+            {
+                for (int i = 0; i < number; i++) {
+                    String id = viewHouse.getStr("id do device");
+                    String divisao = viewHouse.getStr("para qual a divisao");
+                    app.movedivisao(local, divisao, id);
+                }
             }
         }
         catch (CasaNotExistException | DeviceNotExistException | DivisaoNotExistException e)
@@ -196,11 +219,13 @@ public class ControladorHouse
         {
             case 1:
                 ph = this.housePredicate();
-                this.acrescentarDevices(ph);
+                if(ph != null)
+                    this.acrescentarDevices(ph);
                 break;
             case 2:
                 ph = this.housePredicate();
-                this.acrescentarDivisoes(ph);
+                if(ph != null)
+                    this.acrescentarDivisoes(ph);
                 break;
             case 3:
                 this.moveDivisoes();
@@ -210,6 +235,8 @@ public class ControladorHouse
                 int number = viewHouse.ligarDesligar();
                 Predicate<Map.Entry<String,List<String>>> predicate2 = this.divisaoPredicate();
                 Predicate<SmartDevices> smartDevicesPredicate = controladorDevices.devicesPredicate();
+                if(ph == null || predicate2 == null || smartDevicesPredicate == null)
+                    break;
                 if(number == 1)
                     app.changeStateDevice(ph,smartDevicesPredicate,predicate2,true);
                 else if(number == 2)
@@ -218,7 +245,8 @@ public class ControladorHouse
             case 5:
                 try {
                     ph = this.housePredicate();
-                    app.changeFornecedor(ph, viewHouse.getStr("nome do fornecedor"));
+                    if(ph != null)
+                        app.changeFornecedor(ph, viewHouse.getStr("nome do fornecedor"));
                 }
                 catch (FornecedorNotExistException e) {
                     viewHouse.printMessage(e.getMessage());
@@ -227,7 +255,8 @@ public class ControladorHouse
             case 6:
                 try {
                     ph = this.housePredicate();
-                    app.changeProprietario(ph,(int) viewHouse.getNumber("nif do novo proprietario"));
+                    if(ph != null)
+                        app.changeProprietario(ph,(int) viewHouse.getNumber("nif do novo proprietario"));
                 }
                 catch (PessoaNotExistException e)
                 {

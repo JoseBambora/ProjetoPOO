@@ -11,15 +11,46 @@ public class ViewHouse
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
+    private int getNumberIntScanner()
+    {
+        int r = -1;
+        try {
+            r = input.nextInt();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
+    }
     public double getNumber(String str)
     {
         System.out.println("Insira um número " + str);
-        return this.input.nextDouble();
+        double r = -1;
+        try {
+            r = input.nextDouble();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
     }
     public String getStr(String str)
     {
         System.out.println("Insira uma string para " +str);
-        return input.next();
+        String r = "";
+        try {
+            r = input.next();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
     }
     public int predicate()
     {
@@ -32,7 +63,7 @@ public class ViewHouse
         System.out.println("6 - Têm um certo número de devices");
         System.out.println("7 - Têm um certo proprietario");
         System.out.println("8 - Têm um certo fornecedor");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
     public int predicateDiv()
     {
@@ -40,7 +71,7 @@ public class ViewHouse
         System.out.println("1 - Não");
         System.out.println("2 - Têm mais que x dispositivos");
         System.out.println("3 - Têm um certo nome");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
     public int consultarChange()
     {
@@ -48,7 +79,7 @@ public class ViewHouse
         System.out.println("1 - Consultar");
         System.out.println("2 - Mudar");
         System.out.println("3 - Nada");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
 
     public int decideConsulta()
@@ -59,7 +90,7 @@ public class ViewHouse
         System.out.println("3 - Lista de devices seguindo um certo predicado");
         System.out.println("4 - Lista de divisões");
         System.out.println("5 - Lista de localidades");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
     public int decideAlterar()
     {
@@ -70,14 +101,14 @@ public class ViewHouse
         System.out.println("4 - Ligar ou desligar devices seguindo um certo predicado");
         System.out.println("5 - Mudar fornecedor");
         System.out.println("6 - Mudar Proprietário");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
     public int ligarDesligar()
     {
         System.out.println("Ligar ou desligar?");
         System.out.println("1 - Ligar Dispostivo");
         System.out.println("2 - Desligar Dispostivo");
-        return input.nextInt();
+        return this.getNumberIntScanner();
     }
     public List<String> getDivisoesAdd()
     {
