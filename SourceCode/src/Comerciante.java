@@ -6,15 +6,15 @@ public class Comerciante {
     private String nome;
     private Formulas formula;
     private Map<LocalDate,List<Fatura>>faturasEmitidas;
-    public Comerciante(){
-            this.nome = "";
-            this.formula = new FormulaCalc1();
-            this.faturasEmitidas = new HashMap<>();
+    public Comerciante() {
+        this.nome = "";
+        this.formula = new FormulaCalc1();
+        this.faturasEmitidas = new HashMap<>();
     }
 
-    public Comerciante(String nome, Formulas formulas){
-        this.nome = nome;
-        this.formula = formulas;
+    public Comerciante(String nome, Formulas formulas) throws NullPointerException {
+        this.setNome(nome);
+        this.setFormula(formulas);
         this.faturasEmitidas = new HashMap<>();
     }
 
@@ -46,11 +46,16 @@ public class Comerciante {
         return result;
     }
 
-    public void setFormula(Formulas formula) {
+    public void setFormula(Formulas formula) throws NullPointerException {
+        if(formula == null) {
+            throw new NullPointerException("Nome nulo no comercinate com o Nome = "+this.getNome());}
         this.formula = formula;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NullPointerException {
+        if(nome == null) {
+            throw new NullPointerException("Nome nulo no comercinate com a Fórmula = "+this.getFormula());
+        }
         this.nome = nome;
     }
 
@@ -140,7 +145,7 @@ public class Comerciante {
         }
         return result.toString();
     }
-    public void changeFormula (Predicate <Comerciante> p, Formulas fm) {
+    public void changeFormula (Predicate <Comerciante> p, Formulas fm) throws NullPointerException {
         if (p.test(this)){
             this.setFormula(fm);
         }

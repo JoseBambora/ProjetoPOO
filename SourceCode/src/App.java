@@ -24,8 +24,7 @@ public class App
         this.devices = new HashMap<>();
         this.pessoas = new HashMap<>();
     }
-    public void addFornecedor(String nome, Formulas formulas)
-    {
+    public void addFornecedor(String nome, Formulas formulas) throws NullPointerException {
         this.fornecedores.put(nome,new Comerciante(nome,formulas));
     }
     public void addSmartBulb(boolean mode,int tone, double tamanho, double consumo) throws ValorNegativoException {
@@ -94,8 +93,7 @@ public class App
             comerciante.addFatura(fatura,this.getImposto());
         }
     }
-    public void mudaPreco( Map<String,Formulas> atualizacao)
-    {
+    public void mudaPreco( Map<String,Formulas> atualizacao) throws NullPointerException {
         for(Map.Entry<String,Formulas> valor : atualizacao.entrySet())
         {
             if(this.fornecedores.containsKey(valor.getKey()))
@@ -289,8 +287,7 @@ public class App
         }
         return faturasR;
     }
-    public void changeFormulaFornecedor(Predicate<Comerciante> predicate, Formulas formula)
-    {
+    public void changeFormulaFornecedor(Predicate<Comerciante> predicate, Formulas formula) throws NullPointerException {
         for(Comerciante comerciante : this.fornecedores.values())
         {
             if(predicate.test(comerciante))

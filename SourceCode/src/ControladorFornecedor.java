@@ -1,20 +1,18 @@
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class ControladorFornecedor
-{
+public class ControladorFornecedor {
     private ViewFornecedor view;
     private App app;
-    ControladorFornecedor( App app)
-    {
+
+    ControladorFornecedor(App app) {
         this.app = app;
         this.view = new ViewFornecedor();
     }
-    private Formulas convertNumberFormula(int n)
-    {
+
+    private Formulas convertNumberFormula(int n) {
         Formulas formulas;
-        switch (n)
-        {
+        switch (n) {
             case 1:
                 formulas = new FormulaCalc1();
                 break;
@@ -27,23 +25,32 @@ public class ControladorFornecedor
         }
         return formulas;
     }
-    public void addFornecedor(){
-        String nome = view.getNome();
-        int f = view.getFormula();
-        app.addFornecedor(nome,this.convertNumberFormula(f));
-        // Criar Método na view para IO para obter todos os dados do comerciante
-        view.sucess();
+
+    public void addFornecedor() {
+        try {
+            String nome = view.getNome();
+            int f = view.getFormula();
+            app.addFornecedor(nome, this.convertNumberFormula(f));
+            // Criar Método na view para IO para obter todos os dados do comerciante
+            view.sucess();
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    public void addFornecedor(String nome, Formulas formulas)
-    {
-        app.addFornecedor(nome,formulas);
-        view.sucess();
+
+    public void addFornecedor(String nome, Formulas formulas) {
+        try {
+            app.addFornecedor(nome, formulas);
+            view.sucess();
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    private Predicate<Comerciante> comerciantePredicate(){
+
+    private Predicate<Comerciante> comerciantePredicate() {
         int n = view.predicates();
         Predicate<Comerciante> r;
-        switch (n)
-        {
+        switch (n) {
             case 2:
                 r = p -> (p.numberFaturas() > view.numeroCompareI());
                 break;
@@ -52,14 +59,14 @@ public class ControladorFornecedor
                 break;
             case 4:
                 int f = view.getFormula();
-                if(f == 1)
+                if (f == 1)
                     r = p -> (p.getFormula() instanceof FormulaCalc1);
                 else
                     r = p -> (p.getFormula() instanceof FormulaCalc2);
                 break;
             case 5:
                 String nome = view.getNome();
-                r = p ->(p.getNome().equals(nome));
+                r = p -> (p.getNome().equals(nome));
                 break;
             default:
                 r = Objects::nonNull;
@@ -67,12 +74,12 @@ public class ControladorFornecedor
         }
         return r;
     }
+
     public void consultarDados() {
         Predicate<Comerciante> p = this.comerciantePredicate();
         int option = view.getOperation('c');
         String r = "";
-        switch (option)
-        {
+        switch (option) {
             case 1:
                 r = app.getFormulasPredicate(p).toString();
                 break;
@@ -86,33 +93,36 @@ public class ControladorFornecedor
                 r = Double.toString(app.lucro(p));
                 break;
             case 5:
+                view.sucess();
                 r = Integer.toString(app.respectPredicate(p));
-                break;
             default:
                 break;
         }
         view.printInfVF(r);
     }
 
-    public void changeDadosFornecedor(){
-        // Criar Método na view para IO para obter os dados a mudar do comerciante
-        Predicate<Comerciante> p = this.comerciantePredicate();
-        int option = view.getOperation('m');
-        switch (option)
-        {
-            case 1:
-                int f = view.getFormula();
-                app.changeFormulaFornecedor(p,this.convertNumberFormula(f));
-                break;
-            default:
-                break;
+    public void changeDadosFornecedor() {
+        try {
+            // Criar Método na view para IO para obter os dados a mudar do comerciante
+            Predicate<Comerciante> p = this.comerciantePredicate();
+            int option = view.getOperation('m');
+            switch (option) {
+                case 1:
+                    int f = view.getFormula();
+                    app.changeFormulaFornecedor(p, this.convertNumberFormula(f));
+                    break;
+                default:
+                    break;
+            }
+            view.sucess();
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
-        view.sucess();
     }
-    public void whatOperation(){
+
+    public void whatOperation() {
         int n = view.consultarAlterar();
-        switch (n)
-        {
+        switch (n) {
             case 1:
                 consultarDados();
                 break;
