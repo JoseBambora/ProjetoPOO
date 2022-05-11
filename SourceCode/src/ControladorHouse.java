@@ -21,6 +21,7 @@ public class ControladorHouse
             app.addPessoa(nome,nif);
             String fornecedor = campos[2];
             this.addCasaApp(nif,fornecedor);
+            viewHouse.printMessage("Casa adicionada com sucesso");
         }
         catch (NullPointerException |  ValorNegativoException e)
         {
@@ -31,6 +32,7 @@ public class ControladorHouse
     {
         try {
             app.addDivisao(divisao);
+            viewHouse.printMessage("Divisao adicionada com sucesso");
         }
         catch (DevicesExistException e) {
             viewHouse.printMessage(e.getMessage());

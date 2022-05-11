@@ -61,6 +61,9 @@ public class Main {
                 case "Divisao":
                     controladorHouse.addDivisao(linhaPartida[1]);
                     break;
+                case "Fornecedor":
+                    controladorFornecedor.addFornecedor(linhaPartida[1],new FormulaCalc1());
+                    break;
                 case "SmartBulb":
                     controladorDevices.parseSmartBulb(linhaPartida[1]);
                     break;
@@ -69,9 +72,6 @@ public class Main {
                     break;
                 case "SmartCamera":
                     controladorDevices.parseSmartCamera(linhaPartida[1]);
-                    break;
-                case "Fornecedor":
-                    controladorFornecedor.addFornecedor(linhaPartida[1],new FormulaCalc1());
                     break;
                 default:
                     System.out.println(linhaPartida[0] + " " + linhaPartida[1]);
@@ -87,6 +87,8 @@ public class Main {
         app = new App(iteracao.nextInt());
         controladorFornecedor = new ControladorFornecedor(app);
         controladorHouse = new ControladorHouse(app);
+        controladorDevices = new ControladorDevices(app);
+        controladorPessoa = new ControladorPessoa(app);
         parse();
         System.out.println(app.numberDevices());
         System.out.println(app.numberCasas());
