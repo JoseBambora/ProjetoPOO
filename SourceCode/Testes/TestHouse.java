@@ -210,11 +210,9 @@ public class TestHouse
             assertFalse(this.house3.getDevices().get("b4").isOn());
             assertFalse(this.house2.getDevices().get("b4").isOn());
         }
-        catch (ValorNegativoException | NullPointerException e)
+        catch (ValorNegativoException | NullPointerException | DeviceNotExistException  e)
         {
             System.out.println(e.getMessage());
-        } catch (java.lang.NullPointerException e) {
-            throw new RuntimeException(e);
         }
     }
     @Test
@@ -314,61 +312,63 @@ public class TestHouse
     @Test
     public void testOnOff()
     {
-        this.house4.setAllOff();
-        Map<String, SmartDevices> devices = this.house4.getDevices();
-        for(SmartDevices device : devices.values())
-            assertFalse(device.isOn());
-        this.house4.setAllOn();
-        for(SmartDevices device : devices.values())
-            assertFalse(device.isOn());
-        devices = this.house4.getDevices();
-        for(SmartDevices device : devices.values())
-            assertTrue(device.isOn());
-        this.house4.setDeviceOff("b3");
-        this.house4.setDeviceOff("b4");
-        this.house4.setDeviceOff("c4");
-        this.house4.setDeviceOff("s1");
-        this.house4.setDeviceOff("s2");
-        devices = this.house4.getDevices();
-        for(SmartDevices device : devices.values())
-            if(device.getId().equals("b3") || device.getId().equals("b4") || device.getId().equals("c4") || device.getId().equals("s1") || device.getId().equals("s2"))
-                assertFalse(device.isOn(),"device " + device.getId());
-            else
+        try {
+            this.house4.setAllOff();
+            Map<String, SmartDevices> devices = this.house4.getDevices();
+            for(SmartDevices device : devices.values())
+                assertFalse(device.isOn());
+            this.house4.setAllOn();
+            for(SmartDevices device : devices.values())
+                assertFalse(device.isOn());
+            devices = this.house4.getDevices();
+            for(SmartDevices device : devices.values())
                 assertTrue(device.isOn());
-        this.house4.setDeviceOn("b3");
-        this.house4.setDeviceOn("b4");
-        this.house4.setDeviceOn("c4");
-        this.house4.setDeviceOn("s1");
-        this.house4.setDeviceOn("s2");
-        devices = this.house4.getDevices();
-        for(SmartDevices device : devices.values())
-            assertTrue(device.isOn());
-
-        this.house4.setDivisaoOff("Sala");
-        this.house4.setDivisaoOff("WC");
-        devices = this.house4.getDevices();
-        Map<String, List<String>> divisoes = this.house4.getDivisoes();
-        for(SmartDevices device : devices.values())
-            if(divisoes.get("Sala").contains(device.getId()) || divisoes.get("WC").contains(device.getId()))
-                assertFalse(device.isOn(),"device " + device.getId());
-            else
+            this.house4.setDeviceOff("b3");
+            this.house4.setDeviceOff("c4");
+            this.house4.setDeviceOff("s1");
+            devices = this.house4.getDevices();
+            for(SmartDevices device : devices.values())
+                if(device.getId().equals("b3") || device.getId().equals("b4") || device.getId().equals("c4") || device.getId().equals("s1") || device.getId().equals("s2"))
+                    assertFalse(device.isOn(),"device " + device.getId());
+                else
+                    assertTrue(device.isOn());
+            this.house4.setDeviceOn("b3");
+            this.house4.setDeviceOn("c4");
+            this.house4.setDeviceOn("s1");
+            devices = this.house4.getDevices();
+            for(SmartDevices device : devices.values())
                 assertTrue(device.isOn());
 
-        this.house4.setDivisaoOn("Sala");
-        this.house4.setDivisaoOn("WC");
-        devices = this.house4.getDevices();
-        for(SmartDevices device : devices.values())
-            assertTrue(device.isOn());
+            this.house4.setDivisaoOff("Sala");
+            this.house4.setDivisaoOff("WC");
+            devices = this.house4.getDevices();
+            Map<String, List<String>> divisoes = this.house4.getDivisoes();
+            for(SmartDevices device : devices.values())
+                if(divisoes.get("Sala").contains(device.getId()) || divisoes.get("WC").contains(device.getId()))
+                    assertFalse(device.isOn(),"device " + device.getId());
+                else
+                    assertTrue(device.isOn());
 
-        House house = this.house3.clone();
-        house.setAllOff();
-        devices = this.house3.getDevices();
-        for(SmartDevices smartDevices : devices.values())
-            assertTrue(smartDevices.isOn());
+            this.house4.setDivisaoOn("Sala");
+            this.house4.setDivisaoOn("WC");
+            devices = this.house4.getDevices();
+            for(SmartDevices device : devices.values())
+                assertTrue(device.isOn());
 
-        devices = house.getDevices();
-        for(SmartDevices smartDevices : devices.values())
-            assertFalse(smartDevices.isOn());
+            House house = this.house3.clone();
+            house.setAllOff();
+            devices = this.house3.getDevices();
+            for(SmartDevices smartDevices : devices.values())
+                assertTrue(smartDevices.isOn());
+
+            devices = house.getDevices();
+            for(SmartDevices smartDevices : devices.values())
+                assertFalse(smartDevices.isOn());
+        }
+        catch (DeviceNotExistException | DivisaoNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -396,28 +396,32 @@ public class TestHouse
     @Test
     public void testRemove()
     {
-        this.house3.removeDevice("b1");
-        this.house3.removeDevice("b3");
-        this.house3.removeDevice("s4");
-        Map<String, List<String>> divisoes = this.house3.getDivisoes();
-        for(List<String> list : divisoes.values())
-        {
-            assertFalse(list.contains("b1") || list.contains("b3") || list.contains("s4"));
+        try {
+            this.house3.removeDevice("b3");
+            Map<String, List<String>> divisoes = this.house3.getDivisoes();
+            for(List<String> list : divisoes.values())
+            {
+                assertFalse(list.contains("b1") || list.contains("b3") || list.contains("s4"));
+            }
+            Map<String, SmartDevices> devices = this.house3.getDevices();
+            assertFalse(devices.containsKey("b1"));
+            assertFalse(devices.containsKey("b3"));
+            assertFalse(devices.containsKey("s4"));
+            assertTrue(devices.containsKey("c2"));
+            this.house4.removeDivisao("Sala");
+            this.house4.removeDivisao("WC");
+            Map<String, List<String>> divisoes2 = this.house4.getDivisoes();
+            Map<String, SmartDevices> devices2 = this.house4.getDevices();
+            assertFalse(divisoes2.containsKey("Sala"));
+            assertFalse(divisoes2.containsKey("WC"));
+            assertFalse(devices2.containsKey("b2"));
+            assertFalse(devices2.containsKey("b3"));
+            assertFalse(devices2.containsKey("b1"));
+            assertFalse(devices2.containsKey("s4"));
         }
-        Map<String, SmartDevices> devices = this.house3.getDevices();
-        assertFalse(devices.containsKey("b1"));
-        assertFalse(devices.containsKey("b3"));
-        assertFalse(devices.containsKey("s4"));
-        assertTrue(devices.containsKey("c2"));
-        this.house4.removeDivisao("Sala");
-        this.house4.removeDivisao("WC");
-        Map<String, List<String>> divisoes2 = this.house4.getDivisoes();
-        Map<String, SmartDevices> devices2 = this.house4.getDevices();
-        assertFalse(divisoes2.containsKey("Sala"));
-        assertFalse(divisoes2.containsKey("WC"));
-        assertFalse(devices2.containsKey("b2"));
-        assertFalse(devices2.containsKey("b3"));
-        assertFalse(devices2.containsKey("b1"));
-        assertFalse(devices2.containsKey("s4"));
+        catch (DeviceNotExistException | DivisaoNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

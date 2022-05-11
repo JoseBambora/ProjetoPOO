@@ -63,8 +63,7 @@ public class App
     public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
         this.pessoas.put(nif,new Pessoa(nome,nif));
     }
-    public void addDivisao(String divisao)
-    {
+    public void addDivisao(String divisao) throws DevicesExistException {
         if(this.casas.containsKey(this.lastCasa))
         {
             this.lastDivisao = divisao;
@@ -93,42 +92,25 @@ public class App
             comerciante.addFatura(fatura,this.getImposto());
         }
     }
-    public void mudaPreco( Map<String,Formulas> atualizacao) throws NullPointerException {
-        for(Map.Entry<String,Formulas> valor : atualizacao.entrySet())
-        {
-            if(this.fornecedores.containsKey(valor.getKey()))
-            {
-                this.fornecedores.get(valor.getKey()).setFormula(valor.getValue());
-            }
-        }
-    }
-    public void setOnOff(String idHouse, Map<String,Boolean> estadoDispositivos)
-    {
-        if(this.casas.containsKey(idHouse))
-        {
-            House house = this.casas.get(idHouse);
-            for(String id : estadoDispositivos.keySet())
-            {
-                if(house.hasDevice(id))
-                {
-                    house.setDeviceOnOff(id,estadoDispositivos.get(id));
-                }
-            }
-        }
-    }
-
-    public void changeProprietario(String idHouse,Integer pessoa) throws NullPointerException
-    {
+    public void changeProprietario(String idHouse,Integer pessoa) throws NullPointerException, PessoaNotExistException, CasaNotExistException {
         if(this.casas.containsKey(idHouse))
             if(this.pessoas.containsKey(pessoa))
                 this.casas.get(idHouse).setProprietario(this.pessoas.get(pessoa));
+            else
+                throw new PessoaNotExistException("Pessoa não existe na aplicação");
+        else
+            throw new CasaNotExistException("Casa não existe na aplicação");
     }
 
-    public void changeFornecedor(String idHouse, String fornecedor) throws NullPointerException
-    {
+    public void changeFornecedor(String idHouse, String fornecedor) throws NullPointerException, FornecedorNotExistException, CasaNotExistException {
         if(this.casas.containsKey(idHouse))
             if(this.fornecedores.containsKey(fornecedor))
                 this.casas.get(idHouse).setFornecedor(this.fornecedores.get(fornecedor));
+            else
+                throw new FornecedorNotExistException("Fornecedor não existe na aplicação");
+        else
+            throw new CasaNotExistException("Casa não existe na aplicação");
+
     }
 
     public void setHouseComerciante(String idHouse, String comerciante) throws NullPointerException
@@ -433,13 +415,15 @@ public class App
     }
 
     // CRIAR EXCEPTION
-    public Pessoa getPessoa(Integer nif)
-    {
+    public Pessoa getPessoa(Integer nif) throws PessoaNotExistException {
+        if(!this.pessoas.containsKey(nif))
+            throw new PessoaNotExistException("Pessoa não existe na aplicação");
         return this.pessoas.get(nif).clone();
     }
     // CRIAR EXCEPTION
-    public Comerciante getFornecedor(String nome)
-    {
+    public Comerciante getFornecedor(String nome) throws FornecedorNotExistException {
+        if(!this.fornecedores.containsKey(nome))
+            throw new FornecedorNotExistException("Fornecedor não existe na aplicação");
         return this.fornecedores.get(nome).clone();
     }
 
@@ -519,8 +503,6 @@ public class App
     }
     public void associaHouse(Predicate<House> predicate,Map<String, String> map)
     {
-        int lid = this.devices.size()-1;
-        // diferenciação nos ids
         for(House house : this.casas.values())
         {
             if(predicate.test(house))
@@ -532,8 +514,7 @@ public class App
             }
         }
     }
-    public void addDivisoes(Predicate<House> predicate,List<String> divisoes)
-    {
+    public void addDivisoes(Predicate<House> predicate,List<String> divisoes) throws DevicesExistException {
         for(House house : this.casas.values())
         {
             if(predicate.test(house))
@@ -543,10 +524,11 @@ public class App
             }
         }
     }
-    public void movedivisao(String local, String divisao, String device)
-    {
+    public void movedivisao(String local, String divisao, String device) throws CasaNotExistException, DeviceNotExistException, DivisaoNotExistException {
         if(this.casas.containsKey(local))
             this.casas.get(local).moveDivisao(divisao,device);
+        else
+            throw new CasaNotExistException("Casa não existe na aplicação");
     }
     public void changeStateDevice(Predicate<House> predicate, Predicate<SmartDevices> predicateSD, Predicate<Map.Entry<String,List<String>>> divPredicate, boolean mode)
     {
@@ -558,7 +540,7 @@ public class App
             }
         }
     }
-    public void changeFornecedor(Predicate<House> predicate, String nome) throws NullPointerException {
+    public void changeFornecedor(Predicate<House> predicate, String nome) throws NullPointerException, FornecedorNotExistException {
         if(this.fornecedores.containsKey(nome))
         {
             for(House house : this.casas.values())
@@ -569,8 +551,10 @@ public class App
                 }
             }
         }
+        else
+            throw new FornecedorNotExistException("Fornecedor não existe na aplicação");
     }
-    public void changeProprietario(Predicate<House> predicate, Integer nif) throws NullPointerException {
+    public void changeProprietario(Predicate<House> predicate, Integer nif) throws NullPointerException, PessoaNotExistException {
         if(this.pessoas.containsKey(nif))
         {
             for(House house : this.casas.values())
@@ -581,5 +565,7 @@ public class App
                 }
             }
         }
+        else
+            throw new PessoaNotExistException("Pessoa não existe na aplicação");
     }
 }

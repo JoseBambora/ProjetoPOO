@@ -21,7 +21,7 @@ public class House {
     public House(Pessoa proprietario, Comerciante comerciante, String local) throws NullPointerException {
         this.setProprietario(proprietario);
         this.setFornecedor(comerciante);
-        this.local = local;
+        this.setLocal(local);
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
     }
@@ -29,7 +29,7 @@ public class House {
     public House(Pessoa proprietario, Comerciante comerciante, String local, Map<String,SmartDevices> smartDevicesMap) throws NullPointerException {
         this.setProprietario(proprietario);
         this.setFornecedor(comerciante);
-        this.local = local;
+        this.setLocal(local);
         this.devices = new HashMap<>();
         this.divisoes = new HashMap<>();
         this.setDevices(smartDevicesMap);
@@ -141,8 +141,7 @@ public class House {
             smartDevices.turnOff();
     }
 
-    public void setDivisaoOn(String divisao)
-    {
+    public void setDivisaoOn(String divisao) throws DivisaoNotExistException {
         if(this.divisoes.containsKey(divisao))
         {
             List<String> devices = this.divisoes.get(divisao);
@@ -151,10 +150,11 @@ public class House {
                 this.devices.get(device).turnOn();
             }
         }
+        else
+            throw new DivisaoNotExistException("Divisao não existe na casa " + this.getLocal());
     }
 
-    public void setDivisaoOff(String divisao)
-    {
+    public void setDivisaoOff(String divisao) throws DivisaoNotExistException {
         if(this.divisoes.containsKey(divisao))
         {
             List<String> devices = this.divisoes.get(divisao);
@@ -163,51 +163,28 @@ public class House {
                 this.devices.get(device).turnOff();
             }
         }
+        else
+            throw new DivisaoNotExistException("Divisao não existe na casa " + this.getLocal());
     }
 
-    public void setDivisaoOnOff(String divisao, boolean on)
-    {
-        if(this.divisoes.containsKey(divisao))
-        {
-            List<String> devices = this.divisoes.get(divisao);
-            for(String device : devices)
-                this.devices.get(device).setOn(on);
-        }
-    }
-
-    public void setDeviceOn(String device)
-    {
+    public void setDeviceOn(String device) throws DeviceNotExistException {
         if(this.devices.containsKey(device))
         {
             this.devices.get(device).turnOn();
         }
+        else
+            throw new DeviceNotExistException("Device " + device + " não existe na casa " + this.getLocal());
     }
 
-    public void setDeviceOff(String device)
-    {
+    public void setDeviceOff(String device) throws DeviceNotExistException {
         if(this.devices.containsKey(device))
         {
             this.devices.get(device).turnOff();
         }
+        else
+            throw new DeviceNotExistException("Device " + device + " não existe na casa " + this.getLocal());
     }
 
-    public void setDeviceOnOff(String id, boolean estadoDispositivo){
-        if(this.devices.containsKey(id)) this.devices.get(id).setOn(estadoDispositivo);
-    }
-
-    public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
-    {
-        for(SmartDevices smartDevices : this.devices.values())
-            smartDevices.setOn(on,predicate);
-    }
-    public void setDivisaoOn(Predicate<String> predicate, boolean on)
-    {
-        for(String divisoes : this.divisoes.keySet())
-        {
-            if(predicate.test(divisoes))
-                this.setDivisaoOnOff(divisoes,on);
-        }
-    }
     public void setDivisaoSDOnOff(Predicate<Map.Entry<String,List<String>>> predicate, Predicate<SmartDevices> predicate2, boolean on)
     {
         for(Map.Entry<String,List<String>> divisoes : this.divisoes.entrySet())
@@ -232,24 +209,26 @@ public class House {
         this.addDevice(smartDevices);
     }
 
-    public void removeDevice(String device)
-    {
+    public void removeDevice(String device) throws DeviceNotExistException {
         if(this.devices.containsKey(device))
         {
             this.devices.remove(device);
             for(List<String> list : this.divisoes.values())
                 list.removeIf(s -> s.equals(device));
         }
+        else
+            throw new DeviceNotExistException("Device " + device + " não existe na casa " +this.getLocal());
     }
 
-    public void removeDivisao(String divisao)
-    {
+    public void removeDivisao(String divisao) throws DivisaoNotExistException {
         if(this.divisoes.containsKey(divisao))
         {
             List<String> list = this.divisoes.remove(divisao);
             for(String s : list)
                 this.devices.remove(s);
         }
+        else
+            throw new DivisaoNotExistException("Divisão não existe na casa " +this.getLocal());
     }
 
     public House clone()
@@ -289,9 +268,11 @@ public class House {
         return this.devices.containsKey(id);
     }
 
-    public void addDivisao(String id)
-    {
-        if(!this.devices.containsKey(id))this.divisoes.put(id,new ArrayList<>());
+    public void addDivisao(String id) throws DevicesExistException {
+        if(!this.devices.containsKey(id))
+            this.divisoes.put(id,new ArrayList<>());
+        else
+            throw new DevicesExistException("Device já existente na casa " + this.getLocal());
     }
 
     public boolean hasDivisao(String id) {
@@ -305,20 +286,26 @@ public class House {
     {
         return this.devices.size();
     }
-    public void moveDivisao(String divisao, String id)
-    {
-        if(this.devices.containsKey(id) && this.divisoes.containsKey(divisao))
+    public void moveDivisao(String divisao, String id) throws DivisaoNotExistException, DeviceNotExistException {
+        if(this.devices.containsKey(id) )
         {
-            for(List<String> string : this.divisoes.values())
+            if(this.divisoes.containsKey(divisao))
             {
-                if(string.contains(id))
+                for(List<String> string : this.divisoes.values())
                 {
-                    string.remove(id);
-                    break;
+                    if(string.contains(id))
+                    {
+                        string.remove(id);
+                        break;
+                    }
                 }
+                this.divisoes.get(divisao).add(id);
             }
-            this.divisoes.get(divisao).add(id);
+            else
+                throw new DivisaoNotExistException("Divisao não existe na casa " +this.getLocal());
         }
+        else
+            throw new DeviceNotExistException("Device " + id + " não existe na casa " +this.getLocal());
     }
     public List<String> respectPredicate(Predicate<Map.Entry<String,List<String>>> predicate2, Predicate<SmartDevices> predicate1)
     {

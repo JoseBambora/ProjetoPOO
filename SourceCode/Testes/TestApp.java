@@ -105,7 +105,7 @@ public class TestApp
         app.addSmartSpeakerP(true,volume,campos[1],campos[2],consumo);
     }
     @BeforeAll
-    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException {
+    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException, DevicesExistException {
 
         List<String> linhas = lerFicheiro("log.txt");
         String[] linhaPartida;
@@ -166,13 +166,13 @@ public class TestApp
             assertFalse(pessoas.get(758618872) == casas.get("110").getProprietario());
             assertTrue(pessoas.get(pessoa.getNIF()) == casas.get("110").getProprietario());
         }
-        catch (NullPointerException e)
+        catch (NullPointerException | FornecedorNotExistException | PessoaNotExistException | CasaNotExistException e)
         {
             System.out.println(e.getMessage());
         }
     }
     @Test
-    public void testAnvacaDias() throws ValorNegativoException, NullPointerException {
+    public void testAnvacaDias(){
         try
         {
             app.avancaDias(31);

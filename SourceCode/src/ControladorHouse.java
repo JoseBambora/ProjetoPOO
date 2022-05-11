@@ -29,15 +29,26 @@ public class ControladorHouse
     }
     public void addDivisao(String divisao)
     {
-        app.addDivisao(divisao);
+        try {
+            app.addDivisao(divisao);
+        }
+        catch (DevicesExistException e) {
+            viewHouse.printMessage(e.getMessage());
+        }
     }
     public void addCasaApp() throws NullPointerException {
         this.app.addCasa((int) viewHouse.getNumber("nif do dono"), viewHouse.getStr("nome do comerciante"));
     }
-    public void addCasaApp(int nif, String nome) throws NullPointerException {
-        this.app.addCasa(nif,nome);
+    public void addCasaApp(int nif, String nome){
+        try {
+            this.app.addCasa(nif,nome);
+        }
+        catch (NullPointerException e)
+        {
+            viewHouse.printMessage(e.getMessage());
+        }
     }
-    private Predicate<House> housePredicate() throws ValorNegativoException, NullPointerException {
+    private Predicate<House> housePredicate() {
         int n = viewHouse.predicate();
         Predicate<House> r = null;
         switch (n)
@@ -63,20 +74,34 @@ public class ControladorHouse
                 r = h -> h.numberDevices() > number;
                 break;
             case 7:
-                number = (int) viewHouse.getNumber("nif da pessoa");
-                r = h -> h.getProprietario().equals(app.getPessoa(number));
+                try {
+                    number = (int) viewHouse.getNumber("nif da pessoa");
+                    Pessoa p = app.getPessoa(number);
+                    r = h -> h.getProprietario().equals(p);
+                }
+                catch (PessoaNotExistException e)
+                {
+                    viewHouse.printMessage(e.getMessage());
+                }
                 break;
             case 8:
-                String nome = viewHouse.getStr("nome do fornecedor");
-                r = h -> h.getFornecedor().equals(app.getFornecedor(nome));
+                try {
+                    String nome = viewHouse.getStr("nome do fornecedor");
+                    Comerciante comerciante = app.getFornecedor(nome);
+                    r = h -> h.getFornecedor().equals(comerciante);
+                }
+                catch (FornecedorNotExistException e)
+                {
+                    viewHouse.printMessage(e.getMessage());
+                }
                 break;
             default:
                 r = Objects::nonNull;
                 break;
-        }
+            }
         return r;
     }
-    private Predicate<Map.Entry<String,List<String>>> divisaoPredicate() throws ValorNegativoException, NullPointerException {
+    private Predicate<Map.Entry<String,List<String>>> divisaoPredicate() {
         int n = viewHouse.predicateDiv();
         Predicate<Map.Entry<String,List<String>>> r = null;
         switch (n)
@@ -95,7 +120,7 @@ public class ControladorHouse
         }
         return r;
     }
-    public void consultaDados() throws ValorNegativoException, NullPointerException {
+    public void consultaDados(){
         String print = "";
         Predicate<House> ph = this.housePredicate();
         int n = viewHouse.decideConsulta();
@@ -136,18 +161,30 @@ public class ControladorHouse
     }
     private void acrescentarDivisoes(Predicate<House> ph)
     {
-        List<String> divisoes = viewHouse.getDivisoesAdd();
-        app.addDivisoes(ph,divisoes);
+        try {
+            List<String> divisoes = viewHouse.getDivisoesAdd();
+            app.addDivisoes(ph,divisoes);
+        }
+        catch (DevicesExistException e)
+        {
+            viewHouse.printMessage(e.getMessage());
+        }
+
     }
     private void moveDivisoes()
     {
-        int number = (int) viewHouse.getNumber("mover quantos devices?");
-        String local = viewHouse.getStr("local da casa");
-        for(int i = 0; i < number; i++)
+        try {
+            int number = (int) viewHouse.getNumber("mover quantos devices?");
+            String local = viewHouse.getStr("local da casa");
+            for (int i = 0; i < number; i++) {
+                String id = viewHouse.getStr("id do device");
+                String divisao = viewHouse.getStr("para qual a divisao");
+                app.movedivisao(local, divisao, id);
+            }
+        }
+        catch (CasaNotExistException | DeviceNotExistException | DivisaoNotExistException e)
         {
-            String id = viewHouse.getStr("id do device");
-            String divisao = viewHouse.getStr("para qual a divisao");
-            app.movedivisao(local,divisao,id);
+            viewHouse.printMessage(e.getMessage());
         }
     }
     public void alteraDados() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException {
@@ -177,12 +214,23 @@ public class ControladorHouse
                     app.changeStateDevice(ph,smartDevicesPredicate,predicate2,false);
                 break;
             case 5:
-                ph = this.housePredicate();
-                app.changeFornecedor(ph, viewHouse.getStr("nome do fornecedor"));
+                try {
+                    ph = this.housePredicate();
+                    app.changeFornecedor(ph, viewHouse.getStr("nome do fornecedor"));
+                }
+                catch (FornecedorNotExistException e) {
+                    viewHouse.printMessage(e.getMessage());
+                }
                 break;
             case 6:
-                ph = this.housePredicate();
-                app.changeProprietario(ph,(int) viewHouse.getNumber("nif do novo proprietario"));
+                try {
+                    ph = this.housePredicate();
+                    app.changeProprietario(ph,(int) viewHouse.getNumber("nif do novo proprietario"));
+                }
+                catch (PessoaNotExistException e)
+                {
+                    viewHouse.printMessage(e.getMessage());
+                }
                 break;
             default:
                 break;
