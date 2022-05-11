@@ -86,8 +86,8 @@ public class ControladorFornecedor
                 r = Double.toString(app.lucro(p));
                 break;
             case 5:
-                view.sucess();
                 r = Integer.toString(app.respectPredicate(p));
+                break;
             default:
                 break;
         }
