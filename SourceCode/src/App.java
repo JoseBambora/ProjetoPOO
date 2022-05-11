@@ -91,7 +91,7 @@ public class App
             proprietario = casa.getProprietario();
             double preco =  0;
             Fatura fatura = new Fatura(proprietario,preco,this.imposto,consumo,newDate,casa.getLocal());
-            comerciante.addFatura(fatura,23);
+            comerciante.addFatura(fatura,this.getImposto());
         }
     }
     public void mudaPreco( Map<String,Formulas> atualizacao)
