@@ -74,6 +74,11 @@ public class ControladorDevices {
                 break;
         }
     }
+    public int numberDevices()
+    {
+        return app.numberDevices();
+    }
+
     public void addSmartBulb(boolean on, double consumo, int tone, double dimensao) throws ValorNegativoException {
         app.addSmartBulb(on, tone, dimensao, consumo);
         view.sucess();

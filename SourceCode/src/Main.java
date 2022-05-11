@@ -96,7 +96,7 @@ public class Main {
                     controladorPessoa.addPessoa();
                     break;
                 case "ND":
-                    System.out.println("Número de Smart Devices: " + app.numberDevices());
+                    System.out.println("Número de Smart Devices: " + controladorDevices.numberDevices());
                     break;
                 case "F":
                     controladorFornecedor.whatOperation();
