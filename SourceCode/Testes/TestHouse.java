@@ -213,6 +213,8 @@ public class TestHouse
         catch (ValorNegativoException | NullPointerException e)
         {
             System.out.println(e.getMessage());
+        } catch (java.lang.NullPointerException e) {
+            throw new RuntimeException(e);
         }
     }
     @Test

@@ -102,8 +102,7 @@ public class TestComerciante
         }
     }
     @Test
-    public void testSetters()
-    {
+    public void testSetters() throws NullPointerException {
         this.comerciante1.setNome("Braga");
         this.comerciante1.setFormula(new FormulaCalc2());
         assertEquals(this.comerciante1.getNome(), "Braga");
@@ -123,8 +122,7 @@ public class TestComerciante
 
     }
     @Test
-    public void testEqualsClone()
-    {
+    public void testEqualsClone() throws NullPointerException {
         Comerciante aux = this.comerciante2.clone();
         assertEquals(aux,this.comerciante2);
         aux.setFormula(new FormulaCalc1());

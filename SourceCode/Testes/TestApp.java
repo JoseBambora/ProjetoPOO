@@ -105,7 +105,7 @@ public class TestApp
         app.addSmartSpeakerP(true,volume,campos[1],campos[2],consumo);
     }
     @BeforeAll
-    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException {
+    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException {
 
         List<String> linhas = lerFicheiro("log.txt");
         String[] linhaPartida;
