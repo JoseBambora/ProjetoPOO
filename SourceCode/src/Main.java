@@ -11,6 +11,7 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class Main {
+    static ControladorPessoa controladorPessoa;
     static ControladorFornecedor controladorFornecedor;
     static ControladorHouse controladorHouse;
     static ControladorDevices controladorDevices;
@@ -59,23 +60,6 @@ public class Main {
         System.out.println("done! " + linhas.size());
     }
 
-    public static void addPessoa()
-    {
-        try
-        {
-            System.out.println("Qual o nome da pessoa?");
-            String nome = iteracao.next();
-            System.out.println("Introduza o NIF da pessoa");
-            int NIF = iteracao.nextInt();
-            app.addPessoa(nome, NIF);
-            System.out.println("Pessoa adicionada com sucesso " + nome + " " + NIF);
-        }
-        catch (NullPointerException | ValorNegativoException e)
-        {
-            System.out.println(e.getMessage());
-        }
-
-    }
     public static void main(String[] args) throws NullPointerException, ValorNegativoException, ValorExcedeMaximoException {
         String input = "";
         System.out.println("Qual o imposto inicial?");
@@ -109,7 +93,7 @@ public class Main {
                     controladorFornecedor.addFornecedor();
                     break;
                 case "AP":
-                    addPessoa();
+                    controladorPessoa.addPessoa();
                     break;
                 case "ND":
                     System.out.println("Número de Smart Devices: " + app.numberDevices());
