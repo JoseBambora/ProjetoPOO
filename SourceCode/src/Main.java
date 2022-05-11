@@ -15,11 +15,32 @@ public class Main {
     static ControladorFornecedor controladorFornecedor;
     static ControladorHouse controladorHouse;
     static ControladorDevices controladorDevices;
-    static String menu = "Entrou menu";
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
     static Scanner iteracao = new Scanner(System.in);
 
+    public static String charNTimes(int n,char c){
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.valueOf(c).repeat(Math.max(0, n)));
+        return sb.toString();
+    }
+
+    public static String menu(){
+        StringBuilder menu = new StringBuilder();
+        menu.append(charNTimes(79,'-')).append("\n")
+                .append("| Comandos |").append(charNTimes(23,' ')).append("Descriçao").append(charNTimes(34,' ')).append("|\n")
+                .append(charNTimes(79,'-')).append("\n")
+                .append("|    AD    |").append(" Adiciona um Dispositivo").append(charNTimes(42,' ')).append("|\n")
+                .append("|    AC    |").append(" Adiciona um Comerciante").append(charNTimes(42,' ')).append("|\n")
+                .append("|    AF    |").append(" Adiciona um Forncecedor").append(charNTimes(42,' ')).append("|\n")
+                .append("|    AP    |").append(" Adiciona um Proprietario").append(charNTimes(41,' ')).append("|\n")
+                .append("|    ND    |").append(" Total de Dispositivos").append(charNTimes(44,' ')).append("|\n")
+                .append("|     F    |").append(" Operaçoes dos Fornecedores").append(charNTimes(39,' ')).append("|\n")
+                .append("|     D    |").append(" Operaçoes dos Dispositivos").append(charNTimes(39,' ')).append("|\n")
+                .append("|     C    |").append(" Operaçoes das Casas").append(charNTimes(46,' ')).append("|\n")
+                .append(charNTimes(79,'-')).append("\n");
+        return menu.toString();
+    }
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -81,7 +102,7 @@ public class Main {
                 case "m":
                 case "h":
                 case "H":
-                    System.out.println(menu);
+                    System.out.println(menu());
                     break;
                 case "AD":
                     controladorDevices.addDevice();
@@ -101,6 +122,8 @@ public class Main {
                 case "F":
                     controladorFornecedor.whatOperation();
                     break;
+                case "D":
+                    controladorDevices.whatOperation();
                 case "C":
                     controladorHouse.whatOperation();
                     break;

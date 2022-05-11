@@ -18,8 +18,8 @@ public class ViewDevices {
         System.out.println("1: SmartBulb");
         System.out.println("2: SmartCamera");
         System.out.println("3: SmartSpeaker");
-        int option = input.nextInt();
-        return option;
+        System.out.println("Outros Inputs - Nada");
+        return input.nextInt();
     }
 
     public boolean getOn() {
@@ -86,6 +86,7 @@ public class ViewDevices {
         System.out.println("6 - SmartCameras");
         System.out.println("7 - SmartBulbs");
         System.out.println("8 - SmartSpeakers");
+        System.out.println("Outros Inputs - Nada");
         return input.nextInt();
     }
 
@@ -108,6 +109,7 @@ public class ViewDevices {
         System.out.println("1 - Estado do dispositivo (ligar/desligar) ou o consumo diário");
         System.out.println("2 - Mudar o tom (SmartBulb) (Valor igual a 0, 1 ou 2)");
         System.out.println("3 - Canal e volume (SmartSpeaker) ");
+        System.out.println("Outros Inputs - Nada");
         return input.nextInt();
     }
 
@@ -116,6 +118,7 @@ public class ViewDevices {
         System.out.println("1 - Ligar Dispostivo");
         System.out.println("2 - Desligar Dispostivo");
         System.out.println("3 - Consumo");
+        System.out.println("Outros Inputs - Nada");
         return input.nextInt();
     }
 
@@ -123,6 +126,14 @@ public class ViewDevices {
         System.out.println("O que deseja mudar?");
         System.out.println("1 - Canal");
         System.out.println("2 - Volume");
+        System.out.println("Outros Inputs - Nada");
+        return input.nextInt();
+    }
+
+    public int consultarAlterar(){
+        System.out.println("1 - Consultar Dados");
+        System.out.println("2 - Alterar Dados");
+        System.out.println("Outros Inputs - Nada");
         return input.nextInt();
     }
 }

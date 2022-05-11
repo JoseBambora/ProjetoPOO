@@ -78,20 +78,6 @@ public class ControladorDevices {
     {
         return app.numberDevices();
     }
-
-    public void addSmartBulb(boolean on, double consumo, int tone, double dimensao) throws ValorNegativoException {
-        app.addSmartBulb(on, tone, dimensao, consumo);
-        view.sucess();
-    }
-    public void addSmartCamera(boolean on, double consumo, String resolucao,double tamanho) throws ValorNegativoException {
-        String[] res = resolucao.split("x");
-        app.addSmartCamera(on, consumo, Integer.parseInt(res[0]), Integer.parseInt(res[1]), tamanho);
-        view.sucess();
-    }
-    public void addSmartSpeaker(boolean on, double consumo, int volume, String canal, String marca) throws ValorNegativoException, ValorExcedeMaximoException {
-        app.addSmartSpeaker(on,volume,canal,marca,consumo);
-        view.sucess();
-    }
     public Predicate<SmartDevices> devicesPredicate(){
         int n = view.predicates();
         Predicate<SmartDevices> r;
@@ -193,6 +179,20 @@ public class ControladorDevices {
                     int volume = (int) view.insertValue();
                     app.changeVolumeDevices(r3,volume);
                 }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void whatOperation() throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
+        int n = view.consultarAlterar();
+        switch (n){
+            case 1:
+                consultarDados();
+                break;
+            case 2:
+                changeDadosDevice();
                 break;
             default:
                 break;
