@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-public class House {
+public class House implements Serializable {
     private Map<String,SmartDevices> devices;
     private Map<String,List<String>> divisoes;
     private Pessoa proprietario;

@@ -1,12 +1,9 @@
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -15,6 +12,8 @@ public class Main {
     static ControladorFornecedor controladorFornecedor;
     static ControladorHouse controladorHouse;
     static ControladorDevices controladorDevices;
+
+    static ControladorQueries controladorQueries;
     static String string = "Diga qual a próxima operação. Introduza a letra 'M' ou 'm' ou 'H' ou 'h' para aceder a um menu de comandos";
     static App app;
     static Scanner iteracao = new Scanner(System.in);
@@ -38,9 +37,36 @@ public class Main {
                 .append("|     F    |").append(" Operaçoes dos Fornecedores").append(charNTimes(39,' ')).append("|\n")
                 .append("|     D    |").append(" Operaçoes dos Dispositivos").append(charNTimes(39,' ')).append("|\n")
                 .append("|     C    |").append(" Operaçoes das Casas").append(charNTimes(46,' ')).append("|\n")
+                .append("|     Q    |").append(" Queries").append(charNTimes(58,' ')).append("|\n")
                 .append(charNTimes(79,'-')).append("\n");
         return menu.toString();
     }
+
+    public static void saveInfo() throws IOException{
+        System.out.println("Insira o nome do ficheiro onde guardará os resultados");
+        String nome = iteracao.next();
+        FileOutputStream file = new FileOutputStream(nome+".bin");
+        ObjectOutputStream oos = new ObjectOutputStream(file);
+        oos.writeObject(app);
+        oos.flush();
+        oos.close();
+        file.close();
+    }
+
+    public static void getInfo() throws IOException, ClassNotFoundException{
+        System.out.println("Insira o nome do ficheiro onde armazenou os resultados");
+        String nome = iteracao.next();
+        FileInputStream file = new FileInputStream(nome+".bin");
+        ObjectInputStream ois = new ObjectInputStream(file);
+        app = (App) ois.readObject();
+        ois.close();
+        file.close();
+        controladorDevices = new ControladorDevices(app);
+        controladorHouse = new ControladorHouse(app);
+        controladorFornecedor = new ControladorFornecedor(app);
+        controladorPessoa = new ControladorPessoa(app);
+    }
+
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -81,15 +107,28 @@ public class Main {
         System.out.println("done! " + linhas.size());
     }
 
-    public static void main(String[] args) throws NullPointerException, ValorNegativoException, ValorExcedeMaximoException {
+    public static String carregaDados(){
+        System.out.println("Deseja utilizar os dados iniciais?");
+        System.out.println("Y - Sim");
+        System.out.println("Outros inputs - Não");
+        return iteracao.next();
+    }
+    public static void main(String[] args) throws NullPointerException, ValorNegativoException, ValorExcedeMaximoException, IOException, ClassNotFoundException {
         String input = "";
-        System.out.println("Qual o imposto inicial?");
-        app = new App(iteracao.nextInt());
-        controladorFornecedor = new ControladorFornecedor(app);
-        controladorHouse = new ControladorHouse(app);
-        controladorDevices = new ControladorDevices(app);
-        controladorPessoa = new ControladorPessoa(app);
-        parse();
+        String resposta = carregaDados();
+        if(Objects.equals(resposta, "Y") || Objects.equals(resposta, "y") || Objects.equals(resposta, "S") || Objects.equals(resposta, "s")){
+            getInfo();
+        }
+        else {
+            System.out.println("Qual o imposto inicial?");
+            app = new App(iteracao.nextInt());
+            controladorFornecedor = new ControladorFornecedor(app);
+            controladorHouse = new ControladorHouse(app);
+            controladorDevices = new ControladorDevices(app);
+            controladorPessoa = new ControladorPessoa(app);
+            controladorQueries = new ControladorQueries(app);
+            parse();
+        }
         System.out.println(app.numberDevices());
         System.out.println(app.numberCasas());
         System.out.println(app.numberFornecedores());
@@ -126,8 +165,12 @@ public class Main {
                     break;
                 case "D":
                     controladorDevices.whatOperation();
+                    break;
                 case "C":
                     controladorHouse.whatOperation();
+                    break;
+                case "Q":
+                    controladorQueries.selecionouConsultaDados();
                     break;
                 default:
                     System.out.println("Comando inválido");
@@ -135,5 +178,6 @@ public class Main {
             }
             System.out.println(string);
         }
+        saveInfo();
     }
 }

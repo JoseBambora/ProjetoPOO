@@ -1,4 +1,6 @@
-public class FormulaCalc1 implements Formulas {
+import java.io.Serializable;
+
+public class FormulaCalc1 implements Formulas, Serializable {
     @Override
     public double calculaPreco(double consumo, int imposto) {
         return consumo * ((double) imposto/100 + 1);

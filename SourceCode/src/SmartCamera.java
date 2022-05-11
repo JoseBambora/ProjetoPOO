@@ -1,4 +1,6 @@
-public class SmartCamera extends SmartDevices
+import java.io.Serializable;
+
+public class SmartCamera extends SmartDevices implements Serializable
 {
     private int resolucaoX;
     private int resolucaoY;

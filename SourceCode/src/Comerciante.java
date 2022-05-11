@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.*;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
-public class Comerciante {
+public class Comerciante implements Serializable {
     private String nome;
     private Formulas formula;
     private Map<LocalDate,List<Fatura>>faturasEmitidas;

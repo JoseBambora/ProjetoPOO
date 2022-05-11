@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Fatura {
+public class Fatura implements Serializable {
     private Pessoa cliente;
     private double preco;
     private double consumo;

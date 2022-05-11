@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Lâmpadas Inteligentes, as SmartBulb
  */
-public class SmartBulb extends SmartDevices {
+public class SmartBulb extends SmartDevices implements Serializable {
     public static final int WARM = 2;
     public static final int NEUTRAL = 1;
     public static final int COLD = 0;

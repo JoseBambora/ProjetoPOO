@@ -1,4 +1,6 @@
-public class SmartSpeaker extends SmartDevices
+import java.io.Serializable;
+
+public class SmartSpeaker extends SmartDevices implements Serializable
 {
     private static final int MAX = 100;
     private int volume;

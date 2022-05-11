@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class App
+public class App implements Serializable
 {
     private LocalDate dataPrograma;
     private int imposto;

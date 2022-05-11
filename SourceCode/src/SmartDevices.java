@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public abstract class SmartDevices
+public abstract class SmartDevices implements Serializable
 {
     private String id;
     private boolean on;
