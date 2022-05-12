@@ -20,8 +20,7 @@ public class ViewHouse
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel. Insira um novo Inteiro.");
-            return getNumberIntScanner();
+            System.out.println("Valor introduzido não compativel.");
         }
         return r;
     }
@@ -35,8 +34,7 @@ public class ViewHouse
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel. Insira uma nova String.");
-            return scannerString();
+            System.out.println("Valor introduzido não compativel.");
         }
         return r;
     }
