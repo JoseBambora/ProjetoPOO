@@ -20,34 +20,8 @@ public class ViewHouse
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel");
-        }
-        return r;
-    }
-    private Double scannerDouble()
-    {
-        Double r = null;
-        try {
-            r = input.nextDouble();
-        }
-        catch (java.util.InputMismatchException e)
-        {
-            input.nextLine();
-            System.out.println("Valor introduzido não compativel");
-        }
-        return r;
-    }
-
-    private Integer scannerInt()
-    {
-        Integer r = null;
-        try {
-            r = input.nextInt();
-        }
-        catch (java.util.InputMismatchException e)
-        {
-            input.nextLine();
-            System.out.println("Valor introduzido não compativel");
+            System.out.println("Valor introduzido não compativel. Insira um novo Inteiro.");
+            return getNumberIntScanner();
         }
         return r;
     }
@@ -61,33 +35,20 @@ public class ViewHouse
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel");
+            System.out.println("Valor introduzido não compativel. Insira uma nova String.");
+            return scannerString();
         }
         return r;
-    }
-    public Double getNumber(String str)
-    {
-        System.out.println("Insira um número " + str);
-        return this.scannerDouble();
     }
     public Integer getNumber2(String str)
     {
         System.out.println("Insira um número " + str);
-        return this.scannerInt();
+        return this.getNumberIntScanner();
     }
     public String getStr(String str)
     {
         System.out.println("Insira uma string para " +str);
-        String r = "";
-        try {
-            r = input.next();
-        }
-        catch (java.util.InputMismatchException e)
-        {
-            input.nextLine();
-            System.out.println("Valor introduzido não compativel");
-        }
-        return r;
+        return this.scannerString();
     }
     public Integer predicate()
     {
@@ -150,7 +111,7 @@ public class ViewHouse
     public List<String> getDivisoesAdd()
     {
         System.out.println("Qual o número de divisões?");
-        Integer n = this.scannerInt();
+        Integer n = this.getNumberIntScanner();
         if(n == null)
             return null;
         List<String> r = new ArrayList<>(n);

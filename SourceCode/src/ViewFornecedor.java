@@ -17,7 +17,8 @@ public class ViewFornecedor
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel");
+            System.out.println("Valor introduzido não compativel. Insira um novo Inteiro.");
+            return scannerInt();
         }
         return r;
     }
@@ -30,7 +31,8 @@ public class ViewFornecedor
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel");
+            System.out.println("Valor introduzido não compativel. Insira uma nova String.");
+            return scannerString();
         }
         return r;
     }
@@ -44,7 +46,8 @@ public class ViewFornecedor
         catch (java.util.InputMismatchException e)
         {
             input.nextLine();
-            System.out.println("Valor introduzido não compativel");
+            System.out.println("Valor introduzido não compativel. Insira um novo Double.");
+            return scannerDouble();
         }
         return r;
     }
