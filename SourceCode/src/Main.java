@@ -42,29 +42,40 @@ public class Main {
         return menu.toString();
     }
 
-    public static void saveInfo() throws IOException{
-        System.out.println("Insira o nome do ficheiro onde guardará os resultados");
-        String nome = iteracao.next();
-        FileOutputStream file = new FileOutputStream(nome+".bin");
-        ObjectOutputStream oos = new ObjectOutputStream(file);
-        oos.writeObject(app);
-        oos.flush();
-        oos.close();
-        file.close();
+    public static void saveInfo() {
+        try {
+            System.out.println("Insira o nome do ficheiro onde guardará os resultados os binário");
+            String nome = iteracao.next();
+            FileOutputStream file = new FileOutputStream(nome);
+            ObjectOutputStream oos = new ObjectOutputStream(file);
+            oos.writeObject(app);
+            oos.flush();
+            oos.close();
+            file.close();
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+            saveInfo();
+        }
     }
 
-    public static void getInfo() throws IOException, ClassNotFoundException{
-        System.out.println("Insira o nome do ficheiro onde armazenou os resultados");
-        String nome = iteracao.next();
-        FileInputStream file = new FileInputStream(nome+".bin");
-        ObjectInputStream ois = new ObjectInputStream(file);
-        app = (App) ois.readObject();
-        ois.close();
-        file.close();
-        controladorDevices = new ControladorDevices(app);
-        controladorHouse = new ControladorHouse(app);
-        controladorFornecedor = new ControladorFornecedor(app);
-        controladorPessoa = new ControladorPessoa(app);
+    public static void getInfo() {
+        try {
+            System.out.println("Insira o nome do ficheiro onde armazenou os resultados");
+            String nome = iteracao.next();
+            FileInputStream file = new FileInputStream(nome);
+            ObjectInputStream ois = new ObjectInputStream(file);
+            app = (App) ois.readObject();
+            ois.close();
+            file.close();
+            controladorDevices = new ControladorDevices(app);
+            controladorHouse = new ControladorHouse(app);
+            controladorFornecedor = new ControladorFornecedor(app);
+            controladorPessoa = new ControladorPessoa(app);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+            getInfo();
+        }
     }
 
     public static List<String> lerFicheiro(String nomeFich) {
