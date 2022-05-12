@@ -54,21 +54,29 @@ public class ControladorDevices {
         switch(option)
         {
             case 1:
-                int tone = view.getTone();
-                double dimensao = view.getDimensao();
+                Integer tone = view.getTone();
+                if(tone == null) return;
+                Double dimensao = view.getDimensao();
+                if (dimensao == null) return;
                 app.addSmartBulb(on,tone,dimensao,consumo);
                 view.sucess();
                 break;
             case 2:
-                String[] res = view.getResolucao().split("x");
-                double tamanho = view.getTamanho();
+                String resolucao = view.getResolucao();
+                if(resolucao == null) return;
+                String[] res = resolucao.split("x");
+                Double tamanho = view.getTamanho();
+                if(tamanho == null) return;
                 app.addSmartCamera(on,consumo,Integer.parseInt(res[0]),Integer.parseInt(res[1]),tamanho);
                 view.sucess();
                 break;
             case 3:
-                int volume = view.getVolume();
+                Integer volume = view.getVolume();
+                if(volume == null) return;
                 String canal = view.getCanal();
+                if(canal == null) return;
                 String marca = view.getMarca();
+                if(marca == null) return;
                 app.addSmartSpeaker(on,volume,canal,marca,consumo);
                 view.sucess();
                 break;
@@ -86,10 +94,14 @@ public class ControladorDevices {
         Predicate<SmartDevices> r;
         switch (n){
             case 2:
-                r = p ->(p.getConsumo() > view.insertValue());
+                Double aux = view.insertValue();
+                if(aux == null) return null;
+                r = p ->(p.getConsumo() > aux);
                 break;
             case 3:
-                r = p ->(p.getConsumo() < view.insertValue());
+                Double aux2 = view.insertValue();
+                if(aux2 == null) return null;
+                r = p ->(p.getConsumo() < aux2);
                 break;
             case 4:
                 r = SmartDevices::isOn;
@@ -126,10 +138,13 @@ public class ControladorDevices {
         Predicate<SmartDevices> r;
         switch (n){
             case 2:
-                r = p ->(p.getConsumo() > view.insertValue());
+                Double aux = view.insertValue();
+                if(aux == null) return null;
+                r = p ->(p.getConsumo() > aux);
                 break;
-            case 3:
-                r = p ->(p.getConsumo() < view.insertValue());
+            case 3:Double aux2 = view.insertValue();
+                if(aux2 == null) return null;
+                r = p ->(p.getConsumo() < aux2);
                 break;
             case 4:
                 r = SmartDevices::isOn;
@@ -193,7 +208,7 @@ public class ControladorDevices {
                 break;
             default:
                 break;
-            }
+        }
     }
 
     public void whatOperation() throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
@@ -211,5 +226,3 @@ public class ControladorDevices {
         }
     }
 }
-
-
