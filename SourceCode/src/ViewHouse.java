@@ -11,9 +11,9 @@ public class ViewHouse
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
-    private int getNumberIntScanner()
+    private Integer getNumberIntScanner()
     {
-        int r = -1;
+        Integer r = null;
         try {
             r = input.nextInt();
         }
@@ -24,10 +24,9 @@ public class ViewHouse
         }
         return r;
     }
-    public double getNumber(String str)
+    private Double scannerDouble()
     {
-        System.out.println("Insira um número " + str);
-        double r = -1;
+        Double r = null;
         try {
             r = input.nextDouble();
         }
@@ -37,6 +36,44 @@ public class ViewHouse
             System.out.println("Valor introduzido não compativel");
         }
         return r;
+    }
+
+    private Integer scannerInt()
+    {
+        Integer r = null;
+        try {
+            r = input.nextInt();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
+    }
+
+    private String scannerString()
+    {
+        String r = null;
+        try {
+            r = input.next();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
+    }
+    public Double getNumber(String str)
+    {
+        System.out.println("Insira um número " + str);
+        return this.scannerDouble();
+    }
+    public Integer getNumber2(String str)
+    {
+        System.out.println("Insira um número " + str);
+        return this.scannerInt();
     }
     public String getStr(String str)
     {
@@ -52,7 +89,7 @@ public class ViewHouse
         }
         return r;
     }
-    public int predicate()
+    public Integer predicate()
     {
         System.out.println("Algum o critério de filtragem para a casa?");
         System.out.println("1 - Não");
@@ -65,7 +102,7 @@ public class ViewHouse
         System.out.println("8 - Têm um certo fornecedor");
         return this.getNumberIntScanner();
     }
-    public int predicateDiv()
+    public Integer predicateDiv()
     {
         System.out.println("Algum o critério de filtragem para as divisões?");
         System.out.println("1 - Não");
@@ -73,7 +110,7 @@ public class ViewHouse
         System.out.println("3 - Têm um certo nome");
         return this.getNumberIntScanner();
     }
-    public int consultarChange()
+    public Integer consultarChange()
     {
         System.out.println("Consultar ou mudar dados?");
         System.out.println("1 - Consultar");
@@ -82,7 +119,7 @@ public class ViewHouse
         return this.getNumberIntScanner();
     }
 
-    public int decideConsulta()
+    public Integer decideConsulta()
     {
         System.out.println("O que deseja consultar?");
         System.out.println("1 - Comerciante");
@@ -92,7 +129,7 @@ public class ViewHouse
         System.out.println("5 - Lista de localidades");
         return this.getNumberIntScanner();
     }
-    public int decideAlterar()
+    public Integer decideAlterar()
     {
         System.out.println("O que deseja consultar/alterar?");
         System.out.println("1 - Acrescentar n devices");
@@ -103,7 +140,7 @@ public class ViewHouse
         System.out.println("6 - Mudar Proprietário");
         return this.getNumberIntScanner();
     }
-    public int ligarDesligar()
+    public Integer ligarDesligar()
     {
         System.out.println("Ligar ou desligar?");
         System.out.println("1 - Ligar Dispostivo");
@@ -113,32 +150,19 @@ public class ViewHouse
     public List<String> getDivisoesAdd()
     {
         System.out.println("Qual o número de divisões?");
-        int n = input.nextInt();
+        Integer n = this.scannerInt();
+        if(n == null)
+            return null;
         List<String> r = new ArrayList<>(n);
         for(int i = 0; i < n; i++)
         {
             System.out.println("Nome da divisão " + i);
-            r.add(input.next());
-        }
-        return r;
-    }
-    public List<String> getDevicesAdd()
-    {
-        System.out.println("Qual o número de devices?");
-        int n = input.nextInt();
-        List<String> r = new ArrayList<>(n);
-        for(int i = 0; i < n; i++)
-        {
-            System.out.println("Device " + i + ". Escrever I para formato");
-            String aux = input.next();
-            if(aux.equals("I"))
+            String aux = this.scannerString();
+            if(aux != null)
             {
-                System.out.println("3 Possibilidades: (Separar cada parte por ',')");
-                System.out.println("SmartBulb , (ligado ou desligado) , (consumo diário) , (Tom) , (Dimensao)");
-                System.out.println("SmartSpeaker , (ligado ou desligado) , (consumo diário) , (Volume) , (Canal) , (Marca)");
-                System.out.println("SmartCamera , (ligado ou desligado) , (consumo diário) , (Resolução) , (Tamanho)");
+                r.add(aux);
+                i--;
             }
-            else r.add(input.next());
         }
         return r;
     }

@@ -39,9 +39,9 @@ public class ControladorHouse
         }
     }
     public void addCasaApp() throws NullPointerException {
-        int number = (int) viewHouse.getNumber("nif do dono");
+        Integer number = viewHouse.getNumber2("nif do dono");
         String str = viewHouse.getStr("nome do comerciante");
-        if(number != -1 && str != null)
+        if(number != null && str != null)
             this.app.addCasa(number,str);
     }
     public void addCasaApp(int nif, String nome){
@@ -54,8 +54,10 @@ public class ControladorHouse
         }
     }
     private Predicate<House> housePredicate() {
-        int n = viewHouse.predicate();
+        Integer n = viewHouse.predicate();
         Predicate<House> r = null;
+        if(n == null)
+            return null;
         switch (n)
         {
             case 1:
@@ -63,33 +65,33 @@ public class ControladorHouse
                 break;
             case 2:
                 String local = viewHouse.getStr("local");
-                if(!local.equals(""))
+                if(local != null)
                     r = h -> h.getLocal().equals(local);
                 break;
             case 3:
                 String div = viewHouse.getStr("divisao");
-                if(!div.equals(""))
+                if(div != null)
                     r = h -> h.hasDivisao(div);
                 break;
             case 4:
-                int number = (int) viewHouse.getNumber("numero de divisoes");
-                if(number != -1)
+                Integer number = viewHouse.getNumber2("numero de divisoes");
+                if(number != null)
                     r = h -> h.numberDivisoes() > number;
                 break;
             case 5:
                 String id = viewHouse.getStr("id do device");
-                if(!id.equals(""))
+                if(id != null)
                     r = h -> h.hasDevice(id);
                 break;
             case 6:
-                number = (int) viewHouse.getNumber("numero de devices");
-                if(number != -1)
+                number = viewHouse.getNumber2("numero de devices");
+                if(number != null)
                     r = h -> h.numberDevices() > number;
                 break;
             case 7:
                 try {
-                    number = (int) viewHouse.getNumber("nif da pessoa");
-                    if(number != -1)
+                    number = viewHouse.getNumber2("nif da pessoa");
+                    if(number != null)
                     {
                         Pessoa p = app.getPessoa(number);
                         r = h -> h.getProprietario().equals(p);
@@ -103,7 +105,7 @@ public class ControladorHouse
             case 8:
                 try {
                     String nome = viewHouse.getStr("nome do fornecedor");
-                    if (!nome.equals("")) {
+                    if (nome != null) {
                         Comerciante comerciante = app.getFornecedor(nome);
                         r = h -> h.getFornecedor().equals(comerciante);
                     }
@@ -119,20 +121,24 @@ public class ControladorHouse
         return r;
     }
     private Predicate<Map.Entry<String,List<String>>> divisaoPredicate() {
-        int n = viewHouse.predicateDiv();
+        Integer n = viewHouse.predicateDiv();
         Predicate<Map.Entry<String,List<String>>> r = null;
+        if(n == null)
+            return null;
         switch (n)
         {
             case 1:
                 r = Objects::nonNull;
                 break;
             case 2:
-                int num = (int) viewHouse.getNumber("para quantos dispositivos a mais");
-                r = h -> h.getValue().size() > num;
+                Integer num = viewHouse.getNumber2("para quantos dispositivos a mais");
+                if(num != null)
+                    r = h -> h.getValue().size() > num;
                 break;
             case 3:
                 String div = viewHouse.getStr(" para o nome da divisao");
-                r = h -> h.getKey().equals(div);
+                if(div != null)
+                    r = h -> h.getKey().equals(div);
                 break;
             default:
                 break;
@@ -144,7 +150,9 @@ public class ControladorHouse
         Predicate<House> ph = this.housePredicate();
         if(ph == null)
             return;
-        int n = viewHouse.decideConsulta();
+        Integer n = viewHouse.decideConsulta();
+        if(n == null)
+            return;
         switch (n)
         {
             case 1:
@@ -171,13 +179,18 @@ public class ControladorHouse
         viewHouse.printMessage(print);
     }
     private void acrescentarDevices(Predicate<House> ph) throws ValorNegativoException, ValorExcedeMaximoException {
-        int number = (int) viewHouse.getNumber("quantos devices");
+        Integer number = viewHouse.getNumber2("quantos devices");
         Map<String,String> aux = new HashMap<>();
+        if(number == null)
+            return;
         for(int i = 0; i < number; i++)
         {
             controladorDevices.addDevice();
             String divisao = viewHouse.getStr("divisao");
-            aux.put(app.getIdLastDeviceAdd(),divisao);
+            if(divisao != null)
+                aux.put(app.getIdLastDeviceAdd(),divisao);
+            else
+                i--;
         }
         if(number != -1)app.associaHouse(ph,aux);
     }
@@ -196,14 +209,17 @@ public class ControladorHouse
     private void moveDivisoes()
     {
         try {
-            int number = (int) viewHouse.getNumber("mover quantos devices?");
+            Integer number = viewHouse.getNumber2("mover quantos devices?");
             String local = viewHouse.getStr("local da casa");
-            if(!local.equals(""))
+            if(number != null && local != null)
             {
                 for (int i = 0; i < number; i++) {
                     String id = viewHouse.getStr("id do device");
                     String divisao = viewHouse.getStr("para qual a divisao");
-                    app.movedivisao(local, divisao, id);
+                    if(id != null && divisao != null)
+                        app.movedivisao(local, divisao, id);
+                    else
+                        i--;
                 }
             }
         }
@@ -214,7 +230,9 @@ public class ControladorHouse
     }
     public void alteraDados() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException {
         Predicate<House> ph;
-        int n = viewHouse.decideAlterar();
+        Integer n = viewHouse.decideAlterar();
+        if(n == null)
+            return;
         switch (n)
         {
             case 1:
@@ -232,10 +250,10 @@ public class ControladorHouse
                 break;
             case 4:
                 ph = this.housePredicate();
-                int number = viewHouse.ligarDesligar();
+                Integer number = viewHouse.ligarDesligar();
                 Predicate<Map.Entry<String,List<String>>> predicate2 = this.divisaoPredicate();
                 Predicate<SmartDevices> smartDevicesPredicate = controladorDevices.devicesPredicate();
-                if(ph == null || predicate2 == null || smartDevicesPredicate == null)
+                if(number == null || ph == null || predicate2 == null || smartDevicesPredicate == null)
                     break;
                 if(number == 1)
                     app.changeStateDevice(ph,smartDevicesPredicate,predicate2,true);
@@ -256,7 +274,11 @@ public class ControladorHouse
                 try {
                     ph = this.housePredicate();
                     if(ph != null)
-                        app.changeProprietario(ph,(int) viewHouse.getNumber("nif do novo proprietario"));
+                    {
+                        Integer num = viewHouse.getNumber2("nif do novo proprietario");
+                        if(num != null)
+                            app.changeProprietario(ph,num);
+                    }
                 }
                 catch (PessoaNotExistException e)
                 {
@@ -270,8 +292,10 @@ public class ControladorHouse
     public void whatOperation()
     {
         try {
-            int n = viewHouse.consultarChange();
-            if(n == 1)
+            Integer n = viewHouse.consultarChange();
+            if(n == null)
+                return;
+            else if(n == 1)
                 this.consultaDados();
             else if(n == 2)
                 this.alteraDados();

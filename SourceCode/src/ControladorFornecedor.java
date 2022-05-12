@@ -29,10 +29,10 @@ public class ControladorFornecedor {
     public void addFornecedor() {
         try {
             String nome = view.getNome();
-            if(!nome.equals(""))
+            if(nome != null)
             {
-                int f = view.getFormula();
-                if(f != -1)
+                Integer f = view.getFormula();
+                if(f != null)
                 {
                     app.addFornecedor(nome, this.convertNumberFormula(f));
                     view.sucess();
@@ -54,31 +54,35 @@ public class ControladorFornecedor {
     }
 
     private Predicate<Comerciante> comerciantePredicate() {
-        int n = view.predicates();
+        Integer n = view.predicates();
         Predicate<Comerciante> r = null;
+        if(n == null)
+            return null;
         switch (n) {
             case 1:
                 r = Objects::nonNull;
                 break;
             case 2:
-                int num = view.numeroCompareI();
-                if(num != -1)
+                Integer num = view.numeroCompareI();
+                if(num != null)
                     r = p -> (p.numberFaturas() > num);
                 break;
             case 3:
-                double d = view.numeroCompareD();
-                if(d != -1) r = p -> (p.getLucro() > d);
+                Double d = view.numeroCompareD();
+                if(d != null) r = p -> (p.getLucro() > d);
                 break;
             case 4:
-                int f = view.getFormula();
-                if (f == 1)
+                Integer f = view.getFormula();
+                if(f == null)
+                    break;
+                else if (f == 1)
                     r = p -> (p.getFormula() instanceof FormulaCalc1);
                 else if(f == 2)
                     r = p -> (p.getFormula() instanceof FormulaCalc2);
                 break;
             case 5:
                 String nome = view.getNome();
-                if(!nome.equals(""))
+                if(nome != null)
                     r = p -> (p.getNome().equals(nome));
                 break;
             default:
@@ -91,7 +95,9 @@ public class ControladorFornecedor {
         Predicate<Comerciante> p = this.comerciantePredicate();
         if(p == null)
             return;
-        int option = view.getOperation('c');
+        Integer option = view.getOperation('c');
+        if(option == null)
+            return;
         String r = "";
         switch (option) {
             case 1:
@@ -121,7 +127,9 @@ public class ControladorFornecedor {
             Predicate<Comerciante> p = this.comerciantePredicate();
             if(p == null)
                 return;
-            int option = view.getOperation('m');
+            Integer option = view.getOperation('m');
+            if(option == null)
+                return;
             switch (option) {
                 case 1:
                     int f = view.getFormula();
@@ -139,7 +147,9 @@ public class ControladorFornecedor {
     }
 
     public void whatOperation() {
-        int n = view.consultarAlterar();
+        Integer n = view.consultarAlterar();
+        if(n == null)
+            return;
         switch (n) {
             case 1:
                 consultarDados();
