@@ -46,9 +46,11 @@ public class ControladorDevices {
         app.addSmartSpeakerP(true,volume,campos[1],campos[2],consumo);
     }
     public void addDevice() throws ValorNegativoException, ValorExcedeMaximoException {
-        int option = view.getDevice(); // 1 -> smartbulb, 2 -> smartcamera, 3 -> smartspeaker
-        boolean on = view.getOn();
-        double consumo = view.getConsumo();
+        Integer option = view.getDevice(); // 1 -> smartbulb, 2 -> smartcamera, 3 -> smartspeaker
+        Boolean on = view.getOn();
+        Double consumo = view.getConsumo();
+        if(option == null || on == null || consumo == null)
+            return;
         switch(option)
         {
             case 1:
@@ -79,7 +81,8 @@ public class ControladorDevices {
         return app.numberDevices();
     }
     public Predicate<SmartDevices> devicesPredicate(){
-        int n = view.predicates();
+        Integer n = view.predicates();
+        if(n == null) return null;
         Predicate<SmartDevices> r;
         switch (n){
             case 2:
@@ -111,13 +114,15 @@ public class ControladorDevices {
     }
     public void consultarDados() {
         Predicate<SmartDevices> p = this.devicesPredicate();
-        String r = "";
+        if(p == null) return;
+        String r = null;
         r = app.consultaDevice(p).toString();
         view.print(r);
     }
 
     private Predicate<SmartDevices> devicesPredicateChange(){
-        int n = view.predicates();
+        Integer n = view.predicates();
+        if(n == null) return null;
         Predicate<SmartDevices> r;
         switch (n){
             case 2:
@@ -140,24 +145,25 @@ public class ControladorDevices {
         return r;
     }
 
-
-
     public void changeDadosDevice() throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
         //mudar - on, consumo, tone, volume e canal
-        int mudaestado = view.mudaEstado();
-        switch(mudaestado){
+        Integer mudaestado = view.mudaEstado();
+        if(mudaestado == null) return;
+        switch(mudaestado) {
             case 1:
                 Predicate<SmartDevices> r = this.devicesPredicate();
-                int onoffconsumo = view.onOffConsumo();
-                switch (onoffconsumo){
+                if(r == null) return;
+                Integer onoffconsumo = view.onOffConsumo();
+                if(onoffconsumo == null) return;
+                switch (onoffconsumo) {
                     case 1:
-                        app.setDevicesOnOff(r,true);
+                        app.setDevicesOnOff(r, true);
                         break;
                     case 2:
-                        app.setDevicesOnOff(r,false);
+                        app.setDevicesOnOff(r, false);
                         break;
                     case 3:
-                        app.setConsumoDevices(r,view.insertValue());
+                        app.setConsumoDevices(r, view.insertValue());
                         break;
                     default:
                         break;
@@ -165,28 +171,34 @@ public class ControladorDevices {
                 break;
             case 2:
                 Predicate<SmartDevices> r2 = this.devicesPredicateChange();
-                int tom = (int) view.insertValue();
-                app.changeToneDevices(r2,tom);
+                if(r2 == null) return;
+                Integer tom = view.insertValueInteger();
+                if(tom == null) return;
+                app.changeToneDevices(r2, tom);
                 break;
             case 3:
                 Predicate<SmartDevices> r3 = this.devicesPredicateChange();
-                int canalvolume = view.canalVolume();
-                if(canalvolume == 1){
+                if(r3 == null) return;
+                Integer canalvolume = view.canalVolume();
+                if(canalvolume == null) return;
+                if (canalvolume == 1) {
                     String canal = view.insertString();
-                    app.changeCanalDevices(r3,canal);
-                }
-                else if (canalvolume == 2){
-                    int volume = (int) view.insertValue();
-                    app.changeVolumeDevices(r3,volume);
+                    if (canal == null) return;
+                    app.changeCanalDevices(r3, canal);
+                } else if (canalvolume == 2) {
+                    Integer volume = view.insertValueInteger();
+                    if (volume == null) return;
+                    app.changeVolumeDevices(r3, volume);
                 }
                 break;
             default:
                 break;
-        }
+            }
     }
 
     public void whatOperation() throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
-        int n = view.consultarAlterar();
+        Integer n = view.consultarAlterar();
+        if(n == null) return;
         switch (n){
             case 1:
                 consultarDados();
