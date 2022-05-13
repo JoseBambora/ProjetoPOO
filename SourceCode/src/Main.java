@@ -183,8 +183,8 @@ public class Main {
                     controladorHouse.whatOperation(varControl);
                     break;
                 case "Q":
-                    if (varControl == false) {
-                    varControl = controladorQueries.selecionouConsultaDados();}
+                    if (!varControl)
+                        varControl = controladorQueries.selecionouConsultaDados();
                     else controladorQueries.selecionouConsultaDados();
                     break;
                 default:

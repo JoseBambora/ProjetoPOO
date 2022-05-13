@@ -77,6 +77,8 @@ public class App implements Serializable
         House house = new House(this.pessoas.get(pessoa),this.fornecedores.get(fornecedor), this.lastCasa);
         this.casas.put(house.getLocal(),house);
     }
+
+    // TESTADO
     public void avancaDias(int dias) throws NullPointerException, ValorNegativoException {
         this.lastUpdate =  this.dataPrograma;
         LocalDate newDate = this.dataPrograma.plusDays(dias);
@@ -139,7 +141,12 @@ public class App implements Serializable
         return imposto;
     }
 
+    // TESTADO
+    public LocalDate getDataPrograma() {
+        return dataPrograma;
+    }
 
+    // TESTADO
     public Comerciante queryMaiorFornecedor()
     {
         double lucro = -1;
@@ -176,6 +183,8 @@ public class App implements Serializable
         }
         return newMapConsumidor;
     }
+
+    // TESTADO
     public Pessoa queryMaiorConsumidor(){
         List <Fatura> faturas = getFaturasTotal(this.lastUpdate, this.dataPrograma);
         Map <Integer, Double> newMapConsumidor= this.consumoPessoa(faturas);
@@ -185,6 +194,8 @@ public class App implements Serializable
         }
         return this.pessoas.get(maiorNif).clone();
     }
+
+    // TESTADO
     public List<Pessoa> queryMaioresConsumidores(LocalDate d1, LocalDate d2)
     {
         List <Fatura> faturas = getFaturasTotal(d1, d2);
@@ -251,6 +262,8 @@ public class App implements Serializable
         return formulas;
     }
 
+
+    // TESTADO
     public List<Fatura> queryFaturas(Predicate<Comerciante> predicate)
     {
         List<Fatura> faturas = new ArrayList<>();
@@ -349,6 +362,7 @@ public class App implements Serializable
         return this.fornecedores.get(nome).clone();
     }
 
+    // TESTADO
     public Map<String,List<String>> getComerciantesCasas(Predicate<House> predicate)
     {
         Map<String,List<String>> r = new HashMap<>();
@@ -364,6 +378,8 @@ public class App implements Serializable
         }
         return r;
     }
+
+    // TESTADO
     public Map<Integer,List<String>> getPropreitarioCasas(Predicate<House> predicate)
     {
         Map<Integer,List<String>> r = new HashMap<>();
@@ -446,12 +462,16 @@ public class App implements Serializable
             }
         }
     }
+
+    // TESTADO
     public void movedivisao(String local, String divisao, String device) throws CasaNotExistException, DeviceNotExistException, DivisaoNotExistException {
         if(this.casas.containsKey(local))
             this.casas.get(local).moveDivisao(divisao,device);
         else
             throw new CasaNotExistException("Casa não existe na aplicação");
     }
+
+    // TESTADO
     public void changeStateDevice(Predicate<House> predicate, Predicate<SmartDevices> predicateSD, Predicate<Map.Entry<String,List<String>>> divPredicate, boolean mode)
     {
         for(House house : this.casas.values())
@@ -462,6 +482,8 @@ public class App implements Serializable
             }
         }
     }
+
+    // TESTADO
     public void changeFornecedor(Predicate<House> predicate, String nome) throws NullPointerException, FornecedorNotExistException {
         if(this.fornecedores.containsKey(nome))
         {
@@ -476,6 +498,8 @@ public class App implements Serializable
         else
             throw new FornecedorNotExistException("Fornecedor não existe na aplicação");
     }
+
+    // TESTADO
     public void changeProprietario(Predicate<House> predicate, Integer nif) throws NullPointerException, PessoaNotExistException {
         if(this.pessoas.containsKey(nif))
         {

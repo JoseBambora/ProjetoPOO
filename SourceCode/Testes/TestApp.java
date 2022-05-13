@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class TestApp
 {
@@ -239,6 +240,173 @@ public class TestApp
             }
         }
         catch (ValorNegativoException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Test
+    public void testChangeProprietarioPredicate()
+    {
+        try {
+            Predicate<House> p = h -> h.getLocal().equals("111");
+            app.changeProprietario(p,91953719);
+            Pessoa pessoa = app.getPessoa(91953719);
+            Predicate<House> p2 = h -> h.getProprietario().equals(pessoa);
+            Map<Integer,List<String>> map = app.getPropreitarioCasas(p2);
+            assertEquals(app.getCasas().get("111").getProprietario(),app.getPessoa(91953719));
+            assertEquals(app.getCasas().get("17").getProprietario(),app.getPessoa(91953719));
+            assertEquals(map.size(),1);
+            List<String> list = map.get(91953719);
+            assertEquals(list.size(),2);
+            assertEquals(app.getCasas().get(list.get(0)),app.getCasas().get("111"));
+            assertEquals(app.getCasas().get(list.get(1)),app.getCasas().get("17"));
+            app.changeProprietario(p,758618872);
+            map = app.getPropreitarioCasas(p2);
+            assertNotEquals(app.getCasas().get("111").getProprietario(),app.getPessoa(91953719));
+            assertEquals(app.getCasas().get("111").getProprietario(),app.getPessoa(758618872));
+            assertEquals(app.getCasas().get("17").getProprietario(),app.getPessoa(91953719));
+            assertEquals(map.size(),1);
+            list = map.get(91953719);
+            assertEquals(list.size(),1);
+            assertEquals(app.getCasas().get(list.get(0)),app.getCasas().get("17"));
+        }
+        catch (PessoaNotExistException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Test
+    public void testChangeFornecedorPredicate()
+    {
+        try {
+            Predicate<House> p = h -> h.getLocal().equals("111");
+            app.changeFornecedor(p,"EDP Comercial");
+            Comerciante comerciante = app.getFornecedor("EDP Comercial");
+            Predicate<House> p2 = h -> h.getFornecedor().equals(comerciante);
+            assertEquals(app.getCasas().get("111").getFornecedor(),app.getFornecedor("EDP Comercial"));
+            Map<String,List<String>> map = app.getComerciantesCasas(p2);
+            assertEquals(map.size(),1);
+            List<String> strings = map.get("EDP Comercial");
+            assertEquals(strings.size(),17);
+            assertTrue(strings.contains("111"));
+            app.changeFornecedor(p,"Endesa");
+            assertEquals(app.getCasas().get("111").getFornecedor(),app.getFornecedor("Endesa"));
+            map = app.getComerciantesCasas(p2);
+            assertEquals(map.size(),1);
+            strings = map.get("EDP Comercial");
+            assertEquals(strings.size(),16);
+            assertFalse(strings.contains("111"));
+        }
+        catch (FornecedorNotExistException | NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void auxTestChangeStateDevices(House casa, Predicate<Map.Entry<String,List<String>>> divPredicate,Predicate<SmartDevices> p1,boolean bool)
+    {
+        Map<String, SmartDevices> smartDevicesMap = app.getDevices();
+        Map<String,List<String>> divisoes = casa.getDivisoes();
+        for(Map.Entry<String,List<String>> div : divisoes.entrySet())
+        {
+            if(divPredicate.test(div))
+            {
+                List<String> list = divisoes.get(div.getKey());
+                for(String key : list)
+                {
+                    if(p1.test(smartDevicesMap.get(key)))
+                        assertEquals(smartDevicesMap.get(key).isOn(),bool);
+                }
+            }
+        }
+    }
+    @Test
+    public void testChangeStateDevices()
+    {
+        Predicate<House> p = h -> h.getLocal().equals("111");
+        Predicate<SmartDevices> p1 = SmartDevices::isOn;
+        Predicate<SmartDevices> p2 = sd ->(sd instanceof SmartBulb);
+        Predicate<Map.Entry<String,List<String>>> divPredicate = d -> d.getKey().equals("Sala de Jantar");
+        app.changeStateDevice(p,p1,divPredicate,false);
+        Map<String, House> houseMap = app.getCasas();
+        for(House casa : houseMap.values())
+        {
+            if(p.test(casa))
+                this.auxTestChangeStateDevices(casa,divPredicate,p1,false);
+        }
+        app.changeStateDevice(p,p2,divPredicate,false);
+        for(House casa : houseMap.values())
+        {
+            if(p.test(casa))
+                this.auxTestChangeStateDevices(casa,divPredicate,p2,false);
+        }
+        app.changeStateDevice(p,p1,divPredicate,true);
+        for(House casa : houseMap.values())
+        {
+            if(p.test(casa))
+                this.auxTestChangeStateDevices(casa,divPredicate,p1,true);
+        }
+        app.changeStateDevice(p,p2,divPredicate,true);
+        for(House casa : houseMap.values())
+        {
+            if(p.test(casa))
+                this.auxTestChangeStateDevices(casa,divPredicate,p2,true);
+        }
+    }
+    @Test
+    public void testMoveDivisao()
+    {
+        try {
+            app.movedivisao("111","Casa de Banho","3632");
+            app.movedivisao("111","Casa de Banho","3633");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").size(),0);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),3);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(0),"3626");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(1),"3632");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(2),"3633");
+            app.movedivisao("111","Quarto","3633");
+            app.movedivisao("111","Quarto","3632");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").size(),2);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),1);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(0),"3626");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").get(0),"3633");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").get(1),"3632");
+        }
+        catch (DeviceNotExistException | CasaNotExistException | DivisaoNotExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Test
+    public void testQueries()
+    {
+        try {
+
+            Predicate<Comerciante> p = c -> c.getNome().equals("EDP Comercial");
+            Comerciante comerciante = app.queryMaiorFornecedor();
+            Pessoa pessoa = app.queryMaiorConsumidor();
+            List<Fatura> faturas = app.queryFaturas(p);
+            List<Pessoa> pessoas = app.queryMaioresConsumidores(LocalDate.of(2020,1,1),LocalDate.now().plusDays(31));
+            assertTrue(faturas.size() > 0);
+            for(Fatura fatura : faturas)
+            {
+                assertEquals(fatura.getImposto(), app.getImposto());
+                assertTrue(fatura.getPreco() > 0);
+                assertTrue(fatura.getConsumo() > 0);
+                assertNotEquals(fatura.getCliente(), null);
+                assertNotEquals(app.getCasas().get(fatura.getLocal()), null);
+            }
+            assertNotEquals(pessoa, null);
+            assertNotEquals(app.getPessoa(pessoa.getNIF()), null);
+            assertNotEquals(app.getFornecedor(comerciante.getNome()), null);
+            assertTrue(pessoas.size() > 0);
+            assertEquals(app.getDataPrograma(),LocalDate.now().plusDays(31));
+            assertEquals(pessoa,pessoas.get(0));
+            for(Pessoa pessoa1 : pessoas)
+            {
+                assertNotEquals(app.getPessoa(pessoa1.getNIF()),null);
+            }
+        }
+        catch (PessoaNotExistException | FornecedorNotExistException e)
         {
             System.out.println(e.getMessage());
         }
