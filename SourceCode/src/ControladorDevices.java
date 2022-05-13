@@ -211,7 +211,7 @@ public class ControladorDevices {
         }
     }
 
-    public void whatOperation() throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
+    public void whatOperation(boolean changes) throws ValorNegativoException, NullPointerException, ValorExcedeMaximoException {
         Integer n = view.consultarAlterar();
         if(n == null) return;
         switch (n){
@@ -219,7 +219,7 @@ public class ControladorDevices {
                 consultarDados();
                 break;
             case 2:
-                changeDadosDevice();
+                if (changes) changeDadosDevice();
                 break;
             default:
                 break;

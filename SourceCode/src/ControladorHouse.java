@@ -289,7 +289,7 @@ public class ControladorHouse
                 break;
         }
     }
-    public void whatOperation()
+    public void whatOperation(boolean changes)
     {
         try {
             Integer n = viewHouse.consultarChange();
@@ -298,7 +298,7 @@ public class ControladorHouse
             else if(n == 1)
                 this.consultaDados();
             else if(n == 2)
-                this.alteraDados();
+                if(changes) this.alteraDados();
         }
         catch (ValorNegativoException | ValorExcedeMaximoException | NullPointerException e)
         {

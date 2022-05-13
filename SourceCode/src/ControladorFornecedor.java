@@ -146,7 +146,7 @@ public class ControladorFornecedor {
         }
     }
 
-    public void whatOperation() {
+    public void whatOperation(boolean changes) {
         Integer n = view.consultarAlterar();
         if(n == null)
             return;
@@ -155,7 +155,7 @@ public class ControladorFornecedor {
                 consultarDados();
                 break;
             case 2:
-                changeDadosFornecedor();
+                if (changes) changeDadosFornecedor();
                 break;
             default:
                 break;

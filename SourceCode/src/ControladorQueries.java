@@ -28,11 +28,11 @@ public class ControladorQueries {
     }
 
 
-    public void consultaDados() throws ValorNegativoException, NullPointerException {
+    public boolean consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
         Integer n = viewQ.consultarOsDados();
         if(n == null)
-            return;
+            return false;
         switch (n) {
             case 1: //
                 r = queryMF();
@@ -47,31 +47,36 @@ public class ControladorQueries {
 
             case 4:
                 Integer numero = viewQ.inserInteger();
-                if (numero == null) return;
+                if (numero == null) return false;
                 app.avancaDias(numero);
+                return true;
 
             default:
                 break;
         }
         viewQ.printResult(r);
+        return false;
     }
     public void mudaDados()
     {
         Integer imposto = viewQ.inserInteger();
         app.setImposto(imposto);
     }
-    public void selecionouConsultaDados() {
+    public boolean selecionouConsultaDados() {
+        boolean changes = false;
         try {
             Integer n = viewQ.atividadeConsultar();
-            if (n == null) return;
+            if (n == null) return changes;
             if (n == 1)
-                this.consultaDados();
+                return this.consultaDados();
             else if(n == 2)
                 this.mudaDados();
 
         } catch (ValorNegativoException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
+
 }
 

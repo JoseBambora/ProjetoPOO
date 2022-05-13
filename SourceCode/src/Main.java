@@ -18,6 +18,8 @@ public class Main {
     static App app;
     static Scanner iteracao = new Scanner(System.in);
 
+    static boolean varControl = false;
+
     public static String charNTimes(int n,char c){
         StringBuilder sb = new StringBuilder();
         sb.append(String.valueOf(c).repeat(Math.max(0, n)));
@@ -172,16 +174,18 @@ public class Main {
                     System.out.println("Número de Smart Devices: " + controladorDevices.numberDevices());
                     break;
                 case "F":
-                    controladorFornecedor.whatOperation();
+                    controladorFornecedor.whatOperation(varControl);
                     break;
                 case "D":
-                    controladorDevices.whatOperation();
+                    controladorDevices.whatOperation(varControl);
                     break;
                 case "C":
-                    controladorHouse.whatOperation();
+                    controladorHouse.whatOperation(varControl);
                     break;
                 case "Q":
-                    controladorQueries.selecionouConsultaDados();
+                    if (varControl == false) {
+                    varControl = controladorQueries.selecionouConsultaDados();}
+                    else controladorQueries.selecionouConsultaDados();
                     break;
                 default:
                     System.out.println("Comando inválido");
