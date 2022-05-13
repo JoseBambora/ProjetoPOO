@@ -9,9 +9,22 @@ public class ViewQueries {
         input.useDelimiter("\n");
     }
 
+    private String scannerString()
+    {
+        String r = null;
+        try {
+            r = input.next();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel.");
+        }
+        return r;
+    }
     public String getNomeComerciante(){
         System.out.println("Introduza o nome do comerciante");
-        return input.next();
+        return  this.scannerString();
     }
 
     public static LocalDate convertStringToLocalDate (String n) {
@@ -40,7 +53,7 @@ public class ViewQueries {
             return input.nextInt();
         }*/
 
-    public int inserInteger(){
+    public Integer inserInteger(){
         System.out.println("Insira um número");
         return input.nextInt();
     }
@@ -50,7 +63,7 @@ public class ViewQueries {
         return input.next();
     }
 
-    public int consultarOsDados()
+    public Integer consultarOsDados()
     {
         System.out.println("O que pretende consultar?");
         System.out.println("1 - Qual o comercializador com maior volume de faturação");
@@ -60,7 +73,7 @@ public class ViewQueries {
         System.out.println("5 - Nada");
         return input.nextInt();
     }
-    public int atividadeConsultar()
+    public Integer atividadeConsultar()
     {
         System.out.println("Pretende consultar estatísticas sobre o estado do programa ou mudar o fornecedor?");
         System.out.println("1 - Consultar estatísticas");

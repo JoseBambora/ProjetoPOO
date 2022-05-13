@@ -30,7 +30,9 @@ public class ControladorQueries {
 
     public void consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
-        int n = viewQ.consultarOsDados();
+        Integer n = viewQ.consultarOsDados();
+        if(n == null)
+            return;
         switch (n) {
             case 1: //
                 r = queryMF();
@@ -44,7 +46,7 @@ public class ControladorQueries {
                 r = queryMCDates(d1, d2);
 
             case 4:
-                int numero = viewQ.inserInteger();
+                Integer numero = viewQ.inserInteger();
                 app.avancaDias(numero);
 
             default:
@@ -54,12 +56,12 @@ public class ControladorQueries {
     }
     public void mudaDados()
     {
-        int imposto = viewQ.inserInteger();
+        Integer imposto = viewQ.inserInteger();
         app.setImposto(imposto);
     }
     public void selecionouConsultaDados() {
         try {
-            int n = viewQ.atividadeConsultar();
+            Integer n = viewQ.atividadeConsultar();
             if (n == 1)
                 this.consultaDados();
             else if(n == 2)

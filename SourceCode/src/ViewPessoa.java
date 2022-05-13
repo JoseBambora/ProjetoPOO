@@ -8,25 +8,53 @@ public class ViewPessoa {
         input.useDelimiter("\n");
     }
 
-    public String getNomePessoa(){
-        System.out.println("Introduza o nome da Pessoa");
-        return input.next();
+    private Integer scannerInt()
+    {
+        Integer r = null;
+        try {
+            r = input.nextInt();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel.");
+        }
+        return r;
+    }
+    private String scannerString()
+    {
+        String r = null;
+        try {
+            r = input.next();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel.");
+        }
+        return r;
     }
 
-    public int getNifPessoa(){
+
+    public String getNomePessoa(){
+        System.out.println("Introduza o nome da Pessoa");
+        return this.scannerString();
+    }
+
+    public Integer getNifPessoa(){
         System.out.println("Introduza o NIF da Pessoa");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
     public void success(){
         System.out.println("Os dados da pessoa foram introduzidos com sucesso!");
     }
 
-    public int getConsulta (char c) {
+    public Integer getConsulta (char c) {
         if (c == 'c') System.out.println("O que pretende consultar? 1 - Nome, 2-NIF");
         return input.nextInt();
     }
-    public int predicates()
+    public Integer predicates()
     {
         System.out.println("Pretende aplicar algum critério de filtragem?");
         System.out.println("1 - Não pretendo");
@@ -34,31 +62,21 @@ public class ViewPessoa {
         System.out.println("3 - A pessoa tem um certo nome");
         return input.nextInt();
     }
-    public int numeroCompareInteiro()
+    public Integer numeroCompareInteiro()
     {
         System.out.println("Número inteiro para comparar?");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
-    public int inserInteger(){
-        System.out.println("Insira um número");
-        return input.nextInt();
-    }
-
-    public String insertString() {
-        System.out.println("Insira uma String");
-        return input.next();
-    }
-
-    public int consultarOsDados()
+    public Integer consultarOsDados()
     {
         System.out.println("O que pretende consultar??");
         System.out.println("1 - O nome da pessoa");
         System.out.println("2 - O NIF da pessoa");
         System.out.println("3 - Nada");
-        return input.nextInt();
+        return this.scannerInt();
     }
-    public int atividadeConsultar()
+    public Integer atividadeConsultar()
     {
         System.out.println("Pretende consultar  informação da Pessoa?");
         System.out.println("1 - Sim");

@@ -25,8 +25,10 @@ public class ControladorPessoa {
     }
 
     private Predicate<Pessoa> pessoaPredicate() {
-        int n = viewP.predicates();
+        Integer n = viewP.predicates();
         Predicate<Pessoa> pred;
+        if(n == null)
+            return null;
         switch (n) {
             case 1:
                 pred = p -> (p.getNIF() > viewP.numeroCompareInteiro());
@@ -46,7 +48,9 @@ public class ControladorPessoa {
     public String consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
         Predicate<Pessoa> pessoa = this.pessoaPredicate();
-        int n = viewP.consultarOsDados();
+        if (pessoa == null)
+                return null;
+        Integer n = viewP.consultarOsDados();
         switch (n) {
             case 1: //
                 r = app.getNomePessoas().toString();
@@ -63,7 +67,7 @@ public class ControladorPessoa {
     public void selecionouConsultaDados()
     {
         try {
-            int n = viewP.atividadeConsultar();
+            Integer n = viewP.atividadeConsultar();
             if (n == 1)
                 this.consultaDados();
         }
