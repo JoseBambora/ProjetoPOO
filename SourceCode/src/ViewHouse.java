@@ -86,6 +86,7 @@ public class ViewHouse
         System.out.println("3 - Lista de devices seguindo um certo predicado");
         System.out.println("4 - Lista de divisões");
         System.out.println("5 - Lista de localidades");
+        System.out.println("6 - Número de casas");
         return this.getNumberIntScanner();
     }
     public Integer decideAlterar()

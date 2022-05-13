@@ -113,8 +113,8 @@ public class ControladorFornecedor {
                 r = Double.toString(app.lucro(p));
                 break;
             case 5:
-                view.sucess();
-                r = Integer.toString(app.respectPredicate(p));
+                r = Integer.toString(app.respectPredicateFornecedores(p));
+                break;
             default:
                 break;
         }

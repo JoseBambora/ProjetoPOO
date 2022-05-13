@@ -196,6 +196,9 @@ public class Comerciante implements Serializable {
     }
     public int numberFaturas()
     {
-        return this.faturasEmitidas.size();
+        int r = 0;
+        for(List<Fatura> faturas : this.faturasEmitidas.values())
+            r+= faturas.size();
+        return r;
     }
 }

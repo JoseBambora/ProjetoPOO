@@ -60,7 +60,15 @@ public class ViewFornecedor
     public Integer getOperation(char c)
     {
         if(c == 'm') System.out.println("O que quer mudar? 1 - Formula");
-        else         System.out.println("O que quer consultar? 1 - Formula, 2 - Faturas do fornecedor, 3 - Número de faturas, 4 - Lucro do fornecedor, 5 - Número de Fornecedores");
+        else
+        {
+            System.out.println("O que quer consultar?");
+            System.out.println("1 - Formula");
+            System.out.println("2 - Faturas do fornecedor");
+            System.out.println("3 - Número de faturas");
+            System.out.println("4 - Lucro do fornecedor");
+            System.out.println("5 - Número de Fornecedores que respeitam um certo predicado");
+        }
         return this.scannerInt();
     }
     public void sucess()

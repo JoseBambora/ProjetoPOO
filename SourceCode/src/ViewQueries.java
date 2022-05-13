@@ -85,7 +85,7 @@ public class ViewQueries {
     public Integer atividadeConsultar()
     {
         System.out.println("Pretende consultar estatísticas sobre o estado do programa ou mudar o fornecedor?");
-        System.out.println("1 - Consultar estatísticas");
+        System.out.println("1 - Realizar queries");
         System.out.println("2 - Mudar imposto");
         return this.scannerInt();
     }

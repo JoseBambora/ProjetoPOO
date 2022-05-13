@@ -173,6 +173,9 @@ public class ControladorHouse
             case 5:
                 print = app.getLocalidadeCasas(ph).toString() ;
                 break;
+            case 6:
+                print = Integer.toString(app.respectPredicateCasa(ph));
+                break;
             default:
                 break;
         }

@@ -237,12 +237,24 @@ public class App implements Serializable
         }
         return r;
     }
-    public int respectPredicate(Predicate<Comerciante> predicate)
+    public int respectPredicateFornecedores(Predicate<Comerciante> predicate)
     {
         int r = 0;
         for(Comerciante comerciante : this.fornecedores.values())
         {
             if(predicate.test(comerciante))
+            {
+                r++;
+            }
+        }
+        return r;
+    }
+    public int respectPredicateCasa(Predicate<House> predicate)
+    {
+        int r = 0;
+        for(House casa : this.casas.values())
+        {
+            if(predicate.test(casa))
             {
                 r++;
             }
