@@ -47,6 +47,7 @@ public class ControladorQueries {
 
             case 4:
                 Integer numero = viewQ.inserInteger();
+                if (numero == null) return;
                 app.avancaDias(numero);
 
             default:
@@ -62,6 +63,7 @@ public class ControladorQueries {
     public void selecionouConsultaDados() {
         try {
             Integer n = viewQ.atividadeConsultar();
+            if (n == null) return;
             if (n == 1)
                 this.consultaDados();
             else if(n == 2)

@@ -22,6 +22,20 @@ public class ViewQueries {
         }
         return r;
     }
+
+    private Integer scannerInt()
+    {
+        Integer r = null;
+        try {
+            r = input.nextInt();
+        }
+        catch (java.util.InputMismatchException e)
+        {
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel.");
+        }
+        return r;
+    }
     public String getNomeComerciante(){
         System.out.println("Introduza o nome do comerciante");
         return  this.scannerString();
@@ -33,7 +47,7 @@ public class ViewQueries {
     }
     public LocalDate getDate(){
         System.out.println("Introduza o ano-mes-dia");
-        String n1 = input.next();
+        String n1 = this.scannerString();
         String [] date = n1.split("-");
         LocalDate d1 =LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt (date[1]), Integer.parseInt (date[2]));
         return d1;
@@ -48,19 +62,14 @@ public class ViewQueries {
         System.out.println("Os dados necessários para estatísticas do estado do programa  foram introduzidos com sucesso!");
     }
 
-        /*public int getConsulta (char c) {
-            if (c == 'c') System.out.println("O que pretende consultar? 1 - Nome, 2-NIF");
-            return input.nextInt();
-        }*/
-
     public Integer inserInteger(){
         System.out.println("Insira um número");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
     public String insertString() {
         System.out.println("Insira uma String");
-        return input.next();
+        return this.scannerString();
     }
 
     public Integer consultarOsDados()
@@ -71,19 +80,16 @@ public class ViewQueries {
         System.out.println("3 - Dar uma ordenação dos maiores consumidores de energia num período a determinar");
         System.out.println("4 - Desejo avançar dias");
         System.out.println("5 - Nada");
-        return input.nextInt();
+        return this.scannerInt();
     }
     public Integer atividadeConsultar()
     {
         System.out.println("Pretende consultar estatísticas sobre o estado do programa ou mudar o fornecedor?");
         System.out.println("1 - Consultar estatísticas");
         System.out.println("2 - Mudar imposto");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
-    public void printMessage(String message)
-    {
-        System.out.println(message);
-    }
+
 
 }

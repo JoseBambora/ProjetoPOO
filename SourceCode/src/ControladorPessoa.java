@@ -14,7 +14,9 @@ public class ControladorPessoa {
 
     public void addPessoa() throws ValorNegativoException, NullPointerException {
         String nome = viewP.getNomePessoa();
+        if (nome == null) return;
         Integer nif = viewP.getNifPessoa();
+        if (nif == null) return;
         app.addPessoa(nome, nif);
         viewP.success();
     }
@@ -31,11 +33,14 @@ public class ControladorPessoa {
             return null;
         switch (n) {
             case 1:
-                pred = p -> (p.getNIF() > viewP.numeroCompareInteiro());
+                Integer comp =  viewP.numeroCompareInteiro();
+                if (comp == null) return null;
+                pred = p -> (p.getNIF() > comp);
                 break;
 
             case 2:
                 String nome = viewP.getNomePessoa();
+                if (nome == null) return null;
                 pred = p -> (p.getNome().equals(nome));
                 break;
             default:
@@ -45,14 +50,15 @@ public class ControladorPessoa {
         return pred;
     }
 
-    public String consultaDados() throws ValorNegativoException, NullPointerException {
+    public void consultaDados() throws ValorNegativoException, NullPointerException {
         String r = "";
         Predicate<Pessoa> pessoa = this.pessoaPredicate();
         if (pessoa == null)
-                return null;
+                return;
         Integer n = viewP.consultarOsDados();
+        if (n == null) return;
         switch (n) {
-            case 1: //
+            case 1:
                 r = app.getNomePessoas().toString();
                 break;
             case 2:
@@ -61,13 +67,14 @@ public class ControladorPessoa {
             default:
                 break;
         }
-        return r;
+        viewP.printMessage(r);
     }
 
     public void selecionouConsultaDados()
     {
         try {
             Integer n = viewP.atividadeConsultar();
+            if (n == null) return;
             if (n == 1)
                 this.consultaDados();
         }

@@ -60,7 +60,7 @@ public class ViewPessoa {
         System.out.println("1 - Não pretendo");
         System.out.println("2 - A pessoa tem um NIF superior a um certo número inteiro");
         System.out.println("3 - A pessoa tem um certo nome");
-        return input.nextInt();
+        return this.scannerInt();
     }
     public Integer numeroCompareInteiro()
     {
@@ -81,7 +81,7 @@ public class ViewPessoa {
         System.out.println("Pretende consultar  informação da Pessoa?");
         System.out.println("1 - Sim");
         System.out.println("2 - Não ");
-        return input.nextInt();
+        return this.scannerInt();
     }
 
     public void printMessage(String message)
