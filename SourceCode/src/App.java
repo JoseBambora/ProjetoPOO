@@ -261,6 +261,19 @@ public class App implements Serializable
         }
         return r;
     }
+
+    public int respectPredicatePessoa(Predicate<Pessoa> predicate)
+    {
+        int r = 0;
+        for(Pessoa p : this.pessoas.values())
+        {
+            if(predicate.test(p))
+            {
+                r++;
+            }
+        }
+        return r;
+    }
     public List<Formulas> getFormulasPredicate(Predicate<Comerciante> predicate)
     {
         List<Formulas> formulas = new ArrayList<>();

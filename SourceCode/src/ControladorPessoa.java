@@ -64,6 +64,8 @@ public class ControladorPessoa {
             case 2:
                 r = app.getNIFPessoas().toString();
                 break;
+            case 3:
+                r = Integer.toString(app.respectPredicatePessoa(pessoa));
             default:
                 break;
         }

@@ -73,7 +73,8 @@ public class ViewPessoa {
         System.out.println("O que pretende consultar??");
         System.out.println("1 - O nome da pessoa");
         System.out.println("2 - O NIF da pessoa");
-        System.out.println("3 - Nada");
+        System.out.println("3 - Número de Pesosas que respeitam um dado predicado ");
+        System.out.println("4 - Nada");
         return this.scannerInt();
     }
     public Integer atividadeConsultar()
