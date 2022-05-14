@@ -261,6 +261,18 @@ public class App implements Serializable
         }
         return r;
     }
+    public int respectPredicateCasa(Predicate<House> predicate, Predicate<House> predicate2)
+    {
+        int r = 0;
+        for(House casa : this.casas.values())
+        {
+            if(predicate.test(casa) && predicate2.test(casa))
+            {
+                r++;
+            }
+        }
+        return r;
+    }
 
     public int respectPredicatePessoa(Predicate<Pessoa> predicate)
     {
@@ -464,16 +476,14 @@ public class App implements Serializable
     {
         return this.devices.get(Integer.toString(this.devices.size()-1)).getId();
     }
-    public void associaHouse(Predicate<House> predicate,Map<String, String> map)
+    public void associaHouse(Predicate<House> predicate,List<String> strings, String div)
     {
         for(House house : this.casas.values())
         {
-            if(predicate.test(house))
+            if(predicate.test(house) && house.hasDivisao(div))
             {
-                for(Map.Entry<String,String> entry : map.entrySet())
-                {
-                    house.addDevice(entry.getValue(),this.devices.get(entry.getKey()));
-                }
+                house.addDevice(div,this.devices.get(strings.get(strings.size()-1)));
+                strings.remove(strings.size()-1);
             }
         }
     }
@@ -538,5 +548,19 @@ public class App implements Serializable
         }
         else
             throw new PessoaNotExistException("Pessoa não existe na aplicação");
+    }
+    public void replicateNTimesDevice(Predicate<House> predicate, String div)
+    {
+        for(House house : this.casas.values())
+        {
+            if(house.hasDivisao(div) && predicate.test(house))
+            {
+                SmartDevices smartDevices = this.devices.get(this.getIdLastDeviceAdd());
+                house.addDevice(div,smartDevices);
+                SmartDevices aux = smartDevices.clone();
+                aux.setId(Integer.toString(this.devices.size() + 1));
+                this.devices.put(aux.getId(),aux);
+            }
+        }
     }
 }

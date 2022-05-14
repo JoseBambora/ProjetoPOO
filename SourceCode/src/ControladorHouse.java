@@ -191,11 +191,12 @@ public class ControladorHouse
             controladorDevices.addDevice();
             String divisao = viewHouse.getStr("divisao");
             if(divisao != null)
-                aux.put(app.getIdLastDeviceAdd(),divisao);
+            {
+                app.replicateNTimesDevice(ph,divisao);
+            }
             else
                 i--;
         }
-        if(number != -1)app.associaHouse(ph,aux);
     }
     private void acrescentarDivisoes(Predicate<House> ph)
     {
