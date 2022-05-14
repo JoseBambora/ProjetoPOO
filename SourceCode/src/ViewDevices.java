@@ -277,4 +277,20 @@ public class ViewDevices {
         }
         return r;
     }
+    public Integer opcoesConsulta(){
+        System.out.println("Deseja realizar uma consulta mais espefíca ou deseja apenas ver o total de SmartDevices?");
+        System.out.println("1: Consulta Específica");
+        System.out.println("2: Total de SmartDevices");
+        System.out.println("Outros Inputs - Nada");
+        Integer r = null;
+        try{
+            r = input.nextInt();
+        }catch(java.util.InputMismatchException e){
+            input.nextLine();
+            System.out.println("Valor introduzido não compativel");
+        }
+        return r;
+
+    }
+
 }

@@ -35,7 +35,6 @@ public class Main {
                 .append("|    AC    |").append(" Adiciona um Comerciante").append(charNTimes(42,' ')).append("|\n")
                 .append("|    AF    |").append(" Adiciona um Forncecedor").append(charNTimes(42,' ')).append("|\n")
                 .append("|    AP    |").append(" Adiciona um Proprietario").append(charNTimes(41,' ')).append("|\n")
-                .append("|    ND    |").append(" Total de Dispositivos").append(charNTimes(44,' ')).append("|\n")
                 .append("|     F    |").append(" Operaçoes dos Fornecedores").append(charNTimes(39,' ')).append("|\n")
                 .append("|     D    |").append(" Operaçoes dos Dispositivos").append(charNTimes(39,' ')).append("|\n")
                 .append("|     C    |").append(" Operaçoes das Casas").append(charNTimes(46,' ')).append("|\n")
@@ -159,22 +158,23 @@ public class Main {
                     System.out.println(menu());
                     break;
                 case "AD":
-                    controladorDevices.addDevice();
+                    if(varControl) controladorDevices.addDevice();
+                    else System.out.println("Não pode alterar os dados porque não ocorreu avanço temporal");
                     break;
                 case "AC":
-                    controladorHouse.addCasaApp();
+                    if(varControl) controladorHouse.addCasaApp();
+                    else System.out.println("Não pode alterar os dados porque não ocorreu avanço temporal");
                     break;
                 case "AF":
-                    controladorFornecedor.addFornecedor();
+                    if(varControl) controladorFornecedor.addFornecedor();
+                    else System.out.println("Não pode alterar os dados porque não ocorreu avanço temporal");
                     break;
                 case "AP":
-                    controladorPessoa.addPessoa();
-                    break;
-                case "ND":
-                    System.out.println("Número de Smart Devices: " + controladorDevices.numberDevices());
+                    if(varControl) controladorPessoa.addPessoa();
+                    else System.out.println("Não pode alterar os dados porque não ocorreu avanço temporal");
                     break;
                 case "F":
-                    controladorFornecedor.whatOperation(varControl);
+                     controladorFornecedor.whatOperation(varControl);
                     break;
                 case "D":
                     controladorDevices.whatOperation(varControl);

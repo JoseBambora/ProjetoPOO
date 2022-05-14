@@ -125,11 +125,22 @@ public class ControladorDevices {
         return r;
     }
     public void consultarDados() {
-        Predicate<SmartDevices> p = this.devicesPredicate();
-        if(p == null) return;
-        String r = null;
-        r = app.consultaDevice(p).toString();
-        view.print(r);
+        Integer n = view.opcoesConsulta();
+        if (n == null) return;
+        switch(n) {
+            case 1:
+                Predicate<SmartDevices> p = this.devicesPredicate();
+                if (p == null) return;
+                String r = null;
+                r = app.consultaDevice(p).toString();
+                view.print(r);
+                break;
+            case 2:
+                view.print("Número total de SmartDevices = "+numberDevices());
+                break;
+            default:
+                break;
+        }
     }
 
     private Predicate<SmartDevices> devicesPredicateChange(){
