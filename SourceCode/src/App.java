@@ -261,18 +261,6 @@ public class App implements Serializable
         }
         return r;
     }
-    public int respectPredicateCasa(Predicate<House> predicate, Predicate<House> predicate2)
-    {
-        int r = 0;
-        for(House casa : this.casas.values())
-        {
-            if(predicate.test(casa) && predicate2.test(casa))
-            {
-                r++;
-            }
-        }
-        return r;
-    }
 
     public int respectPredicatePessoa(Predicate<Pessoa> predicate)
     {
@@ -486,19 +474,9 @@ public class App implements Serializable
     }
     public String getIdLastDeviceAdd()
     {
-        return this.devices.get(Integer.toString(this.devices.size()-1)).getId();
+        return this.devices.get(Integer.toString(this.devices.size())).getId();
     }
-    public void associaHouse(Predicate<House> predicate,List<String> strings, String div)
-    {
-        for(House house : this.casas.values())
-        {
-            if(predicate.test(house) && house.hasDivisao(div))
-            {
-                house.addDevice(div,this.devices.get(strings.get(strings.size()-1)));
-                strings.remove(strings.size()-1);
-            }
-        }
-    }
+
     public void addDivisoes(Predicate<House> predicate,List<String> divisoes) throws DevicesExistException {
         for(House house : this.casas.values())
         {
@@ -561,6 +539,8 @@ public class App implements Serializable
         else
             throw new PessoaNotExistException("Pessoa não existe na aplicação");
     }
+
+    // TESTADO
     public void replicateNTimesDevice(Predicate<House> predicate, String div)
     {
         for(House house : this.casas.values())

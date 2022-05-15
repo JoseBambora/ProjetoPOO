@@ -12,11 +12,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class TestApp
 {
     static App app = new App(23);
+    static boolean bool = false;
     public static void addSmartBulb(boolean mode,int tone, double tamanho, double consumo)
     {
         try {
@@ -140,7 +142,9 @@ public class TestApp
     @Test
     public void TestCount()
     {
-        assertEquals(app.numberDevices(),6555);
+        if(bool) assertEquals(app.numberDevices(),6555 + 102);
+        else
+            assertEquals(app.numberDevices(),6555);
         assertEquals(app.numberFornecedores(),14);
         assertEquals(app.numberPessoas(),200);
         assertEquals(app.numberCasas(),200);
@@ -359,14 +363,14 @@ public class TestApp
             app.movedivisao("111","Casa de Banho","3632");
             app.movedivisao("111","Casa de Banho","3633");
             assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").size(),0);
-            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),3);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),4);
             assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(0),"3626");
-            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(1),"3632");
-            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(2),"3633");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(2),"3632");
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(3),"3633");
             app.movedivisao("111","Quarto","3633");
             app.movedivisao("111","Quarto","3632");
             assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").size(),2);
-            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),1);
+            assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").size(),2);
             assertEquals(app.getCasas().get("111").getDivisoes().get("Casa de Banho").get(0),"3626");
             assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").get(0),"3633");
             assertEquals(app.getCasas().get("111").getDivisoes().get("Quarto").get(1),"3632");
@@ -410,5 +414,33 @@ public class TestApp
         {
             System.out.println(e.getMessage());
         }
+    }
+    @Test
+    public void testReplicateNTimes()
+    {
+        try {
+            bool = true;
+            Predicate<House> p1 = Objects::nonNull;
+            String div = "Casa de Banho";
+            app.addSmartBulb(true,2,30,30);
+            String lastid = app.getIdLastDeviceAdd();
+            app.replicateNTimesDevice(p1,div);
+            Map<String,SmartDevices> map = app.getDevices();
+            SmartDevices smartDevices = map.get(lastid);
+            int n = Integer.parseInt(lastid) + 1;
+            lastid = app.getIdLastDeviceAdd();
+            int ultimo = Integer.parseInt(lastid);
+            for(int i = n; i < ultimo + 1; i++)
+            {
+                String sd = Integer.toString(i);
+                SmartDevices smartDevices1 = map.get(sd);
+                assertEquals(smartDevices1,smartDevices);
+            }
+        }
+        catch (ValorNegativoException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
