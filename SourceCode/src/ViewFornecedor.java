@@ -63,7 +63,7 @@ public class ViewFornecedor
         else
         {
             System.out.println("O que quer consultar?");
-            System.out.println("1 - Formula");
+            System.out.println("1 - Ocorrências das Formulas");
             System.out.println("2 - Faturas do fornecedor");
             System.out.println("3 - Número de faturas");
             System.out.println("4 - Lucro do fornecedor");
