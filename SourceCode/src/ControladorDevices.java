@@ -189,7 +189,9 @@ public class ControladorDevices {
                         app.setDevicesOnOff(r, false);
                         break;
                     case 3:
-                        app.setConsumoDevices(r, view.insertValue());
+                        Double consumo = view.insertValue();
+                        if(consumo == null) return;
+                        app.setConsumoDevices(r,consumo);
                         break;
                     default:
                         break;
