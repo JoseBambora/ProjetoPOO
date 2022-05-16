@@ -34,7 +34,7 @@ public class ControladorHouse
             app.addDivisao(divisao);
             viewHouse.printMessage("Divisao adicionada com sucesso");
         }
-        catch (DevicesExistException e) {
+        catch (DivisaoExistException e) {
             viewHouse.printMessage(e.getMessage());
         }
     }
@@ -204,7 +204,7 @@ public class ControladorHouse
             List<String> divisoes = viewHouse.getDivisoesAdd();
             app.addDivisoes(ph,divisoes);
         }
-        catch (DevicesExistException e)
+        catch (DivisaoExistException e)
         {
             viewHouse.printMessage(e.getMessage());
         }

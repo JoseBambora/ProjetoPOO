@@ -64,13 +64,14 @@ public class App implements Serializable
     public void addPessoa(String nome, int nif) throws ValorNegativoException, NullPointerException {
         this.pessoas.put(nif,new Pessoa(nome,nif));
     }
-    public void addDivisao(String divisao) throws DevicesExistException {
+    public void addDivisao(String divisao) throws DivisaoExistException {
         if(this.casas.containsKey(this.lastCasa))
         {
             this.lastDivisao = divisao;
             this.casas.get(this.lastCasa).addDivisao(divisao);
         }
     }
+
     public void addCasa(Integer pessoa, String fornecedor) throws NullPointerException
     {
         this.lastCasa = Integer.toString(this.casas.size());
@@ -95,6 +96,8 @@ public class App implements Serializable
             comerciante.addFatura(fatura,this.getImposto());
         }
     }
+
+    // TESTADO
     public void changeProprietario(String idHouse,Integer pessoa) throws NullPointerException, PessoaNotExistException, CasaNotExistException {
         if(this.casas.containsKey(idHouse))
             if(this.pessoas.containsKey(pessoa))
@@ -105,6 +108,7 @@ public class App implements Serializable
             throw new CasaNotExistException("Casa não existe na aplicação");
     }
 
+    // TESTADO
     public void changeFornecedor(String idHouse, String fornecedor) throws NullPointerException, FornecedorNotExistException, CasaNotExistException {
         if(this.casas.containsKey(idHouse))
             if(this.fornecedores.containsKey(fornecedor))
@@ -162,6 +166,8 @@ public class App implements Serializable
         }
         return result.clone();
     }
+
+    // TESTADO
     public List <Fatura> getFaturasTotal (LocalDate d1, LocalDate d2)
     {
         List<Fatura> allFaturas = new ArrayList<>();
@@ -320,7 +326,7 @@ public class App implements Serializable
         }
         return list;
     }
-
+    // TESTADO
     public void setDevicesOnOff(Predicate<SmartDevices> predicate, boolean on)
     {
         for(SmartDevices smartDevices : this.devices.values())
@@ -446,6 +452,8 @@ public class App implements Serializable
         }
         return r;
     }
+
+    // TESTADO
     public Map<String,List<String>> getDivisoesCasas(Predicate<House> predicate)
     {
         Map<String,List<String>> r = new HashMap<>();
@@ -460,6 +468,8 @@ public class App implements Serializable
         }
         return r;
     }
+
+    // TESTADO
     public List<String> getLocalidadeCasas(Predicate<House> predicate)
     {
         List<String> r = new ArrayList<>();
@@ -477,7 +487,8 @@ public class App implements Serializable
         return this.devices.get(Integer.toString(this.devices.size())).getId();
     }
 
-    public void addDivisoes(Predicate<House> predicate,List<String> divisoes) throws DevicesExistException {
+    // TESTADO
+    public void addDivisoes(Predicate<House> predicate,List<String> divisoes) throws DivisaoExistException {
         for(House house : this.casas.values())
         {
             if(predicate.test(house))

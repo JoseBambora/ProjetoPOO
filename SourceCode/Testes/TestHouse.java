@@ -197,9 +197,9 @@ public class TestHouse
             this.b1.setTone(0);
             this.c2.setOn(false);
             this.s2.setMarca("Sony");
-            assertNotEquals(devices.get("b1"), this.b1);
+            assertEquals(devices.get("b1"), this.b1);
             assertEquals(devices.get("c2"), this.c2);
-            assertNotEquals(devices.get("s2"), this.s2);
+            assertEquals(devices.get("s2"), this.s2);
             devices.remove("b1");
             assertFalse(devices.containsKey("b1"));
             assertTrue(this.house1.getDevices().containsKey("b1"));
@@ -319,7 +319,7 @@ public class TestHouse
                 assertFalse(device.isOn());
             this.house4.setAllOn();
             for(SmartDevices device : devices.values())
-                assertFalse(device.isOn());
+                assertTrue(device.isOn());
             devices = this.house4.getDevices();
             for(SmartDevices device : devices.values())
                 assertTrue(device.isOn());
@@ -359,7 +359,7 @@ public class TestHouse
             house.setAllOff();
             devices = this.house3.getDevices();
             for(SmartDevices smartDevices : devices.values())
-                assertTrue(smartDevices.isOn());
+                assertFalse(smartDevices.isOn());
 
             devices = house.getDevices();
             for(SmartDevices smartDevices : devices.values())

@@ -9,10 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class TestApp
@@ -108,7 +105,7 @@ public class TestApp
         app.addSmartSpeakerP(true,volume,campos[1],campos[2],consumo);
     }
     @BeforeAll
-    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException, DevicesExistException {
+    public static void parse() throws ValorNegativoException, ValorExcedeMaximoException, NullPointerException, DivisaoExistException {
 
         List<String> linhas = lerFicheiro("log.txt");
         String[] linhaPartida;
@@ -441,6 +438,88 @@ public class TestApp
         {
             System.out.println(e.getMessage());
         }
+    }
+    @Test
+    public void testAddDivisao()
+    {
+        try {
+            List<String> listDiv = new ArrayList<>();
+            listDiv.add("Quarto do Ze");
+            listDiv.add("Garagem dos arrumos");
+            listDiv.add("Varanda");
+            Pessoa pessoa = app.getPessoa(758618872);
+            app.changeProprietario("112",758618872);
+            Predicate<House> p = h->h.getProprietario().equals(pessoa);
+            app.addDivisoes(p,listDiv);
+            Map<String,House> casas = app.getCasas();
+            House h1 = casas.get("111");
+            House h2 = casas.get("112");
+            assertTrue(h1.hasDivisao("Quarto do Ze"));
+            assertTrue(h1.hasDivisao("Garagem dos arrumos"));
+            assertTrue(h1.hasDivisao("Varanda"));
+            assertTrue(h2.hasDivisao("Quarto do Ze"));
+            assertTrue(h2.hasDivisao("Garagem dos arrumos"));
+            assertTrue(h2.hasDivisao("Varanda"));
+            List<String> listcasas = app.getLocalidadeCasas(p);
+            assertEquals(listcasas.size(),2);
+            assertTrue(listcasas.contains("111"));
+            assertTrue(listcasas.contains("112"));
+            app.changeProprietario("112",586185742);
+            listcasas = app.getLocalidadeCasas(p);
+            assertEquals(listcasas.size(),1);
+            assertTrue(listcasas.contains("111"));
+            Map<String,List<String>> div = app.getDivisoesCasas(p);
+            List<String> divisoes = div.get("111");
+            Set<String> keys = div.keySet();
+            assertEquals(keys.size(),1);
+            assertTrue(divisoes.contains("Varanda"));
+            assertTrue(divisoes.contains("Casa de Banho"));
+            assertTrue(divisoes.contains("Escritorio"));
+        }
+        catch (PessoaNotExistException | CasaNotExistException |NullPointerException | DivisaoExistException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Test
+    public void testDevices()
+    {
+        Predicate<SmartDevices> smartDevicesPredicate = Objects::nonNull;
+        app.setDevicesOnOff(smartDevicesPredicate,false);
+        Map<String,SmartDevices> smartDevicesMap = app.getDevices();
+        for(SmartDevices smartDevices : smartDevicesMap.values())
+        {
+            assertFalse(smartDevices.isOn());
+        }
+        Map<String,House> casas = app.getCasas();
+        for(House casa : casas.values())
+        {
+            Map<String,SmartDevices> dev = casa.getDevices();
+            for(SmartDevices smartDevices1 : dev.values())
+                assertFalse(smartDevices1.isOn());
+        }
+        app.setDevicesOnOff(smartDevicesPredicate,true);
+        for(SmartDevices smartDevices : smartDevicesMap.values())
+        {
+            assertTrue(smartDevices.isOn());
+        }
+        smartDevicesPredicate = d -> d instanceof SmartBulb;
+        app.setDevicesOnOff(smartDevicesPredicate,false);
+        smartDevicesMap = app.getDevices();
+        for(SmartDevices smartDevices : smartDevicesMap.values())
+        {
+            if(smartDevices instanceof SmartBulb)
+                assertFalse(smartDevices.isOn());
+        }
+        app.setDevicesOnOff(smartDevicesPredicate,true);
+    }
 
+    @Test
+    public void testFaturasTotal()
+    {
+        List<Fatura> faturas = app.getFaturasTotal(LocalDate.now(),LocalDate.now().plusDays(2));
+        assertEquals(faturas.size(),0);
+        faturas = app.getFaturasTotal(LocalDate.now(),LocalDate.now().plusDays(31));
+        assertEquals(faturas.size(),200);
     }
 }

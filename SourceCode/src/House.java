@@ -77,7 +77,7 @@ public class House implements Serializable {
     public Map<String, SmartDevices> getDevices(){
         Map<String, SmartDevices> result = new HashMap<>();
         for(String s: this.devices.keySet())
-            result.put(s,this.devices.get(s).clone());
+            result.put(s,this.devices.get(s));
         return result;
     }
 
@@ -89,7 +89,7 @@ public class House implements Serializable {
     public void setDevices(Map<String, SmartDevices> devices){
         this.devices.clear();
         for(String s: devices.keySet())
-            this.devices.put(s,devices.get(s).clone());
+            this.devices.put(s,devices.get(s));
     }
 
     public void setFornecedor(Comerciante fornecedor) throws NullPointerException{
@@ -269,11 +269,11 @@ public class House implements Serializable {
         return this.devices.containsKey(id);
     }
 
-    public void addDivisao(String id) throws DevicesExistException {
-        if(!this.devices.containsKey(id))
+    public void addDivisao(String id) throws DivisaoExistException {
+        if(!this.divisoes.containsKey(id))
             this.divisoes.put(id,new ArrayList<>());
         else
-            throw new DevicesExistException("Device já existente na casa " + this.getLocal());
+            throw new DivisaoExistException("Device já existente na casa " + this.getLocal());
     }
 
     public boolean hasDivisao(String id) {
