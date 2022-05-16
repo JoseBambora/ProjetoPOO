@@ -292,17 +292,30 @@ public class App implements Serializable
         }
         return r;
     }
-    public List<Formulas> getFormulasPredicate(Predicate<Comerciante> predicate)
+
+    // TESTADO
+    public String getFormulasPredicate(Predicate<Comerciante> predicate)
     {
-        List<Formulas> formulas = new ArrayList<>();
+        Map<Formulas,Integer> formulas = new HashMap<>();
         for(Comerciante comerciante : this.fornecedores.values())
         {
             if(predicate.test(comerciante))
             {
-                formulas.add(comerciante.getFormula());
+                if(formulas.containsKey(comerciante.getFormula()))
+                    formulas.put(comerciante.getFormula(),formulas.get(comerciante.getFormula())+1);
+                else
+                    formulas.put(comerciante.getFormula(),1);
             }
         }
-        return formulas;
+        StringBuilder r = new StringBuilder();
+        for(Formulas key : formulas.keySet())
+        {
+            r.append(key.toString());
+            r.append(" ");
+            r.append(formulas.get(key));
+            r.append('\n');
+        }
+        return r.toString();
     }
 
 

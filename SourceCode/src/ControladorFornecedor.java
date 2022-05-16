@@ -101,7 +101,7 @@ public class ControladorFornecedor {
         String r = "";
         switch (option) {
             case 1:
-                r = app.getFormulasPredicate(p).toString();
+                r = app.getFormulasPredicate(p);
                 break;
             case 2:
                 r = app.queryFaturas(p).toString();

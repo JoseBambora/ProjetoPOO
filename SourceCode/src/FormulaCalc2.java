@@ -9,4 +9,13 @@ public class FormulaCalc2 implements Formulas, Serializable {
     public String toString() {
         return "FormulaCacl2";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof FormulaCalc2;
+    }
+    @Override
+    public int hashCode() {
+        return 2;
+    }
 }

@@ -10,4 +10,14 @@ public class FormulaCalc1 implements Formulas, Serializable {
     public String toString() {
         return "FormulaCacl1";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof FormulaCalc1;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 }
