@@ -38,17 +38,25 @@ public class ControladorHouse
             viewHouse.printMessage(e.getMessage());
         }
     }
-    public void addCasaApp() throws NullPointerException {
+    public void addCasaApp(){
         Integer number = viewHouse.getNumber2("nif do dono");
         String str = viewHouse.getStr("nome do comerciante");
         if(number != null && str != null)
-            this.app.addCasa(number,str);
+        {
+            try {
+                this.app.addCasa(number,str);
+            }
+            catch (NullPointerException | PessoaNotExistException | FornecedorNotExistException e)
+            {
+                viewHouse.printMessage(e.getMessage());
+            }
+        }
     }
     public void addCasaApp(int nif, String nome){
         try {
             this.app.addCasa(nif,nome);
         }
-        catch (NullPointerException e)
+        catch (NullPointerException | PessoaNotExistException | FornecedorNotExistException e)
         {
             viewHouse.printMessage(e.getMessage());
         }

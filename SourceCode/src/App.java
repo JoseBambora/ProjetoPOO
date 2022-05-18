@@ -72,11 +72,19 @@ public class App implements Serializable
         }
     }
 
-    public void addCasa(Integer pessoa, String fornecedor) throws NullPointerException
+    public void addCasa(Integer pessoa, String fornecedor) throws NullPointerException, FornecedorNotExistException, PessoaNotExistException
     {
-        this.lastCasa = Integer.toString(this.casas.size());
-        House house = new House(this.pessoas.get(pessoa),this.fornecedores.get(fornecedor), this.lastCasa);
-        this.casas.put(house.getLocal(),house);
+        if(this.pessoas.containsKey(pessoa))
+            if(this.fornecedores.containsKey(fornecedor))
+            {
+                this.lastCasa = Integer.toString(this.casas.size());
+                House house = new House(this.pessoas.get(pessoa),this.fornecedores.get(fornecedor), this.lastCasa);
+                this.casas.put(house.getLocal(),house);
+            }
+            else
+                throw new FornecedorNotExistException("Fornecedor não existe na aplicação.");
+        else
+            throw new PessoaNotExistException("Pessoa não existe na aplicação.");
     }
 
     // TESTADO
