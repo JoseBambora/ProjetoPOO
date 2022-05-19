@@ -63,7 +63,7 @@ public class TestApp
             String fornecedor = campos[2];
             app.addCasa(nif,fornecedor);
         }
-        catch (NullPointerException | ValorNegativoException e)
+        catch (NullPointerException | ValorNegativoException | FornecedorNotExistException | PessoaNotExistException e)
         {
             System.out.println(e.getMessage());
         }
