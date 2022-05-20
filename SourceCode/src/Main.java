@@ -73,6 +73,7 @@ public class Main {
             controladorHouse = new ControladorHouse(app);
             controladorFornecedor = new ControladorFornecedor(app);
             controladorPessoa = new ControladorPessoa(app);
+            controladorQueries = new ControladorQueries(app);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             getInfo();
@@ -186,6 +187,9 @@ public class Main {
                     if (!varControl)
                         varControl = controladorQueries.selecionouConsultaDados();
                     else controladorQueries.selecionouConsultaDados();
+                    break;
+                case "P":
+                    controladorPessoa.selecionouConsultaDados();
                     break;
                 default:
                     System.out.println("Comando inválido");

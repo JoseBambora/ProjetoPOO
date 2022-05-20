@@ -32,13 +32,13 @@ public class ControladorPessoa {
         if(n == null)
             return null;
         switch (n) {
-            case 1:
+            case 2:
                 Integer comp =  viewP.numeroCompareInteiro();
                 if (comp == null) return null;
                 pred = p -> (p.getNIF() > comp);
                 break;
 
-            case 2:
+            case 3:
                 String nome = viewP.getNomePessoa();
                 if (nome == null) return null;
                 pred = p -> (p.getNome().equals(nome));

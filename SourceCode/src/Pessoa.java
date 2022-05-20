@@ -57,8 +57,7 @@ public class Pessoa implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Pessoa:\n")
-                .append("Nome: ").append(this.nome).append("\n").append("NIF: ").append(this.NIF).append("\n");
+        sb.append("Nome: ").append(this.nome).append(' ').append("NIF: ").append(this.NIF);
         return sb.toString();
     }
 

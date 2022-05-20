@@ -189,9 +189,7 @@ public class Comerciante implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Comerciante:\n")
-                .append("Nome: ").append(this.nome).append("\n")
-                .append("Faturas Emitidas: ").append(this.faturasEmitidas).append("\n");
+        sb.append("Comerciante:\nNome: ").append(this.nome).append("\n");
         return sb.toString();
     }
     public int numberFaturas()

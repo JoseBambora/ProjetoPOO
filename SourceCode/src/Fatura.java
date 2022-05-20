@@ -106,10 +106,10 @@ public class Fatura implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Fatura:\n").append("Cliente: ").append(this.cliente).append("\n")
-                .append("Preco: ").append(this.preco).append("\n")
-                .append("Consumo: ").append(this.consumo).append("\n")
-                .append("Data de Emissão: ").append(this.dataEmissao).append("\n")
+        sb.append("Fatura: Cliente: ").append(this.cliente).append(" ")
+                .append("Preco: ").append(this.preco).append(" ")
+                .append("Consumo: ").append(this.consumo).append(" ")
+                .append("Data de Emissão: ").append(this.dataEmissao).append(" ")
                 .append("Local: ").append(this.local).append("\n");
         return sb.toString();
     }

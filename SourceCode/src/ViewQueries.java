@@ -76,7 +76,7 @@ public class ViewQueries {
     {
         System.out.println("O que pretende consultar?");
         System.out.println("1 - Qual o comercializador com maior volume de faturação");
-        System.out.println("2 - A casa que gastou mais naquele período");
+        System.out.println("2 - A pessoa que gastou mais naquele período");
         System.out.println("3 - Dar uma ordenação dos maiores consumidores de energia num período a determinar");
         System.out.println("4 - Desejo avançar dias");
         System.out.println("5 - Nada");
